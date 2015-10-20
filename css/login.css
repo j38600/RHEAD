@@ -1,0 +1,65 @@
+﻿body {
+	font: bold 0.8em Verdana;
+	color: yellow;
+	margin: auto;
+	width: 1000px;
+	text-align: center;
+	background-color: #1B2A0D;
+}
+h1 {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+	margin:0;
+	padding:0;
+}
+hr {
+	border:none;
+	border-top:1px solid #CCCCCC;
+	height:1px;
+	margin-bottom:25px;
+}
+
+a{
+    color: yellow;
+}
+a:visited {
+    color: yellow;
+}
+
+#header img {
+	float: left;
+	width: 250px;
+    height: 120px;
+}
+#header span{
+	float: left;
+	width: 200px;
+	margin-top: 63px;
+	display: block;
+}
+	
+#footer{
+	font-size: 150%;
+	border-bottom: 2px solid lightblue;
+	border-top: 2px solid lightblue;
+	list-style: none;
+}
+
+#autor{
+	visibility:hidden;
+}
+	
+.right {
+	float: right;
+}
+.left {
+	float: left;
+}
+.clear {
+	clear: both;
+}
+.fixed-size{
+    width: 200px;
+    height: 200px;
+}
