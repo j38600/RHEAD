@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database','session','upload','template','form_validation', 'ion_auth', 'googlemaps');
+$autoload['libraries'] = array('database','session','upload','template','form_validation', 'ion_auth');
 
 /*
 | -------------------------------------------------------------------
@@ -126,4 +126,4 @@ $autoload['language'] = array('calendar','form_validation', 'ion_auth');
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('emitter_model', 'incident_model');
+$autoload['model'] = array('militar_model', 'escala_model');

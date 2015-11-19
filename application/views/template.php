@@ -38,27 +38,58 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href='<?php echo base_url()?>' title="Collected Records of Eletronic Warfare">C.R.E.W.</a>
+                <a class="navbar-brand" href='<?php echo base_url()?>' title="Informações do Pessoal para o Apoio à Decisão">I.P.A.D.</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
+                <!--<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-flag"></span> Emissores
+                        <span class="glyphicon glyphicon-briefcase"></span> Impedimentos
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url()?>emitter">Lista</a></li>
-                        <li><a href="<?php echo base_url()?>emitter/map">Mapa</a></li>
+                        <li><a href="<?php echo base_url()?>incident">Listagem</a></li>
+                        <li><a href="<?php echo base_url()?>incident/map">Cenas</a></li>
+                        <li><a href="<?php echo base_url()?>incident">mais cenas</a></li>
+                    </ul>
+                </li>-->
+                <!--<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-globe"></span> Férias
+<span class="glyphicon glyphicon-plane"></span> Férias
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo base_url()?>incident">Listagem</a></li>
+                        <li><a href="<?php echo base_url()?>incident/map">Cenas</a></li>
+                        <li><a href="<?php echo base_url()?>incident">mais cenas</a></li>
+                    </ul>
+                </li>-->
+                <!--<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-education"></span> Trab-Estudantes
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo base_url()?>incident">Listagem</a></li>
+                        <li><a href="<?php echo base_url()?>incident/map">Cenas</a></li>
+                        <li><a href="<?php echo base_url()?>incident">mais cenas</a></li>
+                    </ul>
+                </li>-->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-tasks"></span> Escalas
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo base_url()?>escala">Listagem</a></li>
+                        <li><a href="<?php echo base_url()?>escala/map">Serviço Diário</a></li>
+                        <li><a href="<?php echo base_url()?>escala">Prevenção</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-map-marker"></span> Incidentes
+                        <span class="glyphicon glyphicon-user"></span> Militares
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url()?>incident">Lista</a></li>
-                        <li><a href="<?php echo base_url()?>incident/map">Mapa</a></li>
+                        <li><a href="<?php echo base_url()?>militar">Lista</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

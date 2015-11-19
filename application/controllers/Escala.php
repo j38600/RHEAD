@@ -1,7 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Emitter extends CI_Controller {
+class Escala extends CI_Controller {
 
+    /**@
+    Função construtora
+    @return void
+    **/
     function __construct()
     {
         parent::__construct();
@@ -9,8 +13,8 @@ class Emitter extends CI_Controller {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth', 'refresh');
         } else {
-            $this->template->set('title', 'Emissores');
-            $this->template->set('nav', 'emitter');
+            $this->template->set('title', 'Escalas');
+            $this->template->set('nav', 'escala');
             $this->template->set('user', $this->ion_auth->user()->row()->username);
             $this->template->set(
                 'admin', ($this->ion_auth->is_admin())? true: false
@@ -19,16 +23,66 @@ class Emitter extends CI_Controller {
         $this->output->enable_profiler(TRUE);
     }
 
+    /**@
+    Listagem de escalas existentes
+    + # de militares por escala
+    <nome da escala(edit) | # militares | Consultar escala(view)>
+    @return void
+    **/
     public function index()
     {
-        //$this->output->enable_profiler(TRUE);
         $info = array();
-        $info['emissores'] = $this->emitter_model->ler($info);
+        $escalas = $this->escala_model->ler($info);
+        
+        //$info['nr_militares_escalas'] = 1;
+        //$nr_militares_p_escala = $this->escala_model->ler($info);
+        
+        
+        $info['escalas'] = $escalas;
+        var_dump($escalas);
         $info['admin'] = $this->ion_auth->is_admin();
-        $this->template->load('template', 'emitter/list', $info);
+        $this->template->load('template', 'escala/list', $info);
     }
 
+    /**@
+    Vista de uma escala. 
+    Diversas opções da mesma(semana, fim de semana, 24h ou inicio e fim, etc.)
+    + lista dos militares da mesma, com informação de disponibilidade dos mesmos.
+    @return void
+    **/
+    public function edit($id = '')
+    {
+        $info = array();
+        $info['id'] = $id;
+        $emissor = $this->emitter_model->ler($info);
+        $info['emissor'] = $emissor[0];
+        $info['admin'] = $this->ion_auth->is_admin();
+        $this->template->load('template', 'emitter/view', $info);
+    }
+
+    /**@
+    Consulta de uma escala. 
+    Diversas opções da mesma(semana, fim de semana, 24h ou inicio e fim, etc.)
+    + lista de nomeação dos militares, clicando, vê-se os mais folgados, e as razões de não nomeação.
+    + opção de validar nomeação para aquele dia??
+    @return void
+    **/
     public function view($id = '')
+    {
+        $info = array();
+        $info['id'] = $id;
+        $emissor = $this->emitter_model->ler($info);
+        $info['emissor'] = $emissor[0];
+        $info['admin'] = $this->ion_auth->is_admin();
+        $this->template->load('template', 'emitter/view', $info);
+    }
+
+    /**@
+    Histórico das escalas!!!
+    Por anos, botar estatisticas aki
+    @return void
+    **/
+    public function history($id = '')
     {
         $info = array();
         $info['id'] = $id;

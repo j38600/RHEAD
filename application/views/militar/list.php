@@ -1,29 +1,29 @@
 <div class="container-fluid">
     <div class="row">
-        <h2>Listagem dos emissores</h2>
+        <h2>Listagem dos militares</h2>
         <table class="table table-striped table-condensed table-hover">
             <thead>
             <tr>
-                <th>Nome</th>
-                <th>Latitude, Longitude</th>
-                <th>Tipo</th>
-                <th>Gama de Frequências</th>
+                <th>NIM</th>
+                <th>Posto</th>
+                <th class="text-right">Nome</th>
+                <th>Apelido</th>
                 <th></th>
             </tr>
             </thead>
             <tbody class="text-left">
-                <?php foreach ($emissores as $emissor):?>
+                <?php foreach ($militares as $militar):?>
                     <tr>
-                        <td><?php echo $emissor['nome'];?></td>
-                        <td><?php echo $emissor['lat'].', '.$emissor['lon'];?></td>
-                        <td><?php echo $emissor['tipologia'];?></td>
-                        <td><?php echo $emissor['freq_min'].'Khz até '.$emissor['freq_max'].'KHz';?></td>
+                        <td><?php echo $militar['nim'];?></td>
+                        <td><?php echo $militar['posto_abreviatura'];?></td>
+                        <td class="text-right"><?php echo $militar['nome'];?></td>
+                        <td><?php echo $militar['apelido'];?></td>
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
                                 if ($admin){
                                     echo anchor(
-                                        'emitter/'.$emissor['id'],
+                                        'militar/view/'.$militar['nim'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
                                         array(
                                             'title' => 'Novo',
@@ -32,11 +32,11 @@
                                         )
                                     );
                                     echo anchor(
-                                        'emitter/apaga/'.$emissor['id'],
-                                        '<span class="glyphicon glyphicon-remove"></span> Apagar',
+                                        'militar/edit/'.$militar['nim'],
+                                        '<span class="glyphicon glyphicon-pencil"></span> Atualizar',
                                         array(
                                             'title' => 'Novo',
-                                            'class' => 'btn btn-outline btn-danger col-xs-6',
+                                            'class' => 'btn btn-outline btn-warning col-xs-6',
                                             'role' => 'button'
                                         )
                                     );
@@ -55,7 +55,7 @@
                             <?php
                             if ($admin){
                                 echo anchor(
-                                    'emitter/novo',
+                                    'militar/new',
                                     '<span class="glyphicon glyphicon-plus"></span> Novo',
                                     array(
                                         'title' => 'Novo',
