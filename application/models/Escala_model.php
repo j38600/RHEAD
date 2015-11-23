@@ -30,9 +30,10 @@ class Escala_model extends CI_Model
         }
         
         $this->db->select('escalas.*, COUNT(militares_escalas.escalas_id) as nr_militares');
-        $this->db->from('escalas, militares_escalas');
-
-        $this->db->order_by('nome', 'asc');
+        $this->db->from('escalas');
+        $this->db->join('militares_escalas', 'militares_escalas.escalas_id = escalas.id', 'left');
+        $this->db->group_by('escalas.id');
+        
         $query = $this->db->get();
         
         return ($query->result_array());

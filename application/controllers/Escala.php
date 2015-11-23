@@ -26,7 +26,7 @@ class Escala extends CI_Controller {
     /**@
     Listagem de escalas existentes
     + # de militares por escala
-    <nome da escala(edit) | # militares | Consultar escala(view)>
+    <nome da escala | # militares | Consultar escala(view) | Editar (edit)>
     @return void
     **/
     public function index()
