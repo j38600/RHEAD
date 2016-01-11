@@ -34,14 +34,62 @@ class Escala extends CI_Controller {
         $info = array();
         $escalas = $this->escala_model->ler($info);
         
+        var_dump($escalas);
+        //break;
         //$info['nr_militares_escalas'] = 1;
         //$nr_militares_p_escala = $this->escala_model->ler($info);
         
         
         $info['escalas'] = $escalas;
-        var_dump($escalas);
         $info['admin'] = $this->ion_auth->is_admin();
         $this->template->load('template', 'escala/list', $info);
+    }
+
+    /**@
+    Consulta de uma escala. 
+    Diversas opções da mesma(semana, fim de semana, 24h ou inicio e fim, etc.)
+    + lista dos militares por antiguidades.
+        Clicando podemos ver último serviço, se for trab-estudante, podemos ver período semanal??
+        Podemos colorir, para saber se está disponivel, ou se é trabalhador-estudante.
+        Podemos obter lista dos próximos 2ou 3 períodos de indisponibilidades
+    + botão para ver previsão da escala.
+    @return void
+    **/
+    public function view($id = '')
+    {
+        //$id da escala
+        $info = array();
+        $info['id'] = $id;
+        $escala = $this->escala_model->ler($info);
+        $info['escala'] = $escala[0];
+        //nims dos militares que estao nesta escala
+        if ($info['escala']['nr_militares'] > 0)
+        {
+            $info['nims'] = $this->escala_model->ler_nims($info);
+            unset($info['id']);
+            $nims = $info['nims'];
+            $cont = 0;
+            foreach ($nims as $nim)
+            {
+                $nims[$nim['militares_nim']] =+ $nim['militares_nim'];
+                unset($nims[$cont]);
+                $cont++;
+                
+            }
+            $info['nims'] = $nims;
+            //militares desta escala
+            $info['militares'] = $this->militar_model->ler($info);
+            unset($info['nims']);
+        }
+        else 
+        {
+            $info['militares'] = array();
+            unset($info['id']);
+        }
+        var_dump($info);
+        //break;
+        $info['admin'] = $this->ion_auth->is_admin();
+        $this->template->load('template', 'escala/view', $info);
     }
 
     /**@
@@ -51,23 +99,6 @@ class Escala extends CI_Controller {
     @return void
     **/
     public function edit($id = '')
-    {
-        $info = array();
-        $info['id'] = $id;
-        $emissor = $this->emitter_model->ler($info);
-        $info['emissor'] = $emissor[0];
-        $info['admin'] = $this->ion_auth->is_admin();
-        $this->template->load('template', 'emitter/view', $info);
-    }
-
-    /**@
-    Consulta de uma escala. 
-    Diversas opções da mesma(semana, fim de semana, 24h ou inicio e fim, etc.)
-    + lista de nomeação dos militares, clicando, vê-se os mais folgados, e as razões de não nomeação.
-    + opção de validar nomeação para aquele dia??
-    @return void
-    **/
-    public function view($id = '')
     {
         $info = array();
         $info['id'] = $id;

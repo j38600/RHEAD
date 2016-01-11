@@ -25,8 +25,11 @@ class Militar_model extends CI_Model
     function ler($info)
     {
         if (isset($info['id'])) {
-            $this->db->where('id', $info['id']);
+            $this->db->where('nim', $info['id']);
             $this->db->limit(1);
+        }
+        if (isset($info['nims'])) {
+            $this->db->where_in('nim', $info['nims']);
         }
         
         $this->db->select('militares.*');

@@ -56,10 +56,13 @@ class Militar extends CI_Controller {
     {
         $info = array();
         $info['id'] = $id;
-        $emissor = $this->emitter_model->ler($info);
-        $info['emissor'] = $emissor[0];
+        $militar = $this->militar_model->ler($info);
+        $medalhas = $this->medalha_model->ler_militar($info);
+        $info['militar'] = $militar[0];
+        $info['medalhas'] = $medalhas;
+        var_dump($info);
         $info['admin'] = $this->ion_auth->is_admin();
-        $this->template->load('template', 'emitter/view', $info);
+        $this->template->load('template', 'militar/view', $info);
     }
 
     /**@
@@ -128,27 +131,6 @@ class Militar extends CI_Controller {
         } else {
             $this->template->load('template', 'emitter/new', $info);
         }
-    }
-
-    public function map()
-    {
-        $config['zoom'] = 'auto';
-        $config['cluster'] = TRUE;
-        $this->googlemaps->initialize($config);
-        
-        $info = array();
-        $emissores = $this->emitter_model->ler($info);
-        
-        foreach ($emissores as $emissor){
-            $marker = array();
-            $marker['position'] = $emissor['lat'].', '.$emissor['lon'];
-            $this->googlemaps->add_marker($marker);
-        }
-        
-        $data = array();
-        $data['map'] = $this->googlemaps->create_map();
-        $data['admin'] = $this->ion_auth->is_admin();
-        $this->template->load('template', 'emitter/map', $data);
     }
 }
 
