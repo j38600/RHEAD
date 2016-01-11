@@ -44,10 +44,28 @@ class Medalha_model extends CI_Model
         return ($query->result_array());
     }
     
+    //funcao que le a tabela das medalhas e condecoracoes
+    function ler($info)
+    {
+        
+        if (isset($info['id'])) {
+            $this->db->where('id', $info['id']);
+            $this->db->limit(1);
+        }
+        $this->db->select('medalhas_condecoracoes.*, COUNT(militares_med_cond.med_cond_id) as nr_militares');
+        $this->db->from('medalhas_condecoracoes');
+        $this->db->join('militares_med_cond', 'militares_med_cond.med_cond_id = medalhas_condecoracoes.id', 'left');
+        $this->db->group_by('medalhas_condecoracoes.id');
+        
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
+    
     //funcao para adicionar um militar novo
     function adicionar($info)
     {
-        $this->db->insert('militares', $info);
+        $this->db->insert('medalhas_condecoracoes', $info);
         $novo_id = $this->db->insert_id();
         return $novo_id;
     }

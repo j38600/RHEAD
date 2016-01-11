@@ -134,5 +134,5 @@ class Militar extends CI_Controller {
     }
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/incident.php */
+/* End of file militar.php */
+/* Location: ./application/controllers/militar.php */

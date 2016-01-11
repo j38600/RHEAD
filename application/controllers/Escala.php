@@ -159,28 +159,7 @@ class Escala extends CI_Controller {
             $this->template->load('template', 'emitter/new', $info);
         }
     }
-
-    public function map()
-    {
-        $config['zoom'] = 'auto';
-        $config['cluster'] = TRUE;
-        $this->googlemaps->initialize($config);
-        
-        $info = array();
-        $emissores = $this->emitter_model->ler($info);
-        
-        foreach ($emissores as $emissor){
-            $marker = array();
-            $marker['position'] = $emissor['lat'].', '.$emissor['lon'];
-            $this->googlemaps->add_marker($marker);
-        }
-        
-        $data = array();
-        $data['map'] = $this->googlemaps->create_map();
-        $data['admin'] = $this->ion_auth->is_admin();
-        $this->template->load('template', 'emitter/map', $data);
-    }
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/incident.php */
+/* End of file escala.php */
+/* Location: ./application/controllers/escala.php */

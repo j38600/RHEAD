@@ -76,6 +76,16 @@
                 </li>-->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-tasks"></span> Medalhas
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo base_url()?>medalha">Lista</a></li>
+                        <li><a href="<?php echo base_url()?>medalha">Por receber</a></li>
+                        <li><a href="<?php echo base_url()?>medalha">Por impor</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-tasks"></span> Escalas
                     </a>
                     <ul class="dropdown-menu" role="menu">
