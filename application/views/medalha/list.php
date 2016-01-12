@@ -12,7 +12,7 @@
             <tbody class="text-left">
                 <?php foreach ($medalhas as $medalha):?>
                     <tr>
-                        <td><?php echo $medalha['nome'];?></td>
+                        <td><abbr title='<?php echo $medalha['descricao'];?>'><?php echo $medalha['nome'];?></abbr></td>
                         <td><?php echo $medalha['nr_militares'];?></td>
                         <td>
                             <div class="btn-group btn-block">
@@ -50,7 +50,7 @@
                             if ($admin){
                                 echo anchor(
                                     'medalha/novo/',
-                                    '<span class="glyphicon glyphicon-plus"></span> Novo',
+                                    '<span class="glyphicon glyphicon-plus"></span> Nova',
                                     array(
                                         'title' => 'Nova',
                                         'class' => 'btn btn-outline btn-primary btn-block',

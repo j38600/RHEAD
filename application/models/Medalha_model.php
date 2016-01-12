@@ -44,6 +44,21 @@ class Medalha_model extends CI_Model
         return ($query->result_array());
     }
     
+    //funcao que le os nims que ja teem uma medalha
+    function ler_nims($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('med_cond_id', $info['id']);
+        }
+        
+        $this->db->select('militares_med_cond.*');
+        $this->db->from('militares_med_cond');
+        
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
+    
     //funcao que le a tabela das medalhas e condecoracoes
     function ler($info)
     {

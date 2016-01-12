@@ -25,9 +25,6 @@ class Medalha extends CI_Controller {
 
     /**@
     Listagem de medalhas e condecorações existentes
-    + botoes para atribuir a um militar
-    + botao no fim para adicionar medalha ou condecoração nova.
-    <nome da medalha | # de militares | Atribuir>
     @return void
     **/
     public function index()
@@ -35,15 +32,57 @@ class Medalha extends CI_Controller {
         $info = array();
         $medalhas = $this->medalha_model->ler($info);
         
-        var_dump($medalhas);
-        //break;
-        //$info['nr_militares_escalas'] = 1;
-        //$nr_militares_p_escala = $this->escala_model->ler($info);
-        
-        
         $info['medalhas'] = $medalhas;
         $info['admin'] = $this->ion_auth->is_admin();
         $this->template->load('template', 'medalha/list', $info);
+    }
+    
+    /**@
+    Consulta de uma medalha. 
+    Cartão à esquerda com lista de militares que a têem.
+        Clicando vão para:  o militar, podendo pedir, receber ou atribuir.
+        No fim da lista, pode adicionar um militar.
+            Escolhe de uma dropdown com os nims de todos.
+            É direcionado para o mesmo, podendo pedir, receber ou atribuir a mesma.
+    Cartão à direita com informações da medalha.
+    @return void
+    **/
+    public function view($id = '')
+    {
+        //$id da escala
+        $info = array();
+        $info['id'] = $id;
+        $medalha = $this->medalha_model->ler($info);
+        $info['medalha'] = $medalha[0];
+        
+        //nims dos militares que estao nesta escala
+        if ($info['medalha']['nr_militares'] > 0)
+        {
+            $info['nims'] = $this->medalha_model->ler_nims($info);
+            unset($info['id']);
+            $nims = $info['nims'];
+            
+            $cont = 0;
+            foreach ($nims as $nim)
+            {
+                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                unset($nims[$cont]);
+                $cont++;
+                
+            }
+            $info['nims'] = $nims;
+            //militares desta escala
+            $info['militares'] = $this->militar_model->ler($info);
+            unset($info['nims']);
+        }
+        else 
+        {
+            $info['militares'] = array();
+            unset($info['id']);
+        }
+        
+        $info['admin'] = $this->ion_auth->is_admin();
+        $this->template->load('template', 'medalha/view', $info);
     }
     
     /**@
