@@ -77,12 +77,19 @@ class Medalha_model extends CI_Model
         return ($query->result_array());
     }
     
-    //funcao para adicionar um militar novo
+    //funcao para adicionar uma medalha nova nova
     function adicionar($info)
     {
         $this->db->insert('medalhas_condecoracoes', $info);
         $novo_id = $this->db->insert_id();
         return $novo_id;
+    }
+    
+    //funcao para atribuir uma medalha a um militar
+    function atribuir($info)
+    {
+        $this->db->insert('militares_med_cond', $info);
+        return true;
     }
 }
 

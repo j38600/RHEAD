@@ -23,16 +23,7 @@
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
                                         array(
                                             'title' => 'Consultar',
-                                            'class' => 'btn btn-outline btn-success col-xs-6',
-                                            'role' => 'button'
-                                        )
-                                    );
-                                    echo anchor(
-                                        'medalha/edit/'.$medalha['id'],
-                                        '<span class="glyphicon glyphicon-pencil"></span> Atualizar',
-                                        array(
-                                            'title' => 'Atualizar',
-                                            'class' => 'btn btn-outline btn-warning col-xs-6',
+                                            'class' => 'btn btn-outline btn-success btn-block',
                                             'role' => 'button'
                                         )
                                     );

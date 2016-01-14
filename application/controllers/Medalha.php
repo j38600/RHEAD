@@ -81,6 +81,9 @@ class Medalha extends CI_Controller {
             unset($info['id']);
         }
         
+        //saco todos os militares, para poder atribuir as medalhas.
+        $info['todos_militares'] = $this->militar_model->ler($info);
+        
         $info['admin'] = $this->ion_auth->is_admin();
         $this->template->load('template', 'medalha/view', $info);
     }
@@ -119,6 +122,30 @@ class Medalha extends CI_Controller {
         } else {
             $this->template->load('template', 'medalha/new', $info);
         }
+    }
+    
+    /**@
+    Nova medalha ou condecoração
+    @return void
+    **/
+    public function atribuir()
+    {
+        $info = array();
+        $info = $this->input->post(null, true);
+        
+        $info['id'] = $this->medalha_model->atribuir($info);
+        
+        //$info['user'] = $this->ion_auth->user()->row()->id;
+        //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
+        //$info['agendamento'] = null;
+        //$info['ficheiro'] = $info['id'];
+        //$info['feriado'] = null;
+        //$info['tipo'] = 2;
+        //$this->registo_model->log_escreve($info);
+        
+        
+        redirect('militar/view/'.$info['militar_nim'], 'refresh');
+
     }
     
     #criar o botao para consulta de logs... quem recebeu medalhas no ultimo ano, e assim...

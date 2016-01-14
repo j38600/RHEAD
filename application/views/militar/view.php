@@ -39,12 +39,24 @@
                             <h4 class="list-group-item-heading"><?php echo $medalha['med_cond_nome'];?></h4>
                             <p class="list-group-item-text">
                                 <?php
-                                    echo $medalha['pedida'] ? 'Pedida em '.date('d-m-Y', strtotime($medalha['data_pedida'])) : '';
+                                if ($medalha['pedida']){
+                                    echo 'Pedida em '.date('d-m-Y', strtotime($medalha['data_pedida']));
                                     echo br();
-                                    echo $medalha['recebida'] ? 'Recebida em '.date('d-m-Y', strtotime($medalha['data_recebida'])) : '';
+                                }
+                                if ($medalha['recebida']){
+                                    echo 'Recebida em '.date('d-m-Y', strtotime($medalha['data_recebida']));
                                     echo br();
-                                    echo $medalha['imposta'] ? 'Imposta em '.date('d-m-Y', strtotime($medalha['data_imposta'])) : '';
+                                }
+                                if ($medalha['imposta']){
+                                    echo 'Imposta em '.date('d-m-Y', strtotime($medalha['data_imposta']));
                                     echo br();
+                                }
+                                    //echo $medalha['pedida'] ? 'Pedida em '.date('d-m-Y', strtotime($medalha['data_pedida'])) : '';
+                                    //echo br();
+                                    //echo $medalha['recebida'] ? 'Recebida em '.date('d-m-Y', strtotime($medalha['data_recebida'])) : '';
+                                    //echo br();
+                                    //echo $medalha['imposta'] ? 'Imposta em '.date('d-m-Y', strtotime($medalha['data_imposta'])) : '';
+                                    //echo br();
                                     echo $medalha['informacao'];
                                 ?>
                             </p>
