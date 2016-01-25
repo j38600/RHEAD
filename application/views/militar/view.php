@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <?php
                     echo form_open('medalha/alterarGDH/'.$id, ['class' => 'form-horizontal',
-                                                          'role' => 'form']);?>
+                                                               'role' => 'form']);?>
                 <div class="form-group">
                     <label for="GDH" class="col-xs-3 control-label">Data:</label>
                     <div class="col-xs-8">
@@ -63,9 +63,33 @@
             </div>
             <div class="modal-body">
                 <?php
-                    echo form_open('medalha/atribuir', ['class' => 'form-horizontal',
-                                                        'role' => 'form']);
-                    echo form_hidden('med_cond_id', $medalha['id']);
+                    echo form_open('medalha/alterarGDH/'.$id, ['class' => 'form-horizontal',
+                                                               'role' => 'form']);?>
+                <div class="form-group">
+                    <label for="informacao" class="col-xs-3 control-label">Informações:</label>
+                    <div class="col-xs-8">
+                    <?php echo form_textarea(
+                            ['name' => 'informacao',
+                            'id' => 'informacao',
+                            'type' => 'text',
+                            'value' => set_value('informacao'),
+                            'rows' => '3',
+                            'class' => 'form-control informacao']
+                            ); ?>
+                    </div>
+                </div>
+                <?php
+                    echo form_input(
+                        ['name'  => 'operacao',
+                        'type'  => 'hidden',
+                        'value' => 'informacao',
+                        'class' => 'operacao',]
+                        );
+                    echo form_input(
+                        ['name'  => 'medalha',
+                        'type'  => 'hidden',
+                        'class' => 'medalha',]
+                        );
                 ?>
             </div>
             <div class="modal-footer">
@@ -184,10 +208,13 @@
                                 }
                                 if ($medalha['informacao']){
                                     echo anchor(
-                                        '#',
+                                        '#caixaINFORMACAO',
                                         'Informações',
                                         array(
                                             'class' => 'alert-link',
+                                            'data-toggle' => 'modal',
+                                            'data-medalha-id'=>$medalha['med_cond_id'],
+                                            'data-informacao'=>$medalha['informacao'],
                                         )
                                     );
                                     echo ': '.$medalha['informacao'];
@@ -200,6 +227,8 @@
                                             'class' => 'list-group-item list-group-item-warning',
                                             'role' => 'button',
                                             'data-toggle' => 'modal',
+                                            'data-medalha-id'=>$medalha['med_cond_id'],
+                                            'data-informacao'=>$medalha['informacao'],
                                         )
                                     );
                                 }
@@ -224,6 +253,16 @@
       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
       var modal = $(this)
       modal.find('.operacao').val(operacao) //no DOM com classe operacao dou o valor da variavel operacao
+      modal.find('.informacao').val(informacao) //no DOM com classe operacao dou o valor da variavel operacao
+      modal.find('.medalha').val(medalha_id) //no DOM com classe medalha dou o valor da variavel medalha_id
+    })
+    $('#caixaINFORMACAO').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var medalha_id = button.data('medalha-id') // Extract info from data-* attributes
+      var informacao = button.data('informacao') // Extract info from data-* attributes
+      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      var modal = $(this)
       modal.find('.informacao').val(informacao) //no DOM com classe operacao dou o valor da variavel operacao
       modal.find('.medalha').val(medalha_id) //no DOM com classe medalha dou o valor da variavel medalha_id
     })
