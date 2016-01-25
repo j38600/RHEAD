@@ -54,13 +54,43 @@ class Militar extends CI_Controller {
     **/
     public function view($id = '')
     {
-        $info = array();
-        $info['id'] = $id;
-        $militar = $this->militar_model->ler($info);
-        $medalhas = $this->medalha_model->ler_militar($info);
-        $info['militar'] = $militar[0];
-        $info['medalhas'] = $medalhas;
-        var_dump($info);
+        $this->form_validation->set_rules('data', 'Data', 'trim|required');
+
+        if ($this->form_validation->run() == true) {
+            
+            //guardo o array com o conteudo da pasta, e o indice do ficheiro no array
+            $pasta = $info['pasta'];
+            $ficheiro = $this->input->post('nome_ficheiro');
+
+            unset($info);
+            $info = array();
+            $info = $this->input->post(null, true);
+            unset($info['submit']);
+            //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
+            $info['nome_ficheiro'] = $pasta[$ficheiro];
+            $info['ativo'] = true;
+            $info['id'] = $this->clarim_model->adicionar($info);
+            
+            $info['user'] = $this->ion_auth->user()->row()->id;
+            $info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
+            $info['agendamento'] = null;
+            $info['ficheiro'] = $info['id'];
+            $info['feriado'] = null;
+            $info['tipo'] = 2;
+            $this->registo_model->log_escreve($info);
+
+            redirect('clarim', 'refresh');
+
+        } else {
+
+            $info = array();
+            $info['id'] = $id;
+            $militar = $this->militar_model->ler($info);
+            $medalhas = $this->medalha_model->ler_militar($info);
+            $info['militar'] = $militar[0];
+            $info['medalhas'] = $medalhas;
+            var_dump($info);
+        }
         $info['admin'] = $this->ion_auth->is_admin();
         $this->template->load('template', 'militar/view', $info);
     }
@@ -98,8 +128,8 @@ class Militar extends CI_Controller {
 
     public function novo()
     {
-        $this->form_validation->set_rules('nome_curto', 'Nome Curto', 'trim|max_length[50]|required|xss_clean');
-        $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('nome_curto', 'Nome Curto', 'trim|max_length[50]|required');
+        $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
 
         //$info['pasta'] = scandir(LOCALIZACAO_TOQUES);
     

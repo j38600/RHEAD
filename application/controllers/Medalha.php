@@ -142,12 +142,52 @@ class Medalha extends CI_Controller {
         //$info['feriado'] = null;
         //$info['tipo'] = 2;
         //$this->registo_model->log_escreve($info);
-        
-        
         redirect('militar/view/'.$info['militar_nim'], 'refresh');
-
     }
-    
+
+    /**@
+    Atualizar as datas de pedido, rececao e imposicao das medalhas
+    @return void
+    **/
+    public function alterarGDH($nim = '')
+    {
+        //$this->form_validation->set_rules('GDH', 'Data', 'trim|required');
+
+        //$this->form_validation->run();
+
+        $info = array();
+        $post = $this->input->post(null, true);
+        switch ($post['operacao']) {
+            case 'pedida':
+                $info['data_pedida'] = $post['GDH'];
+                $info['pedida'] = 1;
+                break;
+            case 'recebida':
+                $info['data_recebida'] = $post['GDH'];
+                $info['recebida'] = 1;
+                break;
+            case 'imposta':
+                $info['data_imposta'] = $post['GDH'];
+                $info['imposta'] = 1;
+                break;
+            default:
+                //caso em que só atualiza as informacoes, nao faz nada...
+                break;
+        }
+        $info['informacao'] = $post['informacao'];
+        $info['med_cond_id'] = $post['medalha'];
+        $info['militar_nim'] = $nim;
+        $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
+        
+        //$info['user'] = $this->ion_auth->user()->row()->id;
+        //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
+        //$info['agendamento'] = null;
+        //$info['ficheiro'] = $info['id'];
+        //$info['feriado'] = null;
+        //$info['tipo'] = 2;
+        //$this->registo_model->log_escreve($info);
+        redirect('militar/view/'.$info['militar_nim'], 'refresh');
+    }
     #criar o botao para consulta de logs... quem recebeu medalhas no ultimo ano, e assim...
 }
 

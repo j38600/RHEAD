@@ -91,6 +91,15 @@ class Medalha_model extends CI_Model
         $this->db->insert('militares_med_cond', $info);
         return true;
     }
+
+    //funcao para atualizar as datas de uma medalha a um militar
+    function atualizar_militar_med_cond($info)
+    {
+        $this->db->where('militar_nim', $info['militar_nim']);
+        $this->db->where('med_cond_id', $info['med_cond_id']);
+        $this->db->update('militares_med_cond', $info);
+        return true;
+    }
 }
 
 ?>
