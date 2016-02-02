@@ -17,6 +17,15 @@
                 ?>
             </div>
             <div class="modal-footer">
+                <?php
+                    echo anchor(
+                        'militar/novo/',
+                        'Criar militar',
+                        array(
+                            'class' => 'btn btn-success',
+                        )
+                    );
+                ?>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Guardar informação</button>
                 <?php echo form_close(); ?>

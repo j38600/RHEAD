@@ -50,6 +50,49 @@ class Militar_model extends CI_Model
         return ($query->result_array());
     }
     
+    //funcao que le os postos que existem
+    function ler_postos($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('id', $info['id']);
+        }
+        
+        $this->db->select();
+        $this->db->from('postos');
+        $this->db->order_by('ordem', 'DESC');
+        
+        $query = $this->db->get();
+        return ($query->result_array());
+    }
+
+    //funcao que le os quarteis que existem
+    function ler_quarteis($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('id', $info['id']);
+        }
+        
+        $this->db->select();
+        $this->db->from('quarteis');
+        
+        $query = $this->db->get();
+        return ($query->result_array());
+    }
+
+    //funcao que le os quarteis que existem
+    function ler_companhias($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('id', $info['id']);
+        }
+        
+        $this->db->select();
+        $this->db->from('companhias');
+        
+        $query = $this->db->get();
+        return ($query->result_array());
+    }
+
     //funcao para adicionar um militar novo
     function adicionar($info)
     {

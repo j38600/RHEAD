@@ -86,7 +86,7 @@ class Militar extends CI_Controller {
     Métricas dos militares, por categorias, por anos, companhias, especialidades, etc, etc, etc
     @return void
     **/
-    public function history($id = '')
+    /**public function history($id = '')
     {
         $info = array();
         $info['id'] = $id;
@@ -94,42 +94,71 @@ class Militar extends CI_Controller {
         $info['emissor'] = $emissor[0];
         $info['admin'] = $this->ion_auth->is_admin();
         $this->template->load('template', 'emitter/view', $info);
-    }
+    }**/
 
+    /**@
+    Novo militar
+    @return void
+    **/
     public function novo()
     {
-        $this->form_validation->set_rules('nome_curto', 'Nome Curto', 'trim|max_length[50]|required');
-        $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
+        $this->form_validation->set_rules('nim', 'Número de Indentificação Militar', 'trim|required');
+        $this->form_validation->set_rules('nome', 'Nome Completo', 'trim|required');
+        $this->form_validation->set_rules('apelido', 'Apelido', 'trim|required');
+        $this->form_validation->set_rules('antiguidade', 'Antiguidade', 'trim|required');
+        $this->form_validation->set_rules('nota_curso', 'Nota de Curso', 'trim|required');
+        //$this->form_validation->set_rules('ativo', 'Descrição', 'trim|required');
+        //$this->form_validation->set_rules('posto_id', 'Descrição', 'trim|required');
+        //$this->form_validation->set_rules('quartel_id', 'Descrição', 'trim|required');
+        //$this->form_validation->set_rules('companhia_id', 'Descrição', 'trim|required');
 
-        //$info['pasta'] = scandir(LOCALIZACAO_TOQUES);
-    
+        $info = array();
+        $postos_bd = $this->militar_model->ler_postos($info);
+        $quarteis_bd = $this->militar_model->ler_quarteis($info);
+        $companhias_bd = $this->militar_model->ler_companhias($info);
+
+        $postos=array();
+        $quarteis=array();
+        $companhias=array();
+
+        foreach($postos_bd as $posto){
+            $postos[$posto['id']] = $posto['posto'];
+            }
+        $postos = array('0' => 'Outra opção') + $postos;
+        foreach($quarteis_bd as $quartel){
+            $quarteis[$quartel['id']] = $quartel['quartel'];
+            }
+        $quarteis = array('0' => 'Outra opção') + $quarteis;
+        foreach($companhias_bd as $companhia){
+            $companhias[$companhia['id']] = $companhia['companhia'];
+            }
+        $companhias = array('0' => 'Outra opção') + $companhias;
+        $info['postos'] = $postos;
+        $info['quarteis'] = $quarteis;
+        $info['companhias'] = $companhias;
+
         if ($this->form_validation->run() == true) {
             
-            //guardo o array com o conteudo da pasta, e o indice do ficheiro no array
-            $pasta = $info['pasta'];
-            $ficheiro = $this->input->post('nome_ficheiro');
-
             unset($info);
             $info = array();
             $info = $this->input->post(null, true);
             unset($info['submit']);
             //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
-            $info['nome_ficheiro'] = $pasta[$ficheiro];
             $info['ativo'] = true;
-            $info['id'] = $this->clarim_model->adicionar($info);
+            $info['id'] = $this->militar_model->adicionar($info);
             
-            $info['user'] = $this->ion_auth->user()->row()->id;
-            $info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-            $info['agendamento'] = null;
-            $info['ficheiro'] = $info['id'];
-            $info['feriado'] = null;
-            $info['tipo'] = 2;
-            $this->registo_model->log_escreve($info);
+            //$info['user'] = $this->ion_auth->user()->row()->id;
+            //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
+            //$info['agendamento'] = null;
+            //$info['ficheiro'] = $info['id'];
+            //$info['feriado'] = null;
+            //$info['tipo'] = 2;
+            //$this->registo_model->log_escreve($info);
 
-            redirect('clarim', 'refresh');
+            redirect('militar', 'refresh');
 
         } else {
-            $this->template->load('template', 'emitter/new', $info);
+            $this->template->load('template', 'militar/novo', $info);
         }
     }
 }
