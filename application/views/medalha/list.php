@@ -6,6 +6,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Nr. de militares</th>
+                <th>Stock</th>
                 <th></th>
             </tr>
             </thead>
@@ -14,6 +15,7 @@
                     <tr>
                         <td><abbr title='<?php echo $medalha['descricao'];?>'><?php echo $medalha['nome'];?></abbr></td>
                         <td><?php echo $medalha['nr_militares'];?></td>
+                        <td><?php echo $medalha['stock'];?></td>
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
@@ -34,6 +36,7 @@
                     </tr>
                 <?php endforeach;?>
                 <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>

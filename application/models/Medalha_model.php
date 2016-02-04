@@ -32,11 +32,11 @@ class Medalha_model extends CI_Model
         
         $this->db->select('militares_med_cond.*');
         //as linhas seguintes alteram os nomes aos campos do posto, companhia, quartel dos militares
-        $this->db->select('medalhas_condecoracoes.nome AS med_cond_nome, medalhas_condecoracoes.descricao AS med_cond_descricao');
+        $this->db->select('medalhas_condecoracoes.nome AS med_cond_nome, medalhas_condecoracoes.descricao AS med_cond_descricao, medalhas_condecoracoes.stock AS stock');
         
         $this->db->from('militares_med_cond');
         
-        //as linhas seguintes concatenam o posto, companhia, quartel aos militares
+        //as linhas seguintes concatenam as medalhas e condecorações aos militares
         $this->db->join('medalhas_condecoracoes', 'medalhas_condecoracoes.id = militares_med_cond.med_cond_id');
         //$this->db->order_by('apelido', 'asc');
         $query = $this->db->get();
@@ -98,6 +98,14 @@ class Medalha_model extends CI_Model
         $this->db->where('militar_nim', $info['militar_nim']);
         $this->db->where('med_cond_id', $info['med_cond_id']);
         $this->db->update('militares_med_cond', $info);
+        return true;
+    }
+
+    function atualizar_stock($info)
+    {
+        $this->db->set('stock', $info['stock']);
+        $this->db->where('id', $info['med_cond_id']);
+        $this->db->update('medalhas_condecoracoes');
         return true;
     }
 }

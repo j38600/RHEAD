@@ -39,6 +39,11 @@
                         'class' => 'operacao',]
                         );
                     echo form_input(
+                        ['name'  => 'stock',
+                        'type'  => 'hidden',
+                        'class' => 'stock',]
+                        );
+                    echo form_input(
                         ['name'  => 'medalha',
                         'type'  => 'hidden',
                         'class' => 'medalha',]
@@ -167,6 +172,7 @@
                                             'data-medalha-id'=>$medalha['med_cond_id'],
                                             'data-operacao'=>'pedida',
                                             'data-informacao'=>$medalha['informacao'],
+                                            'data-stock'=>$medalha['stock'],
                                         )
                                     );
                                 }
@@ -185,6 +191,7 @@
                                             'data-medalha-id'=>$medalha['med_cond_id'],
                                             'data-operacao'=>'recebida',
                                             'data-informacao'=>$medalha['informacao'],
+                                            'data-stock'=>$medalha['stock'],
                                         )
                                     );
                                 }
@@ -203,6 +210,7 @@
                                             'data-medalha-id'=>$medalha['med_cond_id'],
                                             'data-operacao'=>'imposta',
                                             'data-informacao'=>$medalha['informacao'],
+                                            'data-stock'=>$medalha['stock'],
                                         )
                                     );
                                 }
@@ -249,11 +257,13 @@
       var medalha_id = button.data('medalha-id') // Extract info from data-* attributes
       var operacao = button.data('operacao') // Extract info from data-* attributes
       var informacao = button.data('informacao') // Extract info from data-* attributes
+      var stock = button.data('stock') // Extract info from data-* attributes
       // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
       var modal = $(this)
       modal.find('.operacao').val(operacao) //no DOM com classe operacao dou o valor da variavel operacao
       modal.find('.informacao').val(informacao) //no DOM com classe operacao dou o valor da variavel operacao
+      modal.find('.stock').val(stock) //no DOM com class stock dou o valor da variavel stock
       modal.find('.medalha').val(medalha_id) //no DOM com classe medalha dou o valor da variavel medalha_id
     })
     $('#caixaINFORMACAO').on('show.bs.modal', function (event) {

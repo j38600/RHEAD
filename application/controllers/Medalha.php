@@ -120,7 +120,7 @@ class Medalha extends CI_Controller {
             redirect('medalha', 'refresh');
 
         } else {
-            $this->template->load('template', 'medalha/new', $info);
+            $this->template->load('template', 'medalha/novo', $info);
         }
     }
     
@@ -165,10 +165,12 @@ class Medalha extends CI_Controller {
             case 'recebida':
                 $info['data_recebida'] = $post['GDH'];
                 $info['recebida'] = 1;
+                $stock = $post['stock']+1;
                 break;
             case 'imposta':
                 $info['data_imposta'] = $post['GDH'];
                 $info['imposta'] = 1;
+                $stock = $post['stock']-1;
                 break;
             default:
                 //caso em que só atualiza as informacoes, nao faz nada...
@@ -177,7 +179,11 @@ class Medalha extends CI_Controller {
         $info['informacao'] = $post['informacao'];
         $info['med_cond_id'] = $post['medalha'];
         $info['militar_nim'] = $nim;
+
         $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
+
+        $info['stock'] = $stock;
+        $info['res'] = $this->medalha_model->atualizar_stock($info);
         
         //$info['user'] = $this->ion_auth->user()->row()->id;
         //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];

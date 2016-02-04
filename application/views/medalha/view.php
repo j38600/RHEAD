@@ -70,8 +70,9 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Descrição</h3>
                 </div>
-                <div class="panel-body">
-                    <?php echo $medalha['descricao'];?>
+                <ul class="list-group">
+                    <li class="list-group-item"><?php echo $medalha['descricao'];?></li>
+                    <li class="list-group-item"><?php echo 'Em stock: '.$medalha['stock'];?></li>
                 </div>
             </div>
         </div>

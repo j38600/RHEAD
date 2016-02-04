@@ -82,9 +82,10 @@
                         <li><a href="<?php echo base_url()?>medalha">Lista</a></li>
                         <li><a href="<?php echo base_url()?>medalha">Por receber</a></li>
                         <li><a href="<?php echo base_url()?>medalha">Por impor</a></li>
+                        <li><a href="<?php echo base_url()?>medalha">Em falta</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <!--<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-tasks"></span> Escalas
                     </a>
@@ -94,6 +95,7 @@
                         <li><a href="<?php echo base_url()?>escala">Prevenção</a></li>
                     </ul>
                 </li>
+            -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-user"></span> Militares
