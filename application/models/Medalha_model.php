@@ -21,6 +21,7 @@ class Medalha_model extends CI_Model
     */
     
     //funcao que le a tabela das medalhas e condecorações
+    //return de listas de militares, com um join da tabela de medalhas.
     function ler_militar($info)
     {
         if (isset($info['id'])) {
@@ -44,13 +45,41 @@ class Medalha_model extends CI_Model
         return ($query->result_array());
     }
     
-    //funcao que le os nims que ja teem uma medalha
+    //funcao que le a tabela das medalhas e condecorações
+    //return de listas de militares, com um join da tabela de militares
+    function ler_militar_medalha($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where('militar_nim', $info['id']);
+        }
+        if (isset($info['por_receber'])) {
+            $this->db->where_in('recebida', 0);
+        }
+        if (isset($info['por_impor'])) {
+            $this->db->where_in('imposta', 0);
+        }
+        $this->db->select('militares_med_cond.*');
+        //as linhas seguintes alteram os nomes aos campos do posto, companhia, quartel dos militares
+        $this->db->select('militares.nome AS militar_nome, militares.apelido AS militar_apelido, postos.abreviatura AS posto_abreviatura');
+        
+        $this->db->from('militares_med_cond');
+        
+        //as linhas seguintes concatenam as medalhas e condecorações aos militares
+        $this->db->join('militares', 'militares.nim = militares_med_cond.militar_nim');
+        $this->db->join('postos', 'postos.id = militares.posto_id');
+        //$this->db->order_by('apelido', 'asc');
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
+    
+    //funcao que le os nims que ja teem uma medalha.
+    //igual a ler_militar, mas sem o join à tabela das medalhas.
     function ler_nims($info)
     {
         if (isset($info['id'])) {
             $this->db->where_in('med_cond_id', $info['id']);
         }
-        
         $this->db->select('militares_med_cond.*');
         $this->db->from('militares_med_cond');
         

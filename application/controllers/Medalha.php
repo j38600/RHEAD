@@ -34,7 +34,7 @@ class Medalha extends CI_Controller {
         
         $info['medalhas'] = $medalhas;
         $info['admin'] = $this->ion_auth->is_admin();
-        $this->template->load('template', 'medalha/list', $info);
+        $this->template->load('template', 'medalha/index', $info);
     }
     
     /**@
@@ -55,7 +55,7 @@ class Medalha extends CI_Controller {
         $medalha = $this->medalha_model->ler($info);
         $info['medalha'] = $medalha[0];
         
-        //nims dos militares que estao nesta escala
+        //nims dos militares que teem esta medalha
         if ($info['medalha']['nr_militares'] > 0)
         {
             $info['nims'] = $this->medalha_model->ler_nims($info);
@@ -63,6 +63,7 @@ class Medalha extends CI_Controller {
             $nims = $info['nims'];
             
             $cont = 0;
+            //var_dump($nims);
             foreach ($nims as $nim)
             {
                 $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
@@ -71,8 +72,11 @@ class Medalha extends CI_Controller {
                 
             }
             $info['nims'] = $nims;
-            //militares desta escala
+            //var_dump($nims);
+            
+            //militares desta medalha
             $info['militares'] = $this->militar_model->ler($info);
+            //var_dump($info['militares']);
             unset($info['nims']);
         }
         else 
@@ -86,6 +90,46 @@ class Medalha extends CI_Controller {
         
         $info['admin'] = $this->ion_auth->is_admin();
         $this->template->load('template', 'medalha/view', $info);
+    }
+
+    /**@
+    Consulta de medalhas não recebidas ou não impostas
+    Cartão à esquerda com lista dos militares que já foi pedida a medalha, mas que ainda não recebemos.
+        Pode haver militares que já foram impostas, mas ainda não foram recebidas.
+    Cartão à direita com lista dos militares que ainda não foram impostas.
+        Podem haver militares que ainda não foram recebidas, ou que já foram recebidas.
+    Clicando no militar vão para o militar, podendo pedir, receber ou atribuir.
+    Clicando na medalha vão para listagem de militares que têm a medalha.
+    
+    Posso acrescentar um campo checkbox, para no final poder exportar uma lista do pessoal que quero impor medalhas??
+    No final tem a possibilidade de exportar as listas, csv/pdf?? 
+
+    Fazer highlight dos militares que já foi imposta, na lista das por receber??
+    Fazer highlight dos militares que já foi recebida, na lista a impor??
+    @return void
+    **/
+    public function lista()
+    {
+        $info=array();
+        
+        $info['por_receber'] = 1;
+        $militares = $this->medalha_model->ler_militar_medalha($info);
+        $info['nims_por_receber'] = $militares;
+        unset($info['por_receber']);
+        
+        $info['por_impor'] = 1;
+        $militares = $this->medalha_model->ler_militar_medalha($info);
+        $info['nims_por_impor'] = $militares;
+        unset($info['por_impor']);
+        
+        $medalhas = $this->medalha_model->ler($info);
+        $info['medalhas'] = $medalhas;
+        
+        //var_dump($info);
+        //break;
+
+        $info['admin'] = $this->ion_auth->is_admin();
+        $this->template->load('template', 'medalha/lista', $info);
     }
     
     /**@

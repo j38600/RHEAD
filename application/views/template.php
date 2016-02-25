@@ -38,7 +38,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href='<?php echo base_url()?>' title="Informações do Pessoal para o Apoio à Decisão">I.P.A.D.</a>
+                <a class="navbar-brand" href='<?php echo base_url()?>' title="Recursos Humanos e Apoio à Decisão">R.H.E.A.D.</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -79,10 +79,8 @@
                         <span class="fa fa-trophy"></span> Medalhas
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url()?>medalha">Lista</a></li>
-                        <li><a href="<?php echo base_url()?>medalha">Por receber</a></li>
-                        <li><a href="<?php echo base_url()?>medalha">Por impor</a></li>
-                        <li><a href="<?php echo base_url()?>medalha">Em falta</a></li>
+                        <li><a href="<?php echo base_url()?>medalha">Despachadas pela RJD</a></li>
+                        <li><a href="<?php echo base_url()?>medalha\lista">Por impor / receber</a></li>
                     </ul>
                 </li>
                 <!--<li class="dropdown">
