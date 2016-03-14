@@ -50,8 +50,16 @@
                             <?php
                             foreach ($nims_por_receber as $militar):
                                 if ($militar['med_cond_id'] == $medalha['id']){
-                                    echo $militar['militar_nim'].' '.$militar['posto_abreviatura'].' '.$militar['militar_apelido'];
-                                    echo br();
+                                    echo anchor(
+                                        'militar/view/'.$militar['militar_nim'],
+                                        $militar['militar_nim'].' '.$militar['posto_abreviatura'].' '.$militar['militar_apelido'],
+                                        array(
+                                            'class' => 'list-group-item',
+                                        )
+                                    );
+                                    //$militar['impor_proxima_cerimonia']
+                                    //echo $militar['militar_nim'].' '.$militar['posto_abreviatura'].' '.$militar['militar_apelido'];
+                                    //echo br();
                                 }
                             endforeach;
                     endforeach;
@@ -72,8 +80,15 @@
                             <?php
                             foreach ($nims_por_impor as $militar):
                                 if ($militar['med_cond_id'] == $medalha['id']){
-                                    echo $militar['militar_nim'].' '.$militar['posto_abreviatura'].' '.$militar['militar_apelido'];
-                                    echo br();
+                                    echo anchor(
+                                        'militar/view/'.$militar['militar_nim'],
+                                        $militar['militar_nim'].' '.$militar['posto_abreviatura'].' '.$militar['militar_apelido'],
+                                        array(
+                                            'class' => 'list-group-item',
+                                        )
+                                    );
+                                    //echo $militar['militar_nim'].' '.$militar['posto_abreviatura'].' '.$militar['militar_apelido'];
+                                    //echo br();
                                 }
                             endforeach;
                     endforeach;
