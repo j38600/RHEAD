@@ -26,7 +26,7 @@
                                         'militar/view/'.$militar['nim'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
                                         array(
-                                            'title' => 'Novo',
+                                            'title' => 'Consultar',
                                             'class' => 'btn btn-outline btn-success col-xs-6',
                                             'role' => 'button'
                                         )
@@ -35,7 +35,7 @@
                                         'militar/edit/'.$militar['nim'],
                                         '<span class="glyphicon glyphicon-pencil"></span> Atualizar',
                                         array(
-                                            'title' => 'Novo',
+                                            'title' => 'Atualizar',
                                             'class' => 'btn btn-outline btn-warning col-xs-6',
                                             'role' => 'button'
                                         )

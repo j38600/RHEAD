@@ -6,13 +6,13 @@
 <table class="table table-striped table-condensed table-hover">
     <thead>
     <tr>
-		<th><?php echo lang('index_fname_th');?></th>
-		<th><?php echo lang('index_lname_th');?></th>
-		<th><?php echo lang('index_email_th');?></th>
-		<th><?php echo lang('index_groups_th');?></th>
-		<th><?php echo lang('index_status_th');?></th>
-		<th><?php echo lang('index_action_th');?></th>
-	</tr>
+        <th><?php echo lang('index_fname_th');?></th>
+        <th><?php echo lang('index_lname_th');?></th>
+        <th><?php echo lang('index_email_th');?></th>
+        <th><?php echo lang('index_groups_th');?></th>
+        <th><?php echo lang('index_status_th');?></th>
+        <th><?php echo lang('index_action_th');?></th>
+    </tr>
     </thead>
     <tbody>
         <?php foreach ($users as $user):?>

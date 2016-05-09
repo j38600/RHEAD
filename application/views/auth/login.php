@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>CTGE</title>
+        <title>RHEAD</title>
         <?php
             echo link_tag('css/bootstrap.min.css');
             echo link_tag('css/metisMenu.min.css');

@@ -43,16 +43,18 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <!--<li class="dropdown">
+            <!--
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-briefcase"></span> Impedimentos
+                        <span class="glyphicon glyphicon-briefcase"></span> SOIS
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url()?>incident">Listagem</a></li>
-                        <li><a href="<?php echo base_url()?>incident/map">Cenas</a></li>
-                        <li><a href="<?php echo base_url()?>incident">mais cenas</a></li>
+                        <li><a href="<?php echo base_url()?>sois/activities">Atividades</a></li>
+                        <li><a href="<?php echo base_url()?>sois/credentials">Credenciação</a></li>
+                        <li><a href="<?php echo base_url()?>sois/vehicles">Viaturas</a></li>
                     </ul>
-                </li>-->
+                </li>
+            -->
                 <!--<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-globe"></span> Férias
@@ -80,7 +82,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="<?php echo base_url()?>medalha">Despachadas pela RJD</a></li>
-                        <li><a href="<?php echo base_url()?>medalha\lista">Por impor / receber</a></li>
+                        <li><a href="<?php echo base_url()?>medalha/lista">Por impor / receber</a></li>
                     </ul>
                 </li>
                 <!--<li class="dropdown">
@@ -112,7 +114,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <?php if ($admin) { ?>
                             <li><a href="<?php echo base_url()?>auth">Utilizadores</a></li>
-                            <li><a href="<?php echo base_url()?>registo/automaticos">Histórico</a></li>
+                            <!--<li><a href="<?php echo base_url()?>registo/automaticos">Histórico</a></li>-->
                             <li class="divider"></li>
                         <?php }?>
                         <li><a href='<?php echo base_url()?>auth/logout'>Logout</a></li>

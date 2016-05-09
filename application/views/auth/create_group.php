@@ -1,20 +1,37 @@
 <h1><?php echo lang('create_group_heading');?></h1>
 <p><?php echo lang('create_group_subheading');?></p>
 
-<div id="infoMessage"><?php echo $message;?></div>
+<?php
+if(validation_errors()){
+?>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <?php echo validation_errors() ?>
+    </div>
+<?php
+}
+?>
+<?php echo form_open("auth/create_group", ['class' => 'form-horizontal',
+                                        'role' => 'form']); ?>
+<div class="form-group">
+    <label for="group_name" class="col-xs-offset-3 col-xs-2 control-label"><?php echo lang('create_group_name_label');?></label>
+    <div class="col-xs-4">
+    <?php echo form_input($group_name); ?>
+    </div>
+</div>
 
-<?php echo form_open("auth/create_group");?>
+<div class="form-group">
+    <label for="description" class="col-xs-offset-3 col-xs-2 control-label"><?php echo lang('create_group_desc_label');?></label>
+    <div class="col-xs-4">
+    <?php echo form_input($description); ?>
+    </div>
+</div>
 
-      <p>
-            <?php echo lang('create_group_name_label', 'group_name');?> <br />
-            <?php echo form_input($group_name);?>
-      </p>
-
-      <p>
-            <?php echo lang('create_group_desc_label', 'description');?> <br />
-            <?php echo form_input($description);?>
-      </p>
-
-      <p><?php echo form_submit('submit', lang('create_group_submit_btn'));?></p>
-
-<?php echo form_close();?>
+<div class="form-group">
+    <div class="col-xs-offset-2">
+        <button class="col-xs-offset-4 btn btn-primary" type="submit" name="submit"><?php echo lang('create_group_submit_btn');?></button>
+    </div>
+</div>
+<?php
+echo form_close();
+?>
