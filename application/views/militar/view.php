@@ -16,7 +16,7 @@
                                             'id' => 'GDH',
                                             'placeholder' => 'AAAA-MM-DD',
                                             'type' => 'date',
-                                            'class' => 'form-control']); ?>
+                                            'class' => 'form-control GDH']); ?>
                     </div>
                 </div>
                 <div class="form-group">
@@ -28,25 +28,24 @@
                             'type' => 'text',
                             'value' => set_value('informacao'),
                             'rows' => '3',
-                            'class' => 'form-control informacao']
-                            ); ?>
+                            'class' => 'form-control informacao']); ?>
                     </div>
                 </div>
                 <?php
                     echo form_input(
                         ['name'  => 'operacao',
                         'type'  => 'hidden',
-                        'class' => 'operacao',]
+                        'class' => 'operacao']
                         );
                     echo form_input(
                         ['name'  => 'stock',
                         'type'  => 'hidden',
-                        'class' => 'stock',]
+                        'class' => 'stock']
                         );
                     echo form_input(
                         ['name'  => 'medalha',
                         'type'  => 'hidden',
-                        'class' => 'medalha',]
+                        'class' => 'medalha']
                         );
                 ?>
             </div>
@@ -88,12 +87,12 @@
                         ['name'  => 'operacao',
                         'type'  => 'hidden',
                         'value' => 'informacao',
-                        'class' => 'operacao',]
+                        'class' => 'operacao']
                         );
                     echo form_input(
                         ['name'  => 'medalha',
                         'type'  => 'hidden',
-                        'class' => 'medalha',]
+                        'class' => 'medalha']
                         );
                 ?>
             </div>
@@ -101,6 +100,51 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Guardar informação</button>
                 <?php echo form_close(); ?>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="caixaPROXIMACERIMONIA" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirma nomeação para próxima cerimónia?</h4>
+            </div>
+            <div class="modal-body">
+                <?php
+                    echo form_open('medalha/alterarGDH/'.$id, ['class' => 'form-horizontal',
+                                                               'role' => 'form']);
+                    echo form_input(
+                        ['name'  => 'operacao',
+                        'type'  => 'hidden',
+                        'value' => 'proximacerimonia',
+                        'class' => 'proximacerimonia']
+                        );
+                    echo form_input(
+                        ['name'  => 'informacao',
+                        'type'  => 'hidden',
+                        'value' => set_value('informacao'),
+                        'class' => 'informacao']
+                        );
+                    echo form_input(
+                        ['name'  => 'proxima_cerimonia',
+                        'type'  => 'hidden',
+                        'value' => set_value('proxima_cerimonia'),
+                        'class' => 'proxima_cerimonia']
+                        );
+                    echo form_input(
+                        ['name'  => 'medalha',
+                        'type'  => 'hidden',
+                        'class' => 'medalha']
+                        );
+                ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar informação</button>
+                <?php echo form_close();?>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -222,7 +266,7 @@
                                             'class' => 'alert-link',
                                             'data-toggle' => 'modal',
                                             'data-medalha-id'=>$medalha['med_cond_id'],
-                                            'data-informacao'=>$medalha['informacao'],
+                                            'data-informacao'=>$medalha['informacao']
                                         )
                                     );
                                     echo ': '.$medalha['informacao'];
@@ -232,11 +276,26 @@
                                         '#caixaINFORMACAO',
                                         'Inserir informações',
                                         array(
-                                            'class' => 'list-group-item list-group-item-warning',
+                                            'class' => 'alert-link',
                                             'role' => 'button',
                                             'data-toggle' => 'modal',
                                             'data-medalha-id'=>$medalha['med_cond_id'],
+                                            'data-informacao'=>$medalha['informacao']
+                                        )
+                                    );
+                                }
+                                echo br();
+                                if (!$medalha['imposta']){
+                                    $coiso = $medalha['impor_proxima_cerimonia'] ? 'Desnomear' : 'Nomear';
+                                    echo anchor(
+                                        '#caixaPROXIMACERIMONIA',
+                                        $coiso.' para a próxima cerimónia',
+                                        array(
+                                            'class' => 'alert-link',
+                                            'data-toggle' => 'modal',
+                                            'data-medalha-id'=>$medalha['med_cond_id'],
                                             'data-informacao'=>$medalha['informacao'],
+                                            'data-proxima-cerimonia'=>$medalha['impor_proxima_cerimonia']
                                         )
                                     );
                                 }
@@ -261,10 +320,10 @@
       // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
       var modal = $(this)
-      modal.find('.operacao').val(operacao) //no DOM com classe operacao dou o valor da variavel operacao
-      modal.find('.informacao').val(informacao) //no DOM com classe operacao dou o valor da variavel operacao
+      modal.find('.operacao').val(operacao) //no DOM com class operacao dou o valor da variavel operacao
+      modal.find('.informacao').val(informacao) //no DOM com class informacao dou o valor da variavel informacao
       modal.find('.stock').val(stock) //no DOM com class stock dou o valor da variavel stock
-      modal.find('.medalha').val(medalha_id) //no DOM com classe medalha dou o valor da variavel medalha_id
+      modal.find('.medalha').val(medalha_id) //no DOM com class medalha dou o valor da variavel medalha_id
     })
     $('#caixaINFORMACAO').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
@@ -273,7 +332,19 @@
       // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
       var modal = $(this)
-      modal.find('.informacao').val(informacao) //no DOM com classe operacao dou o valor da variavel operacao
-      modal.find('.medalha').val(medalha_id) //no DOM com classe medalha dou o valor da variavel medalha_id
+      modal.find('.informacao').val(informacao) //no DOM com class informacao o valor da variavel informacao
+      modal.find('.medalha').val(medalha_id) //no DOM com class medalha dou o valor da variavel medalha_id
+    })
+    $('#caixaPROXIMACERIMONIA').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var medalha_id = button.data('medalha-id') // Extract info from data-* attributes
+      var proxima_cerimonia = button.data('proxima-cerimonia') // Extract info from data-* attributes
+      var informacao = button.data('informacao') // Extract info from data-* attributes
+      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      var modal = $(this)
+      modal.find('.medalha').val(medalha_id) //no DOM com class medalha dou o valor da variavel medalha_id
+      modal.find('.informacao').val(informacao) //no DOM com class informacao dou o valor da variavel informacao
+      modal.find('.proxima_cerimonia').val(proxima_cerimonia) //no DOM com proximacerimonia dou o valor da variavel proxima_cerimonia
     })
 </script>

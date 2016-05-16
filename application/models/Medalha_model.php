@@ -58,6 +58,9 @@ class Medalha_model extends CI_Model
         if (isset($info['por_impor'])) {
             $this->db->where_in('imposta', 0);
         }
+        if (isset($info['proxima_cerimonia'])) {
+            $this->db->where_in('impor_proxima_cerimonia', 1);
+        }
         $this->db->select('militares_med_cond.*');
         //as linhas seguintes alteram os nomes aos campos do posto, companhia, quartel dos militares
         $this->db->select('militares.nome AS militar_nome, militares.apelido AS militar_apelido, postos.abreviatura AS posto_abreviatura');

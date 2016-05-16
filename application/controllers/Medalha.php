@@ -122,6 +122,11 @@ class Medalha extends CI_Controller {
         $info['nims_por_impor'] = $militares;
         unset($info['por_impor']);
         
+        $info['proxima_cerimonia'] = 1;
+        $militares = $this->medalha_model->ler_militar_medalha($info);
+        $info['nims_proxima_cerimonia'] = $militares;
+        unset($info['proxima_cerimonia']);
+        
         $medalhas = $this->medalha_model->ler($info);
         $info['medalhas'] = $medalhas;
         
@@ -201,10 +206,20 @@ class Medalha extends CI_Controller {
 
         $info = array();
         $post = $this->input->post(null, true);
+        
+        $info['informacao'] = $post['informacao'];
+        $info['med_cond_id'] = $post['medalha'];
+        $info['militar_nim'] = $nim;
+        
         switch ($post['operacao']) {
+            case 'proximacerimonia':
+                $info['impor_proxima_cerimonia'] = $post['proxima_cerimonia'] ? '0' : '1';
+                $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
+                break;
             case 'pedida':
                 $info['data_pedida'] = $post['GDH'];
                 $info['pedida'] = 1;
+                $stock = $post['stock'];
                 break;
             case 'recebida':
                 $info['data_recebida'] = $post['GDH'];
@@ -214,21 +229,21 @@ class Medalha extends CI_Controller {
             case 'imposta':
                 $info['data_imposta'] = $post['GDH'];
                 $info['imposta'] = 1;
+                $info['impor_proxima_cerimonia'] = 0;
                 $stock = $post['stock']-1;
                 break;
-            default:
-                //caso em que só atualiza as informacoes, nao faz nada...
+            case 'informacao':
+                $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
                 break;
+            default:
+                //Á partida entra nas outras. Podia por aqui uma mensagem de erro, talvez...
+                break;
+        }//se o GDH vier vazio, salta fora sem fazer nada. 
+        if (!empty($post['GDH'])) { 
+            $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
+            $info['stock'] = $stock;
+            $info['res'] = $this->medalha_model->atualizar_stock($info);
         }
-        $info['informacao'] = $post['informacao'];
-        $info['med_cond_id'] = $post['medalha'];
-        $info['militar_nim'] = $nim;
-
-        $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
-
-        $info['stock'] = $stock;
-        $info['res'] = $this->medalha_model->atualizar_stock($info);
-        
         //$info['user'] = $this->ion_auth->user()->row()->id;
         //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
         //$info['agendamento'] = null;
