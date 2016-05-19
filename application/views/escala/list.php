@@ -17,7 +17,7 @@
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
-                                if ($admin){
+                                if ($permissoes['admin']){
                                     echo anchor(
                                         'escala/view/'.$escala['id'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
@@ -47,7 +47,7 @@
                         <td></td>
                         <td>
                             <?php
-                            if ($admin){
+                            if ($permissoes['admin']){
                                 echo anchor(
                                     'escala/new',
                                     '<span class="glyphicon glyphicon-plus"></span> Novo',

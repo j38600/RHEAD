@@ -112,7 +112,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $user?> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <?php if ($admin) { ?>
+                        <?php if ($permissoes['admin']) { ?>
                             <li><a href="<?php echo base_url()?>auth">Utilizadores</a></li>
                             <!--<li><a href="<?php echo base_url()?>registo/automaticos">Histórico</a></li>-->
                             <li class="divider"></li>

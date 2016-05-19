@@ -19,7 +19,7 @@
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
-                                if ($admin){
+                                if ($permissoes['admin']){
                                     echo anchor(
                                         'medalha/view/'.$medalha['id'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
@@ -41,7 +41,7 @@
                         <td></td>
                         <td>
                             <?php
-                            if ($admin){
+                            if ($permissoes['admin']){
                                 echo anchor(
                                     'medalha/novo/',
                                     '<span class="glyphicon glyphicon-plus"></span> Nova',

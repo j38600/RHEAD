@@ -21,7 +21,7 @@
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
-                                if ($admin){
+                                if ($permissoes['admin']){
                                     echo anchor(
                                         'militar/view/'.$militar['nim'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
@@ -53,9 +53,9 @@
                         <td></td>
                         <td>
                             <?php
-                            if ($admin){
+                            if ($permissoes['admin']){
                                 echo anchor(
-                                    'militar/new',
+                                    'militar/novo',
                                     '<span class="glyphicon glyphicon-plus"></span> Novo',
                                     array(
                                         'title' => 'Novo',

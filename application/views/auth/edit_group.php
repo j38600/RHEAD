@@ -28,7 +28,7 @@ echo form_open(uri_string(), ['class' => 'form-horizontal',
     </div>
 
     <div class="form-group">
-    <div class="col-xs-offset-2">
+    <div class="col-xs-offset-5 col-xs-4">
         <button class="btn btn-primary col-xs-offset-3" type="submit" name="submit"><?php echo lang('edit_group_submit_btn');?></button>
     </div>
 </div>

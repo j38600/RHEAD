@@ -19,6 +19,9 @@ class Escala extends CI_Controller {
             $this->template->set(
                 'admin', ($this->ion_auth->is_admin())? true: false
             );
+            $this->user_group['sois'] = $this->ion_auth->in_group('SOIS');
+            $this->user_group['secpess'] = $this->ion_auth->in_group('SecPess');
+            $this->user_group['admin'] = $this->ion_auth->is_admin();
         }
         $this->output->enable_profiler(TRUE);
     }
@@ -41,7 +44,7 @@ class Escala extends CI_Controller {
         
         
         $info['escalas'] = $escalas;
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'escala/list', $info);
     }
 
@@ -88,7 +91,7 @@ class Escala extends CI_Controller {
         }
         var_dump($info);
         //break;
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'escala/view', $info);
     }
 
@@ -104,7 +107,7 @@ class Escala extends CI_Controller {
         $info['id'] = $id;
         $emissor = $this->emitter_model->ler($info);
         $info['emissor'] = $emissor[0];
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'emitter/view', $info);
     }
 
@@ -119,7 +122,7 @@ class Escala extends CI_Controller {
         $info['id'] = $id;
         $emissor = $this->emitter_model->ler($info);
         $info['emissor'] = $emissor[0];
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'emitter/view', $info);
     }
 

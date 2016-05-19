@@ -13,7 +13,6 @@ if(validation_errors()){
 ?>
 <?php echo form_open("auth/create_user", ['class' => 'form-horizontal',
                                         'role' => 'form']); ?>
-
 <div class="form-group">
     <label for="first_name" class="col-xs-offset-3 col-xs-2 control-label"><?php echo lang('create_user_fname_label');?></label>
     <div class="col-xs-4">
@@ -77,7 +76,7 @@ if(validation_errors()){
 </div>
 
 <div class="form-group">
-    <div class="col-xs-offset-2">
+    <div class="col-xs-offset-5 col-xs-4">
         <button class="col-xs-offset-4 btn btn-primary" type="submit" name="submit"><?php echo lang('create_user_submit_btn');?></button>
     </div>
 </div>

@@ -93,7 +93,7 @@ echo form_open(uri_string(), ['class' => 'form-horizontal',
         echo form_hidden($csrf); ?>
     
     <div class="form-group">
-    <div class="col-xs-offset-2">
+    <div class="col-xs-offset-5 col-xs-4">
         <button class="btn btn-primary" type="submit" name="submit"><?php echo lang('edit_user_submit_btn');?></button>
     </div>
 </div>

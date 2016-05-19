@@ -19,8 +19,11 @@ class Militar extends CI_Controller {
             $this->template->set(
                 'admin', ($this->ion_auth->is_admin())? true: false
             );
+            $this->user_group['sois'] = $this->ion_auth->in_group('SOIS');
+            $this->user_group['secpess'] = $this->ion_auth->in_group('SecPess');
+            $this->user_group['admin'] = $this->ion_auth->is_admin();
         }
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
     }
 
     /**@
@@ -35,9 +38,8 @@ class Militar extends CI_Controller {
     public function index()
     {
         $info = array();
+        $info['permissoes'] = $this->user_group;
         $info['militares'] = $this->militar_model->ler($info);
-        //var_dump($info['militares']);
-        $info['admin'] = $this->ion_auth->is_admin();
         $this->template->load('template', 'militar/list', $info);
     }
 
@@ -61,7 +63,7 @@ class Militar extends CI_Controller {
         $info['militar'] = $militar[0];
         $info['medalhas'] = $medalhas;
         
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'militar/view', $info);
     }
 
@@ -77,7 +79,7 @@ class Militar extends CI_Controller {
         $info['id'] = $id;
         $emissor = $this->emitter_model->ler($info);
         $info['emissor'] = $emissor[0];
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'emitter/view', $info);
     }
 

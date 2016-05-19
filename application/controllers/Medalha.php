@@ -19,6 +19,9 @@ class Medalha extends CI_Controller {
             $this->template->set(
                 'admin', ($this->ion_auth->is_admin())? true: false
             );
+            $this->user_group['sois'] = $this->ion_auth->in_group('SOIS');
+            $this->user_group['secpess'] = $this->ion_auth->in_group('SecPess');
+            $this->user_group['admin'] = $this->ion_auth->is_admin();
         }
         $this->output->enable_profiler(TRUE);
     }
@@ -33,7 +36,7 @@ class Medalha extends CI_Controller {
         $medalhas = $this->medalha_model->ler($info);
         
         $info['medalhas'] = $medalhas;
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'medalha/index', $info);
     }
     
@@ -88,7 +91,7 @@ class Medalha extends CI_Controller {
         //saco todos os militares, para poder atribuir as medalhas.
         $info['todos_militares'] = $this->militar_model->ler($info);
         
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'medalha/view', $info);
     }
 
@@ -133,7 +136,7 @@ class Medalha extends CI_Controller {
         //var_dump($info);
         //break;
 
-        $info['admin'] = $this->ion_auth->is_admin();
+        $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'medalha/lista', $info);
     }
     
