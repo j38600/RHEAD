@@ -102,9 +102,12 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="<?php echo base_url()?>militar">Lista</a></li>
-                        <li><a href="<?php echo base_url()?>militar/novo">Novo</a></li>
-                        <li><a href="<?php echo base_url()?>militar">Lista TODOS</a></li>
-                        <!--  nesta terceira lista, liso todos os militares
+                        <?php if ($permissoes['secpess']) { ?>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo base_url()?>militar/novo">Novo</a></li>
+                        <?php }?>
+                        <!--  <li><a href="<?php echo base_url()?>militar">Lista TODOS</a></li>
+                        nesta terceira lista, liso todos os militares
                         usar no caso dos convidados para cerimonias,
                         ou no caso dos ex-militares do ultramar, que medalhas para receber-->
                     </ul>

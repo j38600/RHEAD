@@ -52,15 +52,17 @@
                             )
                         );
                     endforeach;
-                    echo anchor(
-                        '#caixaNIMs',
-                        'Atribuir a novo militar',
-                        array(
-                            'class' => 'list-group-item list-group-item-success',
-                            'role' => 'button',
-                            'data-toggle' => 'modal',
-                        )
-                    );
+                    if ($permissoes['secpess']) {
+                        echo anchor(
+                            '#caixaNIMs',
+                            'Atribuir a novo militar',
+                            array(
+                                'class' => 'list-group-item list-group-item-success',
+                                'role' => 'button',
+                                'data-toggle' => 'modal',
+                            )
+                        );
+                    }
                     ?>
                 </ul>
             </div>

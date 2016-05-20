@@ -205,7 +205,7 @@
                                     echo 'Pedida em '.date('d-m-Y', strtotime($medalha['data_pedida']));
                                     echo br();
                                 }
-                                else{
+                                elseif ($permissoes['secpess']) {
                                     echo anchor(
                                         '#caixaGDH',
                                         'Inserir data pedida',
@@ -224,7 +224,7 @@
                                     echo 'Recebida em '.date('d-m-Y', strtotime($medalha['data_recebida']));
                                     echo br();
                                 }
-                                else{
+                                elseif ($permissoes['secpess']) {
                                     echo anchor(
                                         '#caixaGDH',
                                         'Inserir data recebida',
@@ -243,7 +243,7 @@
                                     echo 'Imposta em '.date('d-m-Y', strtotime($medalha['data_imposta']));
                                     echo br();
                                 }
-                                else{
+                                elseif ($permissoes['secpess']) {
                                     echo anchor(
                                         '#caixaGDH',
                                         'Inserir data imposta',
@@ -258,10 +258,11 @@
                                         )
                                     );
                                 }
-                                if ($medalha['informacao']){
+                                $anchor = ($medalha['informacao']) ? 'Informações : ' : 'Inserir informações';
+                                if ($permissoes['secpess']){
                                     echo anchor(
                                         '#caixaINFORMACAO',
-                                        'Informações',
+                                        $anchor,
                                         array(
                                             'class' => 'alert-link',
                                             'data-toggle' => 'modal',
@@ -269,23 +270,13 @@
                                             'data-informacao'=>$medalha['informacao']
                                         )
                                     );
-                                    echo ': '.$medalha['informacao'];
                                 }
-                                else{
-                                    echo anchor(
-                                        '#caixaINFORMACAO',
-                                        'Inserir informações',
-                                        array(
-                                            'class' => 'alert-link',
-                                            'role' => 'button',
-                                            'data-toggle' => 'modal',
-                                            'data-medalha-id'=>$medalha['med_cond_id'],
-                                            'data-informacao'=>$medalha['informacao']
-                                        )
-                                    );
+                                elseif ($medalha['informacao']) {
+                                    echo 'Informações : ';
                                 }
+                                echo $medalha['informacao'];
                                 echo br();
-                                if (!$medalha['imposta']){
+                                if (!$medalha['imposta'] && $permissoes['secpess']){
                                     $coiso = $medalha['impor_proxima_cerimonia'] ? 'Desnomear' : 'Nomear';
                                     echo anchor(
                                         '#caixaPROXIMACERIMONIA',

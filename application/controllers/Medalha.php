@@ -23,7 +23,7 @@ class Medalha extends CI_Controller {
             $this->user_group['secpess'] = $this->ion_auth->in_group('SecPess');
             $this->user_group['admin'] = $this->ion_auth->is_admin();
         }
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
     }
 
     /**@
@@ -34,7 +34,6 @@ class Medalha extends CI_Controller {
     {
         $info = array();
         $medalhas = $this->medalha_model->ler($info);
-        
         $info['medalhas'] = $medalhas;
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'medalha/index', $info);
@@ -146,6 +145,10 @@ class Medalha extends CI_Controller {
     **/
     public function novo()
     {
+        $permissoes = $this->user_group;
+        if (!$permissoes['secpess']) {
+            redirect('medalha', 'refresh');
+        }
         $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
         $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
         
@@ -182,6 +185,10 @@ class Medalha extends CI_Controller {
     **/
     public function atribuir()
     {
+        $permissoes = $this->user_group;
+        if (!$permissoes['secpess']) {
+            redirect('medalha', 'refresh');
+        }
         $info = array();
         $info = $this->input->post(null, true);
         
@@ -203,10 +210,10 @@ class Medalha extends CI_Controller {
     **/
     public function alterarGDH($nim = '')
     {
-        //$this->form_validation->set_rules('GDH', 'Data', 'trim|required');
-
-        //$this->form_validation->run();
-
+        $permissoes = $this->user_group;
+        if (!$permissoes['secpess']) {
+            redirect('medalha', 'refresh');
+        }
         $info = array();
         $post = $this->input->post(null, true);
         

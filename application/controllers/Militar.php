@@ -29,7 +29,6 @@ class Militar extends CI_Controller {
     /**@
     Listagem de todos os militares
     + campos de filtragem no topo...
-    ??cor indica presença em mapa diário??
     <nim | posto | apelido(view) | nome | editar (edit_info_pessoal) >
     botao adicionar normal se for sec pess e for colocado na unidade, 
     botao adicionar adido se for companhia e for colocado como adido.
@@ -40,7 +39,7 @@ class Militar extends CI_Controller {
         $info = array();
         $info['permissoes'] = $this->user_group;
         $info['militares'] = $this->militar_model->ler($info);
-        $this->template->load('template', 'militar/list', $info);
+        $this->template->load('template', 'militar/lista', $info);
     }
 
     /**@
@@ -62,7 +61,6 @@ class Militar extends CI_Controller {
         $medalhas = $this->medalha_model->ler_militar($info);
         $info['militar'] = $militar[0];
         $info['medalhas'] = $medalhas;
-        
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'militar/view', $info);
     }
@@ -75,6 +73,10 @@ class Militar extends CI_Controller {
     **/
     public function edit($id = '')
     {
+        $permissoes = $this->user_group;
+        if (!$permissoes['secpess']) {
+            redirect('militar', 'refresh');
+        }
         $info = array();
         $info['id'] = $id;
         $emissor = $this->emitter_model->ler($info);
@@ -104,6 +106,10 @@ class Militar extends CI_Controller {
     **/
     public function novo()
     {
+        $permissoes = $this->user_group;
+        if (!$permissoes['secpess']) {
+            redirect('militar', 'refresh');
+        }
         $this->form_validation->set_rules('nim', 'Número de Indentificação Militar', 'trim|required');
         $this->form_validation->set_rules('nome', 'Nome Completo', 'trim|required');
         $this->form_validation->set_rules('apelido', 'Apelido', 'trim|required');

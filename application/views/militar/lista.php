@@ -21,16 +21,17 @@
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
-                                if ($permissoes['admin']){
+                                $classe = ($permissoes['secpess']) ? 'col-xs-6' : 'col-xs-12';
                                     echo anchor(
                                         'militar/view/'.$militar['nim'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
                                         array(
                                             'title' => 'Consultar',
-                                            'class' => 'btn btn-outline btn-success col-xs-6',
+                                            'class' => 'btn btn-outline btn-success '.$classe,
                                             'role' => 'button'
                                         )
                                     );
+                                if ($permissoes['secpess']){
                                     echo anchor(
                                         'militar/edit/'.$militar['nim'],
                                         '<span class="glyphicon glyphicon-pencil"></span> Atualizar',

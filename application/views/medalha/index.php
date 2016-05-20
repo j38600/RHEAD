@@ -19,7 +19,6 @@
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
-                                if ($permissoes['admin']){
                                     echo anchor(
                                         'medalha/view/'.$medalha['id'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
@@ -29,7 +28,6 @@
                                             'role' => 'button'
                                         )
                                     );
-                                }
                                 ?>
                             </div>
                         </td>
@@ -41,7 +39,7 @@
                         <td></td>
                         <td>
                             <?php
-                            if ($permissoes['admin']){
+                            if ($permissoes['secpess']) {
                                 echo anchor(
                                     'medalha/novo/',
                                     '<span class="glyphicon glyphicon-plus"></span> Nova',
