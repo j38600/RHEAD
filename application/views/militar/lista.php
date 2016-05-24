@@ -54,7 +54,7 @@
                         <td></td>
                         <td>
                             <?php
-                            if ($permissoes['admin']){
+                            if ($permissoes['secpess']){
                                 echo anchor(
                                     'militar/novo',
                                     '<span class="glyphicon glyphicon-plus"></span> Novo',

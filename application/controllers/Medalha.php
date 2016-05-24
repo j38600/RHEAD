@@ -226,6 +226,11 @@ class Medalha extends CI_Controller {
                 $info['impor_proxima_cerimonia'] = $post['proxima_cerimonia'] ? '0' : '1';
                 $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
                 break;
+            case 'proposta':
+                $info['data_proposta'] = $post['GDH'];
+                $info['proposta'] = 1;
+                $stock = $post['stock'];
+                break;
             case 'pedida':
                 $info['data_pedida'] = $post['GDH'];
                 $info['pedida'] = 1;

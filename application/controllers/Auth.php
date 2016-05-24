@@ -24,6 +24,9 @@ class Auth extends CI_Controller
             $this->template->set(
                 'admin', ($this->ion_auth->is_admin())? true: false
             );
+            $this->user_group['sois'] = $this->ion_auth->in_group('SOIS');
+            $this->user_group['secpess'] = $this->ion_auth->in_group('SecPess');
+            $this->user_group['admin'] = $this->ion_auth->is_admin();
         }
         $this->output->enable_profiler(TRUE);
         
@@ -55,7 +58,7 @@ class Auth extends CI_Controller
                 $this->data['users'][$k]->groups = $this
                     ->ion_auth->get_users_groups($user->id)->result();
             }
-
+            $this->data['permissoes'] = $this->user_group;
             $this->template->load('template', 'auth/index', $this->data);
             //$this->_render_page('auth/index', $this->data);
         }
@@ -543,6 +546,7 @@ class Auth extends CI_Controller
                 'class' => 'form-control',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
+            $this->data['permissoes'] = $this->user_group;
             $this->template->load('template', 'auth/create_user', $this->data);
             //$this->_render_page('auth/create_user', $this->data);
         }
@@ -688,6 +692,7 @@ class Auth extends CI_Controller
             'type' => 'password',
             'class' => 'form-control',
         );
+        $this->data['permissoes'] = $this->user_group;
         $this->template->load('template', 'auth/edit_user', $this->data);
         //$this->_render_page('auth/edit_user', $this->data);
     }
@@ -735,6 +740,7 @@ class Auth extends CI_Controller
                 'class' => 'form-control',
                 'value' => $this->form_validation->set_value('description'),
             );
+            $this->data['permissoes'] = $this->user_group;
             $this->template->load('template', 'auth/create_group', $this->data);
             //$this->_render_page('auth/create_group', $this->data);
         }
@@ -818,6 +824,7 @@ class Auth extends CI_Controller
             ),
         );
 
+        $this->data['permissoes'] = $this->user_group;
         $this->template->load('template', 'auth/edit_group', $this->data);
         //$this->_render_page('auth/edit_group', $this->data);
     }

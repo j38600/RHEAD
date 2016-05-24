@@ -201,6 +201,25 @@
                             <h4 class="list-group-item-heading"><?php echo $medalha['med_cond_nome'];?></h4>
                             <p class="list-group-item-text">
                                 <?php
+                                if ($medalha['proposta']){
+                                    echo 'Proposta em '.date('d-m-Y', strtotime($medalha['data_proposta']));
+                                    echo br();
+                                }
+                                elseif ($permissoes['secpess']) {
+                                    echo anchor(
+                                        '#caixaGDH',
+                                        'Inserir data da proposta',
+                                        array(
+                                            'class' => 'list-group-item list-group-item-warning',
+                                            'role' => 'button',
+                                            'data-toggle' => 'modal',
+                                            'data-medalha-id'=>$medalha['med_cond_id'],
+                                            'data-operacao'=>'proposta',
+                                            'data-informacao'=>$medalha['informacao'],
+                                            'data-stock'=>$medalha['stock'],
+                                        )
+                                    );
+                                }
                                 if ($medalha['pedida']){
                                     echo 'Pedida em '.date('d-m-Y', strtotime($medalha['data_pedida']));
                                     echo br();
