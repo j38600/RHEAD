@@ -153,15 +153,16 @@ class Militar extends CI_Controller {
             unset($info['submit']);
             //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
             $info['ativo'] = true;
-            $info['id'] = $this->militar_model->adicionar($info);
+            $this->militar_model->adicionar($info);
             
-            //$info['user'] = $this->ion_auth->user()->row()->id;
-            //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-            //$info['agendamento'] = null;
-            //$info['ficheiro'] = $info['id'];
-            //$info['feriado'] = null;
-            //$info['tipo'] = 2;
-            //$this->registo_model->log_escreve($info);
+            //crio os campos que vou usar para fazer o log.
+            $info['user_nim'] = $this->ion_auth->user()->row()->username;
+            $info['tipo'] = 'militares';
+            $info['accao'] = 'criar';
+            $info['informacao'] = 'nim: '.$info['nim'].'; nome: '.$info['nome'].'; apelido: '.$info['apelido'].
+                '; posto: p|'.$info['posto_id'].'; antiguidade: '.$info['antiguidade'].'; nota curso: '.$info['nota_curso'].
+                '; quartel: q|'.$info['quartel_id'].'; companhia: c|'.$info['companhia_id'];
+            $this->registo_model->log_escreve($info);
 
             redirect('militar', 'refresh');
 

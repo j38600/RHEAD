@@ -28,7 +28,7 @@ class Auth extends CI_Controller
             $this->user_group['secpess'] = $this->ion_auth->in_group('SecPess');
             $this->user_group['admin'] = $this->ion_auth->is_admin();
         }
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
         
     }
 

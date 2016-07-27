@@ -24,7 +24,7 @@
         echo form_open('militar/novo', ['class' => 'form-horizontal',
                                               'role' => 'form']); ?>
         <div class="form-group">
-            <label for="lat" class="col-xs-offset-3 col-xs-2 control-label">NIM</label>
+            <label for="nim" class="col-xs-offset-3 col-xs-2 control-label">NIM</label>
             <div class="col-xs-4">
             <?php echo form_input([ 'name' => 'nim',
                                     'id' => 'nim',
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="nome" class="col-xs-offset-3 col-xs-2 control-label">Apelido</label>
+            <label for="apelido" class="col-xs-offset-3 col-xs-2 control-label">Apelido</label>
             <div class="col-xs-4">
             <?php echo form_input([ 'name' => 'apelido',
                                     'id' => 'apelido',
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="nome" class="col-xs-offset-3 col-xs-2 control-label">Data de Promoção</label>
+            <label for="antiguidade" class="col-xs-offset-3 col-xs-2 control-label">Data de Promoção</label>
             <div class="col-xs-4">
             <?php echo form_input([ 'name' => 'antiguidade',
                                     'id' => 'antiguidade',
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="lat" class="col-xs-offset-3 col-xs-2 control-label">Nota de Curso (0000-2000)</label>
+            <label for="nota_curso" class="col-xs-offset-3 col-xs-2 control-label">Nota de Curso (0000-2000)</label>
             <div class="col-xs-4">
             <?php echo form_input([ 'name' => 'nota_curso',
                                     'id' => 'nota_curso',
@@ -74,21 +74,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="nome_ficheiro" class="col-xs-offset-3 col-xs-2 control-label">Posto</label>
+            <label for="posto_id" class="col-xs-offset-3 col-xs-2 control-label">Posto</label>
             <div class="col-xs-4">
             <?php 
             echo form_dropdown('posto_id',$postos,'','class="form-control"');?>
             </div>
         </div>
         <div class="form-group">
-            <label for="nome_ficheiro" class="col-xs-offset-3 col-xs-2 control-label">Unidade/Estabelecimento/Órgão</label>
+            <label for="quartel_id" class="col-xs-offset-3 col-xs-2 control-label">Unidade/Estabelecimento/Órgão</label>
             <div class="col-xs-4">
             <?php 
             echo form_dropdown('quartel_id',$quarteis,'','class="form-control"');?>
             </div>
         </div>
         <div class="form-group">
-            <label for="nome_ficheiro" class="col-xs-offset-3 col-xs-2 control-label">Companhia</label>
+            <label for="companhia_id" class="col-xs-offset-3 col-xs-2 control-label">Companhia</label>
             <div class="col-xs-4">
             <?php 
             echo form_dropdown('companhia_id',$companhias,'','class="form-control"');?>

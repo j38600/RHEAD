@@ -117,7 +117,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <?php if ($permissoes['admin']) { ?>
                             <li><a href="<?php echo base_url()?>auth">Utilizadores</a></li>
-                            <!--<li><a href="<?php echo base_url()?>registo/automaticos">Histórico</a></li>-->
+                            <li><a href="<?php echo base_url()?>registo">Histórico</a></li>
                             <li class="divider"></li>
                         <?php }?>
                         <li><a href='<?php echo base_url()?>auth/logout'>Logout</a></li>
