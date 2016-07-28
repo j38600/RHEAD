@@ -100,6 +100,15 @@ class Militar_model extends CI_Model
         $novo_id = $this->db->insert_id();
         return $novo_id;
     }
+
+    //funcao para adicionar um militar novo
+    function atualizar($info)
+    {
+        $this->db->where('nim', $info['nim']);
+        $this->db->update('militares', $info);
+        
+        return true;
+    }
 }
 
 ?>

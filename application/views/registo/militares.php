@@ -1,11 +1,11 @@
 <div class="container-fluid">
-    <div class="row">
+    <!--<div class="row">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation" class="active"><a href="militares">Militares</a></li>
             <li role="presentation"><a href="medalhas">Medalhas e condecorações</a></li>
             <li role="presentation"><a href="atividades">Atividades SOIS</a></li>
         </ul>
-    </div>
+    </div> -->
     <div classe="row">
         <h2>Histórico das alterações à base de dados.</h2>
         <table class="table table-striped table-condensed table-hover">

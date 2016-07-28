@@ -186,6 +186,8 @@
                         <dd><?php echo $militar['nota_curso'];?></dd>
                         <dt>Ativo?</dt>
                         <dd><?php echo ($militar['ativo']) ? 'Sim' : 'Não';?></dd>
+                        <dt><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></dt>
+                        <dd><a href="<?php echo base_url()?>militar/edit/<?php echo $militar['nim'];?>">Editar</a></dd>
                     </dl>
                 </div>
             </div>
