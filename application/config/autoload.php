@@ -126,4 +126,4 @@ $autoload['language'] = array('calendar','form_validation', 'ion_auth');
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('militar_model', 'escala_model', 'medalha_model', 'registo_model');
+$autoload['model'] = array('militar_model', 'escala_model', 'medalha_model', 'registo_model', 'atividade_model');

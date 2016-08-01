@@ -9,10 +9,12 @@ class Registo_model extends CI_Model
     }
     /*
     / Tabela log
-    / ID  | USER(NIM) | GDH     | IP_MAQUINA | ACCAO  | TIPO
-    / int | int       |timestamp| varchar    | varchar| int
+    / ID  | MILITAR_NIM | GDH     | IP_MAQUINA | ACCAO  | TIPO    | INFORMACAO
+    / int | int         | datetime| varchar    | varchar| varchar | varchar
     /
-    /na coluna tipo, digo o ambito do registo, se é militar, ou medalha, ou atividades(sois)
+    /na coluna tipo, digo o ambito do registo, se é militar, ou medalha, ou atividades(sois), etc
+    /na coluna accao descrimino um pouco mais, se é novo, ou criar, ou alterar, etc.
+    /na informação faço a descrição promenorizada do que se trata.
 
     */
     
@@ -52,7 +54,7 @@ class Registo_model extends CI_Model
         $this->db->join('users', 'registos.militar_nim = users.username');
         $this->db->order_by('gdh', 'desc');
         $query = $this->db->get();
-        
+
         return ($query->result_array());
     }
 }

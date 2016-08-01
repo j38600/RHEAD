@@ -78,6 +78,14 @@
                 </li>-->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-calendar"></span> Atividades
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo base_url()?>atividade">Lista</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="fa fa-trophy"></span> Medalhas
                     </a>
                     <ul class="dropdown-menu" role="menu">

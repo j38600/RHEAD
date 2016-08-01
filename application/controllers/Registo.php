@@ -58,7 +58,6 @@ class Registo extends CI_Controller {
     Listagem do registo de atividades com medalhas
     adição, edição de informações, nomeações, medalhas recebidas, impostas, etc.
     @return void
-    **/
     public function medalhas()
     {
         //ainda nao funca
@@ -66,13 +65,13 @@ class Registo extends CI_Controller {
         $info['obter'] = 'medalhas';
         $info['registos'] = $this->registo_model->ler($info);
         $this->template->load('template', 'registo/medalhas', $info);
-    }
+    }**/
+    
 
     /**@
     Listagem do registo de atividades com atividades(SOIS)
     adição de atividades, remoção, confirmação, edição, etc.
     @return void
-    **/
     public function atividades()
     {
         //ainda nao funca
@@ -80,5 +79,6 @@ class Registo extends CI_Controller {
         $info['obter'] = 'atividades';
         $info['registos'] = $this->registo_model->ler($info);
         $this->template->load('template', 'registo/atividades', $info);
-    }
+    }**/
+    
 }
