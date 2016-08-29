@@ -46,15 +46,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="efetivada" class="col-xs-offset-3 col-xs-2 control-label">Realizada</label>
-            <div class="col-xs-4">
-            <?php
-                echo form_radio('efetivada', TRUE).' Sim ';
-                echo form_radio('efetivada', FALSE).' Não ';
-            ?>
-            </div>
-        </div>
-        <div class="form-group">
             <label for="sircape" class="col-xs-offset-3 col-xs-2 control-label">SIRCAPE</label>
             <div class="col-xs-4">
             <?php

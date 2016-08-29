@@ -9,7 +9,6 @@
                 <th>Até</th>
                 <th>Secção BipBip</th>
                 <th>Secção Anuário</th>
-                <th>Realizada</th>
                 <th>SIRCAPE</th>
                 <tH></th>
             </tr>
@@ -22,28 +21,17 @@
                         <td><?php echo date('d-m-Y', strtotime($atividade['ate']));?></td>
                         <td><?php echo $atividade['seccao_bipbip'];?></td>
                         <td><?php echo $atividade['seccao_anuario'];?></td>
-                        <td><?php echo ($atividade['efetivada']) ? 'Sim' : 'Não';?></td>
                         <td><?php echo ($atividade['sircape']) ? 'Sim' : 'Não';?></td>
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
-                                $classe = ($permissoes['secpess']) ? 'col-xs-6' : 'col-xs-12';
-                                    echo anchor(
-                                        'atividade/view/'.$atividade['id'],
-                                        '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
-                                        array(
-                                            'title' => 'Consultar',
-                                            'class' => 'btn btn-outline btn-success '.$classe,
-                                            'role' => 'button'
-                                        )
-                                    );
-                                if ($permissoes['secpess']){
+                                if ($permissoes['sois']){
                                     echo anchor(
                                         'atividade/edit/'.$atividade['id'],
                                         '<span class="glyphicon glyphicon-pencil"></span> Atualizar',
                                         array(
                                             'title' => 'Atualizar',
-                                            'class' => 'btn btn-outline btn-warning col-xs-6',
+                                            'class' => 'btn btn-outline btn-warning col-xs-12',
                                             'role' => 'button'
                                         )
                                     );
@@ -54,7 +42,6 @@
                     </tr>
                 <?php endforeach;?>
                 <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

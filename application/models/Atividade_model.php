@@ -14,7 +14,7 @@ class Atividade_model extends CI_Model
     / DESCRICAO         VARCHAR(255)
     / DE                DATETIME
     / ATE               DATETIME
-    / EFETIVADA         TINYINT(0)
+    / CANCELADA         TINYINT(0)
     / SIRCAPE           TINYINT(0)
     / BIPBIP_ID         FK INT(11)
     / ANUARIO_ID        FK INT(11)
@@ -26,8 +26,13 @@ class Atividade_model extends CI_Model
     //faz o join com as tabelas anuário e bipbip.
     function ler($info)
     {
+        if (isset($info['cancelada'])) {
+            $this->db->where('cancelada', 1);
+        }else{
+            $this->db->where('cancelada', 0);
+        }
         if (isset($info['id'])) {
-            $this->db->where('id', $info['id']);
+            $this->db->where('atividades.id', $info['id']);
         }
         if (isset($info['bipbip_id'])) {
             $this->db->where_in('bipbip_id', $info['bipbip_id']);

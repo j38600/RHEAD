@@ -44,107 +44,7 @@ class Atividade extends CI_Controller {
     }
     
     /**@
-    Consulta de uma medalha. 
-    Cartão à esquerda com lista de militares que a têem.
-        Clicando vão para:  o militar, podendo pedir, receber ou atribuir.
-        No fim da lista, pode adicionar um militar.
-            Escolhe de uma dropdown com os nims de todos.
-            É direcionado para o mesmo, podendo pedir, receber ou atribuir a mesma.
-    Cartão à direita com informações da medalha.
-    @return void
-    **/
-    public function view($id = '')
-    {
-        //$id da escala
-        $info = array();
-        $info['id'] = $id;
-        $medalha = $this->medalha_model->ler($info);
-        $info['medalha'] = $medalha[0];
-        
-        //nims dos militares que teem esta medalha
-        if ($info['medalha']['nr_militares'] > 0)
-        {
-            $info['nims'] = $this->medalha_model->ler_nims($info);
-            unset($info['id']);
-            $nims = $info['nims'];
-            
-            $cont = 0;
-            //var_dump($nims);
-            foreach ($nims as $nim)
-            {
-                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
-                unset($nims[$cont]);
-                $cont++;
-                
-            }
-            $info['nims'] = $nims;
-            //var_dump($nims);
-            
-            //militares desta medalha
-            $info['militares'] = $this->militar_model->ler($info);
-            //var_dump($info['militares']);
-            unset($info['nims']);
-        }
-        else 
-        {
-            $info['militares'] = array();
-            unset($info['id']);
-        }
-        
-        //saco todos os militares, para poder atribuir as medalhas.
-        $info['todos_militares'] = $this->militar_model->ler($info);
-        
-        $info['permissoes'] = $this->user_group;
-        $this->template->load('template', 'medalha/view', $info);
-    }
-
-    /**@
-    Consulta de medalhas não recebidas ou não impostas
-    Cartão à esquerda com lista dos militares que já foi pedida a medalha, mas que ainda não recebemos.
-        Pode haver militares que já foram impostas, mas ainda não foram recebidas.
-    Cartão à direita com lista dos militares que ainda não foram impostas.
-        Podem haver militares que ainda não foram recebidas, ou que já foram recebidas.
-    Clicando no militar vão para o militar, podendo pedir, receber ou atribuir.
-    Clicando na medalha vão para listagem de militares que têm a medalha.
-    
-    Posso acrescentar um campo checkbox, para no final poder exportar uma lista do pessoal que quero impor medalhas??
-    No final tem a possibilidade de exportar as listas, csv/pdf?? 
-
-    Fazer highlight dos militares que já foi imposta, na lista das por receber??
-    Fazer highlight dos militares que já foi recebida, na lista a impor??
-    @return void
-    **/
-    public function lista()
-    {
-        $info=array();
-        
-        $info['por_receber'] = 1;
-        $militares = $this->medalha_model->ler_militar_medalha($info);
-        $info['nims_por_receber'] = $militares;
-        unset($info['por_receber']);
-        
-        $info['por_impor'] = 1;
-        $militares = $this->medalha_model->ler_militar_medalha($info);
-        $info['nims_por_impor'] = $militares;
-        unset($info['por_impor']);
-        
-        $info['proxima_cerimonia'] = 1;
-        $militares = $this->medalha_model->ler_militar_medalha($info);
-        $info['nims_proxima_cerimonia'] = $militares;
-        unset($info['proxima_cerimonia']);
-        
-        $medalhas = $this->medalha_model->ler($info);
-        $info['medalhas'] = $medalhas;
-        
-        //var_dump($info);
-        //break;
-
-        $info['permissoes'] = $this->user_group;
-        $this->template->load('template', 'medalha/lista', $info);
-    }
-    
-    /**@
-    Nova medalha ou condecoração
+    Nova atividade
     @return void
     **/
     public function nova()
@@ -208,97 +108,79 @@ class Atividade extends CI_Controller {
             $this->template->load('template', 'atividade/novo', $info);
         }
     }
-    
-    /**@
-    Nova medalha ou condecoração
-    @return void
-    **/
-    public function atribuir()
-    {
-        $permissoes = $this->user_group;
-        if (!$permissoes['secpess']) {
-            redirect('medalha', 'refresh');
-        }
-        $info = array();
-        $info = $this->input->post(null, true);
-        
-        $info['id'] = $this->medalha_model->atribuir($info);
-        
-        //$info['user'] = $this->ion_auth->user()->row()->id;
-        //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-        //$info['agendamento'] = null;
-        //$info['ficheiro'] = $info['id'];
-        //$info['feriado'] = null;
-        //$info['tipo'] = 2;
-        //$this->registo_model->log_escreve($info);
-        redirect('militar/view/'.$info['militar_nim'], 'refresh');
-    }
 
     /**@
-    Atualizar as datas de pedido, rececao e imposicao das medalhas
+    Edição de atividades.
+    Quando adicionarem a atividade ao SIRCAPE, podem vir aki atualizar.
+    Se mudar o nome, datas dos apoios, podem vir aki.
+    Se cancelarem, podem apagá-las?? 
     @return void
     **/
-    public function alterarGDH($nim = '')
+    public function edit($id = '')
     {
         $permissoes = $this->user_group;
         if (!$permissoes['secpess']) {
-            redirect('medalha', 'refresh');
+            redirect('atividade', 'refresh');
         }
         $info = array();
-        $post = $this->input->post(null, true);
         
-        $info['informacao'] = $post['informacao'];
-        $info['med_cond_id'] = $post['medalha'];
-        $info['militar_nim'] = $nim;
+        $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
         
-        switch ($post['operacao']) {
-            case 'proximacerimonia':
-                $info['impor_proxima_cerimonia'] = $post['proxima_cerimonia'] ? '0' : '1';
-                $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
-                break;
-            case 'proposta':
-                $info['data_proposta'] = $post['GDH'];
-                $info['proposta'] = 1;
-                $stock = $post['stock'];
-                break;
-            case 'pedida':
-                $info['data_pedida'] = $post['GDH'];
-                $info['pedida'] = 1;
-                $stock = $post['stock'];
-                break;
-            case 'recebida':
-                $info['data_recebida'] = $post['GDH'];
-                $info['recebida'] = 1;
-                $stock = $post['stock']+1;
-                break;
-            case 'imposta':
-                $info['data_imposta'] = $post['GDH'];
-                $info['imposta'] = 1;
-                $info['impor_proxima_cerimonia'] = 0;
-                $stock = $post['stock']-1;
-                break;
-            case 'informacao':
-                $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
-                break;
-            default:
-                //Á partida entra nas outras. Podia por aqui uma mensagem de erro, talvez...
-                break;
-        }//se o GDH vier vazio, salta fora sem fazer nada. 
-        if (!empty($post['GDH'])) { 
-            $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
-            $info['stock'] = $stock;
-            $info['res'] = $this->medalha_model->atualizar_stock($info);
+        $bipbip_bd = $this->atividade_model->ler_bipbip($info);
+        $quarteis_bd = $this->militar_model->ler_quarteis($info);
+        $anuario_bd = $this->atividade_model->ler_anuario($info);
+
+        $bipbips=array();
+        $quarteis=array();
+        $anuarios=array();
+
+        foreach($bipbip_bd as $bipbip){
+            $bipbips[$bipbip['id']] = $bipbip['seccao'];
+            }
+        
+        foreach($quarteis_bd as $quartel){
+            $quarteis[$quartel['id']] = $quartel['quartel'];
+            }
+        
+        foreach($anuario_bd as $anuario){
+            $anuarios[$anuario['id']] = $anuario['seccao'];
+            }
+        
+        $info['id'] = $id;
+        $atividade = $this->atividade_model->ler($info);
+        $info['atividade'] = $atividade[0];
+
+        if ($this->form_validation->run() == true) {
+            
+            unset($info);
+            $info = array();
+            $info = $this->input->post(null, true);
+            unset($info['submit']);
+            //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
+            //$info['ativo'] = true;
+            $this->militar_model->atualizar($info);
+            
+            //crio os campos que vou usar para fazer o log.
+            //$info['user_nim'] = $this->ion_auth->user()->row()->username;
+            //$info['tipo'] = 'militares';
+            //$info['accao'] = 'editar';
+            //$info['informacao'] = 'nim: '.$info['nim'].'; nome: '.$info['nome'].'; apelido: '.$info['apelido'].
+            //    '; posto: p|'.$info['posto_id'].'; antiguidade: '.$info['antiguidade'].'; nota curso: '.$info['nota_curso'].
+            //    '; quartel: q|'.$info['quartel_id'].'; companhia: c|'.$info['companhia_id'];
+            //$this->registo_model->log_escreve($info);
+
+            redirect('atividade', 'refresh');
+
+        } else {
+            $info['permissoes'] = $this->user_group;
+            
+            $info['bipbips'] = $bipbips;
+            $info['quarteis'] = $quarteis;
+            $info['anuarios'] = $anuarios;
+
+            $this->template->load('template', 'atividade/editar', $info);
         }
-        //$info['user'] = $this->ion_auth->user()->row()->id;
-        //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-        //$info['agendamento'] = null;
-        //$info['ficheiro'] = $info['id'];
-        //$info['feriado'] = null;
-        //$info['tipo'] = 2;
-        //$this->registo_model->log_escreve($info);
-        redirect('militar/view/'.$info['militar_nim'], 'refresh');
     }
-    #criar o botao para consulta de logs... quem recebeu medalhas no ultimo ano, e assim...
 }
 
 /* End of file medalha.php */
