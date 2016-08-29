@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <h2>Listagem de ativiadades previstas / realizadas</h2>
+        <h2>Listagem de atividades previstas / realizadas</h2>
         <table class="table table-striped table-condensed table-hover">
             <thead>
             <tr>

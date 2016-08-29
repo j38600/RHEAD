@@ -58,6 +58,9 @@ class Medalha_model extends CI_Model
         if (isset($info['por_impor'])) {
             $this->db->where_in('imposta', 0);
         }
+        if (isset($info['para_proposta'])) {
+            $this->db->where_in('proposta', 0);
+        }
         if (isset($info['proxima_cerimonia'])) {
             $this->db->where_in('impor_proxima_cerimonia', 1);
         }

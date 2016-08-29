@@ -119,6 +119,11 @@ class Medalha extends CI_Controller {
         $info['nims_por_receber'] = $militares;
         unset($info['por_receber']);
         
+        $info['para_proposta'] = 1;
+        $militares = $this->medalha_model->ler_militar_medalha($info);
+        $info['nims_para_proposta'] = $militares;
+        unset($info['para_proposta']);
+        
         $info['por_impor'] = 1;
         $militares = $this->medalha_model->ler_militar_medalha($info);
         $info['nims_por_impor'] = $militares;

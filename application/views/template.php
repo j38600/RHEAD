@@ -89,8 +89,8 @@
                         <span class="fa fa-trophy"></span> Medalhas
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url()?>medalha">Despachadas pela RJD</a></li>
-                        <li><a href="<?php echo base_url()?>medalha/lista">Por impor / receber</a></li>
+                        <li><a href="<?php echo base_url()?>medalha">Stock de Medalhas</a></li>
+                        <li><a href="<?php echo base_url()?>medalha/lista">Lista de Militares</a></li>
                     </ul>
                 </li>
                 <!--<li class="dropdown">

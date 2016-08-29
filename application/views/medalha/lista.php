@@ -37,7 +37,37 @@
 <h2 class="text-center">Listagens de medalhas e condecorações</h2>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">a despacho à RJD</h3>
+                </div>
+                <ul class="list-group">
+                    <?php foreach ($medalhas as $medalha):?>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading"><?php echo $medalha['nome'];?></h4>
+                            <p class="list-group-item-text">
+                            <?php
+                            foreach ($nims_para_proposta as $militar):
+                                if ($militar['med_cond_id'] == $medalha['id']){
+                                    echo anchor(
+                                        'militar/view/'.$militar['militar_nim'],
+                                        $militar['militar_nim'].' '.$militar['posto_abreviatura'].' '.$militar['militar_apelido'],
+                                        array(
+                                            'class' => 'list-group-item',
+                                        )
+                                    );
+                                    //$militar['impor_proxima_cerimonia']
+                                    //echo $militar['militar_nim'].' '.$militar['posto_abreviatura'].' '.$militar['militar_apelido'];
+                                    //echo br();
+                                }
+                            endforeach;
+                    endforeach;
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">por receber</h3>
@@ -67,7 +97,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">por impor</h3>
@@ -94,7 +124,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">próxima cerimónia</h3>
