@@ -147,17 +147,36 @@ class Atividade extends CI_Controller {
     Nova medalha ou condecoração
     @return void
     **/
-    public function novo()
+    public function nova()
     {
         $permissoes = $this->user_group;
         if (!$permissoes['secpess']) {
-            redirect('medalha', 'refresh');
+            redirect('atividade', 'refresh');
         }
-        $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
         $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
         
         $info = array();
 
+        $bipbip_bd = $this->atividade_model->ler_bipbip($info);
+        $quarteis_bd = $this->militar_model->ler_quarteis($info);
+        $anuario_bd = $this->atividade_model->ler_anuario($info);
+
+        $bipbips=array();
+        $quarteis=array();
+        $anuarios=array();
+
+        foreach($bipbip_bd as $bipbip){
+            $bipbips[$bipbip['id']] = $bipbip['seccao'];
+            }
+        
+        foreach($quarteis_bd as $quartel){
+            $quarteis[$quartel['id']] = $quartel['quartel'];
+            }
+        
+        foreach($anuario_bd as $anuario){
+            $anuarios[$anuario['id']] = $anuario['seccao'];
+            }
+        
         if ($this->form_validation->run() == true) {
             
             unset($info);
@@ -166,8 +185,9 @@ class Atividade extends CI_Controller {
             unset($info['submit']);
             //var_dump($info);
             //break;
-            $info['id'] = $this->medalha_model->adicionar($info);
             
+            $info['id'] = $this->atividade_model->adicionar($info);
+
             //$info['user'] = $this->ion_auth->user()->row()->id;
             //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
             //$info['agendamento'] = null;
@@ -176,10 +196,16 @@ class Atividade extends CI_Controller {
             //$info['tipo'] = 2;
             //$this->registo_model->log_escreve($info);
 
-            redirect('medalha', 'refresh');
+            redirect('atividade', 'refresh');
 
         } else {
-            $this->template->load('template', 'medalha/novo', $info);
+            $info['permissoes'] = $this->user_group;
+
+            $info['bipbips'] = $bipbips;
+            $info['quarteis'] = $quarteis;
+            $info['anuarios'] = $anuarios;
+
+            $this->template->load('template', 'atividade/novo', $info);
         }
     }
     

@@ -13,10 +13,10 @@
         }
 
         $this->form_validation->set_rules('nim', 'Número de Indentificação Militar', 'trim|required');
-                $this->form_validation->set_rules('nome', 'Nome Completo', 'trim|required');
-                $this->form_validation->set_rules('apelido', 'Apelido', 'trim|required');
-                $this->form_validation->set_rules('antiguidade', 'Antiguidade', 'trim|required');
-                $this->form_validation->set_rules('nota_curso', 'Nota de Curso', 'trim|required');
+        $this->form_validation->set_rules('nome', 'Nome Completo', 'trim|required');
+        $this->form_validation->set_rules('apelido', 'Apelido', 'trim|required');
+        $this->form_validation->set_rules('antiguidade', 'Antiguidade', 'trim|required');
+        $this->form_validation->set_rules('nota_curso', 'Nota de Curso', 'trim|required');
                 
         echo form_open('militar/edit/'.$id, ['class' => 'form-horizontal',
                                               'role' => 'form']); ?>

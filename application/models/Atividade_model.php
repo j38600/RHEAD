@@ -50,6 +50,36 @@ class Atividade_model extends CI_Model
         return ($query->result_array());
     }
     
+    //funcao que le as secções que existem no bipbip
+    function ler_bipbip($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('id', $info['id']);
+        }
+        
+        $this->db->select();
+        $this->db->from('bipbip');
+        
+        $query = $this->db->get();
+        return ($query->result_array());
+    }
+
+    //funcao que le as secções que existem no anuario
+    function ler_anuario($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('id', $info['id']);
+        }
+        
+        $this->db->select();
+        $this->db->from('anuario');
+        
+        $query = $this->db->get();
+        return ($query->result_array());
+    }
+
+    //funcao que le os quarteis que existem
+    /*
     //funcao que le a tabela das medalhas e condecorações
     //return de listas de militares, com um join da tabela de militares
     function ler_militar_medalha($info)
@@ -80,7 +110,8 @@ class Atividade_model extends CI_Model
         
         return ($query->result_array());
     }
-    
+    */
+    /*
     //funcao que le os nims que ja teem uma medalha.
     //igual a ler_militar, mas sem o join à tabela das medalhas.
     function ler_nims($info)
@@ -95,9 +126,10 @@ class Atividade_model extends CI_Model
         
         return ($query->result_array());
     }
-    
+    */
+    /*
     //funcao que le a tabela das medalhas e condecoracoes
-    /*function ler($info)
+    function ler($info)
     {
         
         if (isset($info['id'])) {
@@ -117,18 +149,20 @@ class Atividade_model extends CI_Model
     //funcao para adicionar uma medalha nova nova
     function adicionar($info)
     {
-        $this->db->insert('medalhas_condecoracoes', $info);
+        $this->db->insert('atividades', $info);
         $novo_id = $this->db->insert_id();
         return $novo_id;
     }
     
+    /*
     //funcao para atribuir uma medalha a um militar
     function atribuir($info)
     {
         $this->db->insert('militares_med_cond', $info);
         return true;
     }
-
+    */
+    /*
     //funcao para atualizar as datas de uma medalha a um militar
     function atualizar_militar_med_cond($info)
     {
@@ -137,7 +171,8 @@ class Atividade_model extends CI_Model
         $this->db->update('militares_med_cond', $info);
         return true;
     }
-
+    */
+    /*
     function atualizar_stock($info)
     {
         $this->db->set('stock', $info['stock']);
@@ -145,6 +180,7 @@ class Atividade_model extends CI_Model
         $this->db->update('medalhas_condecoracoes');
         return true;
     }
+    */
 }
 
 ?>

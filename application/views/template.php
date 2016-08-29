@@ -82,6 +82,10 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="<?php echo base_url()?>atividade">Lista</a></li>
+                        <?php if ($permissoes['secpess']) { ?>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo base_url()?>atividade/nova">Nova</a></li>
+                        <?php }?>
                     </ul>
                 </li>
                 <li class="dropdown">

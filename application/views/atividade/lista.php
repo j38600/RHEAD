@@ -9,6 +9,8 @@
                 <th>Até</th>
                 <th>Secção BipBip</th>
                 <th>Secção Anuário</th>
+                <th>Realizada</th>
+                <th>SIRCAPE</th>
                 <tH></th>
             </tr>
             </thead>
@@ -20,12 +22,14 @@
                         <td><?php echo date('d-m-Y', strtotime($atividade['ate']));?></td>
                         <td><?php echo $atividade['seccao_bipbip'];?></td>
                         <td><?php echo $atividade['seccao_anuario'];?></td>
+                        <td><?php echo ($atividade['efetivada']) ? 'Sim' : 'Não';?></td>
+                        <td><?php echo ($atividade['sircape']) ? 'Sim' : 'Não';?></td>
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
                                 $classe = ($permissoes['secpess']) ? 'col-xs-6' : 'col-xs-12';
                                     echo anchor(
-                                        'militar/view/'.$atividade['id'],
+                                        'atividade/view/'.$atividade['id'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
                                         array(
                                             'title' => 'Consultar',
@@ -35,7 +39,7 @@
                                     );
                                 if ($permissoes['secpess']){
                                     echo anchor(
-                                        'militar/edit/'.$atividade['id'],
+                                        'atividade/edit/'.$atividade['id'],
                                         '<span class="glyphicon glyphicon-pencil"></span> Atualizar',
                                         array(
                                             'title' => 'Atualizar',
@@ -55,12 +59,14 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
                         <td>
                             <?php
                             if ($permissoes['secpess']){
                                 echo anchor(
-                                    'militar/novo',
-                                    '<span class="glyphicon glyphicon-plus"></span> Novo',
+                                    'atividade/nova',
+                                    '<span class="glyphicon glyphicon-plus"></span> Nova',
                                     array(
                                         'title' => 'Novo',
                                         'class' => 'btn-block btn btn-primary btn-outline',
