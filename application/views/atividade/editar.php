@@ -14,7 +14,8 @@
         $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
                 
         echo form_open('atividade/edit/'.$id, ['class' => 'form-horizontal',
-                                               'role' => 'form']); ?>
+                                               'role' => 'form']);
+        echo form_hidden ('id',$id);?>
         <div class="form-group">
             <label for="descricao" class="col-xs-offset-3 col-xs-2 control-label">Descrição</label>
             <div class="col-xs-4">
@@ -46,11 +47,11 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="efetivada" class="col-xs-offset-3 col-xs-2 control-label">Cancelada</label>
+            <label for="cancelada" class="col-xs-offset-3 col-xs-2 control-label">Cancelada</label>
             <div class="col-xs-4">
             <?php
-                echo form_radio('efetivada', TRUE, $atividade['cancelada']).' Sim ';
-                echo form_radio('efetivada', FALSE, !$atividade['cancelada']).' Não ';
+                echo form_radio('cancelada', TRUE, $atividade['cancelada']).' Sim ';
+                echo form_radio('cancelada', FALSE, !$atividade['cancelada']).' Não ';
             ?>
             </div>
         </div>

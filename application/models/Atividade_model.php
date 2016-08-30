@@ -83,6 +83,15 @@ class Atividade_model extends CI_Model
         return ($query->result_array());
     }
 
+    //funcao para atualizar a informacao da tabela atividades
+    function atualizar($info)
+    {
+        $this->db->where('id', $info['id']);
+        $this->db->update('atividades', $info);
+        
+        return true;
+    }
+
     //funcao que le os quarteis que existem
     /*
     //funcao que le a tabela das medalhas e condecorações

@@ -79,7 +79,7 @@ class Militar_model extends CI_Model
         return ($query->result_array());
     }
 
-    //funcao que le os quarteis que existem
+    //funcao que le as companhias que existem
     function ler_companhias($info)
     {
         if (isset($info['id'])) {
@@ -101,7 +101,7 @@ class Militar_model extends CI_Model
         return $novo_id;
     }
 
-    //funcao para adicionar um militar novo
+    //funcao para atualizar um militar existente
     function atualizar($info)
     {
         $this->db->where('nim', $info['nim']);

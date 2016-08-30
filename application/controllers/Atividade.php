@@ -149,7 +149,7 @@ class Atividade extends CI_Controller {
         $info['id'] = $id;
         $atividade = $this->atividade_model->ler($info);
         $info['atividade'] = $atividade[0];
-
+        
         if ($this->form_validation->run() == true) {
             
             unset($info);
@@ -158,7 +158,7 @@ class Atividade extends CI_Controller {
             unset($info['submit']);
             //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
             //$info['ativo'] = true;
-            $this->militar_model->atualizar($info);
+            $this->atividade_model->atualizar($info);
             
             //crio os campos que vou usar para fazer o log.
             //$info['user_nim'] = $this->ion_auth->user()->row()->username;
