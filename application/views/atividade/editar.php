@@ -50,8 +50,8 @@
             <label for="cancelada" class="col-xs-offset-3 col-xs-2 control-label">Cancelada</label>
             <div class="col-xs-4">
             <?php
-                echo form_radio('cancelada', TRUE, $atividade['cancelada']).' Sim ';
-                echo form_radio('cancelada', FALSE, !$atividade['cancelada']).' Não ';
+                echo form_radio('cancelada', 1, $atividade['cancelada']).' Sim ';
+                echo form_radio('cancelada', 0, !$atividade['cancelada']).' Não ';
             ?>
             </div>
         </div>
@@ -59,8 +59,8 @@
             <label for="sircape" class="col-xs-offset-3 col-xs-2 control-label">SIRCAPE</label>
             <div class="col-xs-4">
             <?php
-                echo form_radio('sircape', TRUE, $atividade['sircape']).' inserida ';
-                echo form_radio('sircape', FALSE, !$atividade['sircape']).' por inserir ';
+                echo form_radio('sircape', 1, $atividade['sircape']).' inserida ';
+                echo form_radio('sircape', 0, !$atividade['sircape']).' por inserir ';
             ?>
             </div>
         </div>

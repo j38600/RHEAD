@@ -83,18 +83,18 @@ class Atividade extends CI_Controller {
             $info = array();
             $info = $this->input->post(null, true);
             unset($info['submit']);
-            //var_dump($info);
-            //break;
             
             $info['id'] = $this->atividade_model->adicionar($info);
-
-            //$info['user'] = $this->ion_auth->user()->row()->id;
-            //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-            //$info['agendamento'] = null;
-            //$info['ficheiro'] = $info['id'];
-            //$info['feriado'] = null;
-            //$info['tipo'] = 2;
-            //$this->registo_model->log_escreve($info);
+            
+            //crio os campos que vou usar para fazer o log.
+            $info['user_nim'] = $this->ion_auth->user()->row()->username;
+            $info['tipo'] = 'atividades';
+            $info['accao'] = 'criar';
+            $info['informacao'] = 'descrição: '.$info['descricao'].'; de: '.$info['de'].'; ate: '.$info['ate'].
+                '; Inserido no SIRCAPE: '.$info['sircape'].'; Secção Bipbip: b|'.$info['bipbip_id'].
+                '; quartel: q|'.$info['quarteis_id'].'; Secção Anuário: a|'.$info['anuario_id'];
+            
+            $this->registo_model->log_escreve($info);
 
             redirect('atividade', 'refresh');
 
@@ -113,7 +113,7 @@ class Atividade extends CI_Controller {
     Edição de atividades.
     Quando adicionarem a atividade ao SIRCAPE, podem vir aki atualizar.
     Se mudar o nome, datas dos apoios, podem vir aki.
-    Se cancelarem, podem apagá-las?? 
+    Se cancelarem, desaparecem da lista, mas nao da db. 
     @return void
     **/
     public function edit($id = '')
@@ -157,17 +157,18 @@ class Atividade extends CI_Controller {
             $info = $this->input->post(null, true);
             unset($info['submit']);
             //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
-            //$info['ativo'] = true;
+            
             $this->atividade_model->atualizar($info);
             
             //crio os campos que vou usar para fazer o log.
-            //$info['user_nim'] = $this->ion_auth->user()->row()->username;
-            //$info['tipo'] = 'militares';
-            //$info['accao'] = 'editar';
-            //$info['informacao'] = 'nim: '.$info['nim'].'; nome: '.$info['nome'].'; apelido: '.$info['apelido'].
-            //    '; posto: p|'.$info['posto_id'].'; antiguidade: '.$info['antiguidade'].'; nota curso: '.$info['nota_curso'].
-            //    '; quartel: q|'.$info['quartel_id'].'; companhia: c|'.$info['companhia_id'];
-            //$this->registo_model->log_escreve($info);
+            $info['user_nim'] = $this->ion_auth->user()->row()->username;
+            $info['tipo'] = 'atividades';
+            $info['accao'] = 'atualizar';
+            $info['informacao'] = 'descrição: '.$info['descricao'].'; de: '.$info['de'].'; ate: '.$info['ate'].
+                '; Inserido no SIRCAPE: '.$info['sircape'].'; Secção Bipbip: b|'.$info['bipbip_id'].
+                '; quartel: q|'.$info['quarteis_id'].'; Secção Anuário: a|'.$info['anuario_id'];
+            
+            $this->registo_model->log_escreve($info);
 
             redirect('atividade', 'refresh');
 

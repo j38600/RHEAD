@@ -49,8 +49,8 @@
             <label for="sircape" class="col-xs-offset-3 col-xs-2 control-label">SIRCAPE</label>
             <div class="col-xs-4">
             <?php
-                echo form_radio('sircape', TRUE).' inserida ';
-                echo form_radio('sircape', FALSE).' por inserir ';
+                echo form_radio('sircape', 1).' inserida ';
+                echo form_radio('sircape', 0).' por inserir ';
             ?>
             </div>
         </div>
