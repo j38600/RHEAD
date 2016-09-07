@@ -144,21 +144,6 @@ class Militar extends CI_Controller {
     }
 
     /**@
-    Histórico dos militares!!!
-    Métricas dos militares, por categorias, por anos, companhias, especialidades, etc, etc, etc
-    @return void
-    **/
-    /**public function history($id = '')
-    {
-        $info = array();
-        $info['id'] = $id;
-        $emissor = $this->emitter_model->ler($info);
-        $info['emissor'] = $emissor[0];
-        $info['admin'] = $this->ion_auth->is_admin();
-        $this->template->load('template', 'emitter/view', $info);
-    }**/
-
-    /**@
     Novo militar
     @return void
     **/

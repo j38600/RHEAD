@@ -27,7 +27,8 @@ class Medalha extends CI_Controller {
     }
 
     /**@
-    Listagem de medalhas e condecorações existentes
+    Listagem de medalhas e condecorações existentes, e número de militares com elas.
+    Possibilidade de adicionar mais medalhas.
     @return void
     **/
     public function index()
@@ -65,7 +66,7 @@ class Medalha extends CI_Controller {
             $nims = $info['nims'];
             
             $cont = 0;
-            //var_dump($nims);
+
             foreach ($nims as $nim)
             {
                 $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
@@ -74,11 +75,9 @@ class Medalha extends CI_Controller {
                 
             }
             $info['nims'] = $nims;
-            //var_dump($nims);
             
             //militares desta medalha
             $info['militares'] = $this->militar_model->ler($info);
-            //var_dump($info['militares']);
             unset($info['nims']);
         }
         else 
@@ -95,16 +94,15 @@ class Medalha extends CI_Controller {
     }
 
     /**@
-    Consulta de medalhas não recebidas ou não impostas
-    Cartão à esquerda com lista dos militares que já foi pedida a medalha, mas que ainda não recebemos.
+    Consulta do estado das medalhas dos vários militares
+    Cartão com lista dos militares que foi feito o despacho para a RJD, a solicitar a imposição da medalha.
+    Cartão com lista dos militares que já foi pedida a medalha, mas que ainda não recebemos.
         Pode haver militares que já foram impostas, mas ainda não foram recebidas.
-    Cartão à direita com lista dos militares que ainda não foram impostas.
+    Cartão com lista dos militares que ainda não foram impostas.
         Podem haver militares que ainda não foram recebidas, ou que já foram recebidas.
     Clicando no militar vão para o militar, podendo pedir, receber ou atribuir.
-    Clicando na medalha vão para listagem de militares que têm a medalha.
-    
-    Posso acrescentar um campo checkbox, para no final poder exportar uma lista do pessoal que quero impor medalhas??
-    No final tem a possibilidade de exportar as listas, csv/pdf?? 
+    Cartão com lista dos militares nomeados para receber a medalha numa próxima cerimónia.
+        Pode ser dia da unidade ou outra cerimónia qualquer.
 
     Fazer highlight dos militares que já foi imposta, na lista das por receber??
     Fazer highlight dos militares que já foi recebida, na lista a impor??
@@ -137,9 +135,6 @@ class Medalha extends CI_Controller {
         $medalhas = $this->medalha_model->ler($info);
         $info['medalhas'] = $medalhas;
         
-        //var_dump($info);
-        //break;
-
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'medalha/lista', $info);
     }
@@ -165,21 +160,21 @@ class Medalha extends CI_Controller {
             $info = array();
             $info = $this->input->post(null, true);
             unset($info['submit']);
-            //var_dump($info);
-            //break;
+            
             $info['id'] = $this->medalha_model->adicionar($info);
             
-            //$info['user'] = $this->ion_auth->user()->row()->id;
-            //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-            //$info['agendamento'] = null;
-            //$info['ficheiro'] = $info['id'];
-            //$info['feriado'] = null;
-            //$info['tipo'] = 2;
-            //$this->registo_model->log_escreve($info);
-
+            //crio os campos que vou usar para fazer o log.
+            $info['user_nim'] = $this->ion_auth->user()->row()->username;
+            $info['tipo'] = 'medalhas';
+            $info['accao'] = 'nova';
+            $info['informacao'] = 'nome: '.$info['nome'].'; descrição: '.$info['descricao'];
+            $this->registo_model->log_escreve($info);
+            
             redirect('medalha', 'refresh');
 
         } else {
+
+            $info['permissoes'] = $this->user_group;
             $this->template->load('template', 'medalha/novo', $info);
         }
     }
@@ -199,13 +194,13 @@ class Medalha extends CI_Controller {
         
         $info['id'] = $this->medalha_model->atribuir($info);
         
-        //$info['user'] = $this->ion_auth->user()->row()->id;
-        //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-        //$info['agendamento'] = null;
-        //$info['ficheiro'] = $info['id'];
-        //$info['feriado'] = null;
-        //$info['tipo'] = 2;
-        //$this->registo_model->log_escreve($info);
+        //crio os campos que vou usar para fazer o log.
+        $info['user_nim'] = $this->ion_auth->user()->row()->username;
+        $info['tipo'] = 'medalhas';
+        $info['accao'] = 'atribuir';
+        $info['informacao'] = 'nim condecorado: '.$info['militar_nim'].'; medalha: m|'.$info['med_cond_id'];
+        $this->registo_model->log_escreve($info);
+        
         redirect('militar/view/'.$info['militar_nim'], 'refresh');
     }
 
@@ -225,55 +220,69 @@ class Medalha extends CI_Controller {
         $info['informacao'] = $post['informacao'];
         $info['med_cond_id'] = $post['medalha'];
         $info['militar_nim'] = $nim;
+        $operacao = '';
         
         switch ($post['operacao']) {
             case 'proximacerimonia':
                 $info['impor_proxima_cerimonia'] = $post['proxima_cerimonia'] ? '0' : '1';
                 $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
+                $operacao = 'próxima cerimónia';
                 break;
             case 'proposta':
                 $info['data_proposta'] = $post['GDH'];
                 $info['proposta'] = 1;
                 $stock = $post['stock'];
+                $operacao = 'proposta';
                 break;
             case 'pedida':
                 $info['data_pedida'] = $post['GDH'];
                 $info['pedida'] = 1;
                 $stock = $post['stock'];
+                $operacao = 'pedida';
                 break;
             case 'recebida':
                 $info['data_recebida'] = $post['GDH'];
                 $info['recebida'] = 1;
                 $stock = $post['stock']+1;
+                $operacao = 'recebida';
                 break;
             case 'imposta':
                 $info['data_imposta'] = $post['GDH'];
                 $info['imposta'] = 1;
                 $info['impor_proxima_cerimonia'] = 0;
                 $stock = $post['stock']-1;
+                $operacao = 'imposta';
                 break;
             case 'informacao':
                 $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
+                $operacao = 'alteração informação';
                 break;
             default:
                 //Á partida entra nas outras. Podia por aqui uma mensagem de erro, talvez...
                 break;
-        }//se o GDH vier vazio, salta fora sem fazer nada. 
+        }//se o GDH vier vazio, salta fora sem fazer nada.
         if (!empty($post['GDH'])) { 
             $info['resultado'] = $this->medalha_model->atualizar_militar_med_cond($info);
             $info['stock'] = $stock;
             $info['res'] = $this->medalha_model->atualizar_stock($info);
+            $gdh = $post['GDH'];
         }
-        //$info['user'] = $this->ion_auth->user()->row()->id;
-        //$info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-        //$info['agendamento'] = null;
-        //$info['ficheiro'] = $info['id'];
-        //$info['feriado'] = null;
-        //$info['tipo'] = 2;
-        //$this->registo_model->log_escreve($info);
+        
+        //crio os campos que vou usar para fazer o log.
+        $info['user_nim'] = $this->ion_auth->user()->row()->username;
+        $info['tipo'] = 'medalhas';
+        $info['accao'] = 'atualizar';
+        $temporario = 'nim condecorado: '.$info['militar_nim'].'; medalha: m|'.$info['med_cond_id'].
+            '; operação: '.$operacao.'; informação: '.$info['informacao'];
+        if (!empty($gdh)) { 
+            $temporario .= '; GDH: '.$gdh;
+        }
+        $temporario .= ($operacao == 'próxima cerimónia') ? '; Nomeado '.$info['impor_proxima_cerimonia'] : '';
+        $info['informacao'] = $temporario;
+        $this->registo_model->log_escreve($info);
+        
         redirect('militar/view/'.$info['militar_nim'], 'refresh');
     }
-    #criar o botao para consulta de logs... quem recebeu medalhas no ultimo ano, e assim...
 }
 
 /* End of file medalha.php */

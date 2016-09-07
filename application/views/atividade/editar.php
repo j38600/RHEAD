@@ -88,7 +88,7 @@
 
         <div class="form-group">
             <div class="col-xs-offset-5 col-xs-4">
-                <button class="btn btn-primary" type="submit" name="submit">Adicionar</button>
+                <button class="btn btn-primary" type="submit" name="submit">Atualizar</button>
             </div>
         </div>
         <?php
