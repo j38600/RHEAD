@@ -1,14 +1,17 @@
 <div class="container-fluid">
-    <!--<div class="row">
-        <ul class="nav nav-tabs nav-justified">
-            <li role="presentation" class="active"><a href="militares">Militares</a></li>
-            <li role="presentation"><a href="medalhas">Medalhas e condecorações</a></li>
-            <li role="presentation"><a href="atividades">Atividades SOIS</a></li>
-        </ul>
-    </div> -->
-    <div classe="row">
+    <div class="row">
         <h2>Histórico das alterações à base de dados.</h2>
-        <table class="table table-striped table-condensed table-hover">
+        <div class="row">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class='<?php if($obter == 'atividades'){echo 'active';}?>'>
+                    <a href="<?php echo base_url()?>registo/lista/atividades">Atividades</a></li>
+                <li role="presentation" class='<?php if($obter == 'medalhas'){echo 'active';}?>'>
+                    <a href="<?php echo base_url()?>registo/lista/medalhas">Medalhas</a></li>
+                <li role="presentation" class='<?php if($obter == 'militares'){echo 'active';}?>'>
+                    <a href="<?php echo base_url()?>registo/lista/militares">Militares</a></li>
+            </ul>
+        </div>
+    <table class="table table-striped table-condensed table-hover">
             <thead>
             <tr>
                 <th>GDH</th>
