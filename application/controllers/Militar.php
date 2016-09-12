@@ -34,9 +34,10 @@ class Militar extends CI_Controller {
     botao adicionar adido se for companhia e for colocado como adido.
     @return void
     **/
-    public function index()
+    public function index($lista = '')
     {
         $info = array();
+        $info['nav'] = $lista;
         $info['permissoes'] = $this->user_group;
         $info['militares'] = $this->militar_model->ler($info);
         $this->template->load('template', 'militar/lista', $info);

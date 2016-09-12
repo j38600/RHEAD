@@ -1,6 +1,12 @@
 <div class="container-fluid">
     <div class="row">
         <h2>Listagem dos militares</h2>
+        <ul class="nav nav-tabs">
+            <li role="presentation" class='<?php if($nav == ''){echo 'active';}?>'>
+                <a href="<?php echo base_url()?>militar">Colocados RTm (Ativados)</a></li>
+            <li role="presentation" class='<?php if($nav == 'pendentes'){echo 'active';}?>'>
+                <a href="<?php echo base_url()?>militar/index/pendentes">Reserva / Disponibilidade (Desativados)</a></li>
+        </ul>
         <table class="table table-striped table-condensed table-hover">
             <thead>
             <tr>

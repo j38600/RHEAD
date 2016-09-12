@@ -31,7 +31,9 @@ class Militar_model extends CI_Model
         if (isset($info['nims'])) {
             $this->db->where_in('nim', $info['nims']);
         }
-        
+        if (isset($info['nav'])) {
+            $this->db->where_in('ativo', !$info['nav']);
+        }
         $this->db->select('militares.*');
         //as linhas seguintes alteram os nomes aos campos do posto, companhia, quartel dos militares
         $this->db->select('postos.abreviatura AS posto_abreviatura, postos.posto AS posto_nome');
@@ -44,7 +46,7 @@ class Militar_model extends CI_Model
         $this->db->join('postos', 'postos.id = militares.posto_id');
         $this->db->join('companhias', 'companhias.id = militares.companhia_id');
         $this->db->join('quarteis', 'quarteis.id = militares.quartel_id');
-        //$this->db->order_by('apelido', 'asc');
+        $this->db->order_by('nim', 'asc');
         $query = $this->db->get();
         
         return ($query->result_array());

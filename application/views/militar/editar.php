@@ -91,9 +91,16 @@
             echo form_dropdown('companhia_id',$companhias,$militar['companhia_id'],'class="form-control"');?>
             </div>
         </div>
-
-
-
+        <div class="form-group">
+            <label for="ativo" class="col-xs-offset-3 col-xs-2 control-label">Ativo?</label>
+            <div class="col-xs-4">
+            <?php
+                echo form_radio('ativo', 1, $militar['ativo']).' Sim ';
+                echo form_radio('ativo', 0, !$militar['ativo']).' Não ';
+            ?>
+            </div>
+        </div>
+        
         <div class="form-group">
             <div class="col-xs-offset-5 col-xs-4">
                 <button class="btn btn-primary" type="submit" name="submit">Atualizar</button>
