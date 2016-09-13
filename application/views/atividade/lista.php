@@ -25,7 +25,7 @@
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
-                                if ($permissoes['sois']){
+                                if ($permissoes['sois'] || $permissoes['secpess']){
                                     echo anchor(
                                         'atividade/edit/'.$atividade['id'],
                                         '<span class="glyphicon glyphicon-pencil"></span> Atualizar',
@@ -50,7 +50,7 @@
                         <td></td>
                         <td>
                             <?php
-                            if ($permissoes['secpess']){
+                            if ($permissoes['secpess'] || $permissoes['sois']){
                                 echo anchor(
                                     'atividade/nova',
                                     '<span class="glyphicon glyphicon-plus"></span> Nova',

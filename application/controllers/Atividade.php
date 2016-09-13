@@ -50,7 +50,7 @@ class Atividade extends CI_Controller {
     public function nova()
     {
         $permissoes = $this->user_group;
-        if (!$permissoes['secpess']) {
+        if (!$permissoes['secpess'] && !$permissoes['sois']) {
             redirect('atividade', 'refresh');
         }
         $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
@@ -119,13 +119,13 @@ class Atividade extends CI_Controller {
     public function edit($id = '')
     {
         $permissoes = $this->user_group;
-        if (!$permissoes['secpess']) {
+        if (!$permissoes['secpess'] && !$permissoes['sois']) {
             redirect('atividade', 'refresh');
         }
         $info = array();
-        
+
         $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
-        
+
         $bipbip_bd = $this->atividade_model->ler_bipbip($info);
         $quarteis_bd = $this->militar_model->ler_quarteis($info);
         $anuario_bd = $this->atividade_model->ler_anuario($info);
@@ -137,29 +137,29 @@ class Atividade extends CI_Controller {
         foreach($bipbip_bd as $bipbip){
             $bipbips[$bipbip['id']] = $bipbip['seccao'];
             }
-        
+
         foreach($quarteis_bd as $quartel){
             $quarteis[$quartel['id']] = $quartel['quartel'];
             }
-        
+
         foreach($anuario_bd as $anuario){
             $anuarios[$anuario['id']] = $anuario['seccao'];
             }
-        
+
         $info['id'] = $id;
         $atividade = $this->atividade_model->ler($info);
         $info['atividade'] = $atividade[0];
-        
+
         if ($this->form_validation->run() == true) {
-            
+
             unset($info);
             $info = array();
             $info = $this->input->post(null, true);
             unset($info['submit']);
             //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
-            
+
             $this->atividade_model->atualizar($info);
-            
+
             //crio os campos que vou usar para fazer o log.
             $info['user_nim'] = $this->ion_auth->user()->row()->username;
             $info['tipo'] = 'atividades';
@@ -167,14 +167,14 @@ class Atividade extends CI_Controller {
             $info['informacao'] = 'descrição: '.$info['descricao'].'; de: '.$info['de'].'; ate: '.$info['ate'].
                 '; Inserido no SIRCAPE: '.$info['sircape'].'; Secção Bipbip: b|'.$info['bipbip_id'].
                 '; quartel: q|'.$info['quarteis_id'].'; Secção Anuário: a|'.$info['anuario_id'];
-            
+
             $this->registo_model->log_escreve($info);
 
             redirect('atividade', 'refresh');
 
         } else {
             $info['permissoes'] = $this->user_group;
-            
+
             $info['bipbips'] = $bipbips;
             $info['quarteis'] = $quarteis;
             $info['anuarios'] = $anuarios;
