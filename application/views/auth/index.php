@@ -1,7 +1,18 @@
 <h1><?php echo lang('index_heading');?></h1>
 <p><?php echo lang('index_subheading');?></p>
 
-<div id="infoMessage"><?php echo $message;?></div>
+<?php
+if($message){
+?>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <?php echo $message; ?>
+    </div>
+<?php
+}
+?>
+
+<!--<div id="infoMessage"><?php echo $message;?></div>-->
 
 <table class="table table-striped table-condensed table-hover">
     <thead>

@@ -354,8 +354,7 @@ class Migration_Second extends CI_Migration {
             'nim' => array(
                 'type' => 'INT',
                 'constraint' => 8,
-                'unsigned' => TRUE,
-                'zerofill' => TRUE
+                'unsigned' => TRUE
             ),
             'nome' => array(
                 'type' => 'VARCHAR',
@@ -408,8 +407,7 @@ class Migration_Second extends CI_Migration {
             'militar_nim' => array(
                 'type' => 'INT',
                 'constraint' => 8,
-                'unsigned' => TRUE,
-                'zerofill' => TRUE
+                'unsigned' => TRUE
             ),
             'gdh_inicio' => array(
                 'type' => 'DATETIME'
@@ -449,8 +447,7 @@ class Migration_Second extends CI_Migration {
             'militar_nim' => array(
                 'type' => 'INT',
                 'constraint' => 8,
-                'unsigned' => TRUE,
-                'zerofill' => TRUE
+                'unsigned' => TRUE
             ),
             'escalas_id' => array(
                 'type' => 'INT',
@@ -475,8 +472,7 @@ class Migration_Second extends CI_Migration {
             'militar_nim' => array(
                 'type' => 'INT',
                 'constraint' => 8,
-                'unsigned' => TRUE,
-                'zerofill' => TRUE
+                'unsigned' => TRUE
             ),
             'gdh' => array(
                 'type' => 'DATETIME'
@@ -507,8 +503,7 @@ class Migration_Second extends CI_Migration {
             'militar_nim' => array(
                 'type' => 'INT',
                 'constraint' => 8,
-                'unsigned' => TRUE,
-                'zerofill' => TRUE
+                'unsigned' => TRUE
             ),
             'med_cond_id' => array(
                 'type' => 'INT',
@@ -550,7 +545,7 @@ class Migration_Second extends CI_Migration {
                 'type' => 'DATETIME',
                 'default' => '0000-00-00 00:00:00'
             ),
-            'imformacao' => array(
+            'informacao' => array(
                 'type' => 'TEXT'
             ),
             'impor_proxima_cerimonia' => array(
