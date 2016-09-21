@@ -23,7 +23,7 @@ class Atividade extends CI_Controller {
             $this->user_group['secpess'] = $this->ion_auth->in_group('SecPess');
             $this->user_group['admin'] = $this->ion_auth->is_admin();
         }
-        $this->output->enable_profiler(TRUE);
+    //$this->output->enable_profiler(TRUE);
     }
 
     /**@
@@ -34,11 +34,38 @@ class Atividade extends CI_Controller {
     {
         unset($info);
         $info = array();
-        $info = $this->input->post(null, true);
         
+        $bipbip_bd = $this->atividade_model->ler_bipbip($info);
+        $anuario_bd = $this->atividade_model->ler_anuario($info);
+
+        $bipbips=array();
+        $bipbips[0]='Todas';
+
+        $anuarios=array();
+        $anuarios[0]='Todas';
+
+        foreach($bipbip_bd as $bipbip){
+            $bipbips[$bipbip['id']] = $bipbip['seccao'];
+            }
+
+        foreach($anuario_bd as $anuario){
+            $anuarios[$anuario['id']] = $anuario['seccao'];
+            }
+        
+        //var_dump($info);
+        //echo ('separador');
+
+        $info = $this->input->post(null, true);
+        //var_dump($info);
+
         $atividades = $this->atividade_model->ler($info);
+
         $info['atividades'] = $atividades;
         $info['permissoes'] = $this->user_group;
+
+        $info['bipbips'] = $bipbips;
+        $info['anuarios'] = $anuarios;
+
         //var_dump($info);
         $this->template->load('template', 'atividade/lista', $info);
     }

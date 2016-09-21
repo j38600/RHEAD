@@ -8,18 +8,6 @@ class Atividade_model extends CI_Model
         parent::__construct();
     }
     
-    /*
-    / Tabela atividades
-    / ID                PK INT(11)
-    / DESCRICAO         VARCHAR(255)
-    / DE                DATETIME
-    / ATE               DATETIME
-    / CANCELADA         TINYINT(0)
-    / SIRCAPE           TINYINT(0)
-    / BIPBIP_ID         FK INT(11)
-    / ANUARIO_ID        FK INT(11)
-    / QUARTEIS_ID       FK INT(11)
-    */
     
     //funcao que le a tabela das atividades
     //return de listas de todas as atividades, independentemente do quartel
@@ -31,14 +19,20 @@ class Atividade_model extends CI_Model
         }else{
             $this->db->where('cancelada', 0);
         }
+        if (isset($info['sircape'])) {
+            $this->db->where('sircape', 1);
+        }else{
+            $this->db->where('sircape', 0);
+        }
         if (isset($info['id'])) {
             $this->db->where('atividades.id', $info['id']);
         }
-        if (isset($info['bipbip_id'])) {
+        if (isset($info['bipbip_id']) && $info['bipbip_id']!=0) {
+            echo('entrou');
             $this->db->where_in('bipbip_id', $info['bipbip_id']);
         }
-        if (isset($info['anuario_id'])) {
-            $this->db->where_in('anuario_id', $info['bipbip_id']);
+        if (isset($info['anuario_id']) && $info['anuario_id']!=0) {
+            $this->db->where_in('anuario_id', $info['anuario_id']);
         }
         
         $this->db->select('atividades.*');

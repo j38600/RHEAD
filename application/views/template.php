@@ -17,12 +17,6 @@
         <script src='<?php echo base_url()?>js/bootstrap.min.js'> </script>
         <script src='<?php echo base_url()?>js/metisMenu.min.js'></script>
         <script src='<?php echo base_url()?>js/sb-admin-2.js'></script>
-
-        <?php if (isset($map)){
-            echo $map['js'];
-                }
-         ?>
-        
     </head>
 
 <body>

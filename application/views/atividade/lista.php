@@ -1,6 +1,109 @@
 <div class="container-fluid">
     <div class="row">
         <h2>Listagem de atividades previstas / realizadas</h2>
+        <a class="btn btn-primary btn-outline" role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+          Filtros
+        </a>
+        <div class="collapse" id="collapseExample1">
+          <div class="well">
+              <?php echo form_open('atividade/index', ['class' => 'form-horizontal, form-inline',
+                                                        'role' => 'form']); ?>
+              <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">De</div>
+                    <?php echo form_input([ 'name' => 'de',
+                                            'id' => 'de',
+                                            'type' => 'date',
+                                            'value' => set_value('de'),
+                                            'class' => 'form-control']); ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Até</div>
+                    <?php echo form_input([ 'name' => 'ate',
+                                            'id' => 'ate',
+                                            'type' => 'date',
+                                            'value' => set_value('ate'),
+                                            'class' => 'form-control']); ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Bipbip</div>
+                <?php 
+                echo form_dropdown('bipbip_id',$bipbips,'','class="form-control"');?>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Anuário</div>
+                <?php 
+                echo form_dropdown('anuario_id',$anuarios,'','class="form-control"');?>
+                </div>
+              </div>
+              <div class="form-group">
+                  <div class="checkbox">
+                    <?php echo form_checkbox('cancelada','').' Cancelada';?>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="checkbox">
+                      <?php echo form_checkbox('sircape','').' SIRCAPE';?>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-default">Filtrar</button>
+            <?php
+            echo form_close();
+            ?>
+          </div>
+        </div><!--
+        <div class="collapse" id="collapseExample2">
+          <div class="well">
+            <form class="form-inline">
+              <div class="form-group">
+                <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                <div class="input-group">
+                  <div class="input-group-addon">Bipbip</div>
+                  <select class="form-control">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                <div class="input-group">
+                  <div class="input-group-addon">Anuário</div>
+                  <select class="form-control">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                <div class="input-group">
+                  <div class="input-group-addon">Relatório Semanal BrigInt/G9</div>
+                  <select class="form-control">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-default">Exportar RTF</button>
+            </form>
+          </div>
+        </div> -->
         <table class="table table-striped table-condensed table-hover">
             <thead>
             <tr>
