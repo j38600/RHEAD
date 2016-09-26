@@ -34,12 +34,46 @@ class Militar extends CI_Controller {
     botao adicionar adido se for companhia e for colocado como adido.
     @return void
     **/
-    public function index($lista = '')
+    public function index()
     {
+        unset($info);
         $info = array();
-        $info['nav'] = $lista;
+        
+        $postos_bd = $this->militar_model->ler_postos($info);
+        $quarteis_bd = $this->militar_model->ler_quarteis($info);
+        $companhias_bd = $this->militar_model->ler_companhias($info);
+
+        $postos=array();
+        $quarteis=array();
+        $companhias=array();
+
+        foreach($postos_bd as $posto){
+            $postos[$posto['id']] = $posto['posto'];
+            }
+        $postos = array('0' => 'Outra opção') + $postos;
+        $postos = array('' => 'Todos') + $postos;
+        foreach($quarteis_bd as $quartel){
+            $quarteis[$quartel['id']] = $quartel['quartel'];
+            }
+        $quarteis = array('0' => 'Outra opção') + $quarteis;
+        $quarteis = array('' => 'Todos') + $quarteis;
+        foreach($companhias_bd as $companhia){
+            $companhias[$companhia['id']] = $companhia['companhia'];
+            }
+        $companhias = array('0' => 'Outra opção') + $companhias;
+        $companhias = array('' => 'Todas') + $companhias;
+        
+        $info = $this->input->post(null, true);
+        
+        $info['postos'] = $postos;
+        $info['quarteis'] = $quarteis;
+        $info['companhias'] = $companhias;
+
         $info['permissoes'] = $this->user_group;
         $info['militares'] = $this->militar_model->ler($info);
+        
+        //var_dump($info);
+        
         $this->template->load('template', 'militar/lista', $info);
     }
 

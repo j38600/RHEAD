@@ -28,7 +28,6 @@ class Atividade_model extends CI_Model
             $this->db->where('atividades.id', $info['id']);
         }
         if (isset($info['bipbip_id']) && $info['bipbip_id']!=0) {
-            echo('entrou');
             $this->db->where_in('bipbip_id', $info['bipbip_id']);
         }
         if (isset($info['anuario_id']) && $info['anuario_id']!=0) {

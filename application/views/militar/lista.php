@@ -1,12 +1,45 @@
 <div class="container-fluid">
     <div class="row">
         <h2>Listagem dos militares</h2>
-        <ul class="nav nav-tabs">
-            <li role="presentation" class='<?php if($nav == ''){echo 'active';}?>'>
-                <a href="<?php echo base_url()?>militar">Colocados RTm (Ativados)</a></li>
-            <li role="presentation" class='<?php if($nav == 'pendentes'){echo 'active';}?>'>
-                <a href="<?php echo base_url()?>militar/index/pendentes">Reserva / Disponibilidade (Desativados)</a></li>
-        </ul>
+        <a class="btn btn-primary btn-outline" role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+          Filtros
+        </a>
+        <div class="collapse" id="collapseExample1">
+          <div class="well">
+              <?php echo form_open('militar', ['class' => 'form-horizontal, form-inline',
+                                                        'role' => 'form']); ?>
+              <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Posto</div>
+                <?php 
+                echo form_dropdown('posto_id',$postos,'','class="form-control"');?>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Quartel</div>
+                <?php 
+                echo form_dropdown('quartel_id',$quarteis,'','class="form-control"');?>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Companhia</div>
+                <?php 
+                echo form_dropdown('companhia_id',$companhias,'','class="form-control"');?>
+                </div>
+              </div>
+              <div class="form-group">
+                  <div class="checkbox">
+                    <?php echo form_checkbox('ativo','').' Fora do ativo';?>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-default">Filtrar</button>
+            <?php
+            echo form_close();
+            ?>
+          </div>
+        </div>
         <table class="table table-striped table-condensed table-hover">
             <thead>
             <tr>

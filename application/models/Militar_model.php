@@ -8,19 +8,6 @@ class Militar_model extends CI_Model
         parent::__construct();
     }
     
-    /*
-    / Tabela militar
-    / NIM               INT(8)
-    / NOME              VARCHAR(200)
-    / APELIDO           VARCHAR(50)
-    / ANTIGUIDADE       DATETIME
-    / NOTA_CURSO        INT(4)
-    / ATIVO             INT(11)
-    / POSTO_ID          FK INT(11)
-    / QUARTEL_ID        FK INT(11)
-    / COMPANHIA_ID      FK INT(11)
-    */
-    
     //funcao que le a tabela dos militares
     function ler($info)
     {
@@ -31,8 +18,20 @@ class Militar_model extends CI_Model
         if (isset($info['nims'])) {
             $this->db->where_in('nim', $info['nims']);
         }
-        if (isset($info['nav'])) {
-            $this->db->where_in('ativo', !$info['nav']);
+        //do interface militar/lista.php diz "fora do ativo", então tenho k negar o ativo.
+        if (isset($info['ativo'])) {
+            $this->db->where('ativo', 0);
+        }else{
+            $this->db->where('ativo', 1);
+        }
+        if (isset($info['posto_id']) && $info['posto_id']!='') {
+            $this->db->where_in('posto_id', $info['posto_id']);
+        }
+        if (isset($info['quartel_id']) && $info['quartel_id']!='') {
+            $this->db->where_in('quartel_id', $info['quartel_id']);
+        }
+        if (isset($info['companhia_id']) && $info['companhia_id']!='') {
+            $this->db->where_in('companhia_id', $info['companhia_id']);
         }
         $this->db->select('militares.*');
         //as linhas seguintes alteram os nomes aos campos do posto, companhia, quartel dos militares

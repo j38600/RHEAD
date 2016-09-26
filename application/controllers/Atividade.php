@@ -46,18 +46,14 @@ class Atividade extends CI_Controller {
 
         foreach($bipbip_bd as $bipbip){
             $bipbips[$bipbip['id']] = $bipbip['seccao'];
-            }
+        }
 
         foreach($anuario_bd as $anuario){
             $anuarios[$anuario['id']] = $anuario['seccao'];
-            }
+        }
         
-        //var_dump($info);
-        //echo ('separador');
-
         $info = $this->input->post(null, true);
-        //var_dump($info);
-
+        
         $atividades = $this->atividade_model->ler($info);
 
         $info['atividades'] = $atividades;
@@ -66,7 +62,6 @@ class Atividade extends CI_Controller {
         $info['bipbips'] = $bipbips;
         $info['anuarios'] = $anuarios;
 
-        //var_dump($info);
         $this->template->load('template', 'atividade/lista', $info);
     }
     
