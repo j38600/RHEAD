@@ -55,6 +55,37 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="fotografias" class="col-xs-offset-3 col-xs-2 control-label">Cobertura fotográfica</label>
+            <div class="col-xs-4">
+            <?php
+                echo form_radio('fotografias', 1).' Sim ';
+                echo form_radio('fotografias', 0).' Não ';
+            ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="rel_empenhamento_op" class="col-xs-offset-3 col-xs-2 control-label">Rel. Empenhamento Op.</label>
+            <div class="col-xs-4">
+            <?php
+                echo form_radio('rel_empenhamento_op', 1).' Feito ';
+                echo form_radio('rel_empenhamento_op', 0).' Por fazer';
+            ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="noticia" class="col-xs-offset-3 col-xs-2 control-label">Notícia:</label>
+            <div class="col-xs-4">
+            <?php echo form_textarea(
+                    ['name' => 'noticia',
+                    'id' => 'noticia',
+                    'type' => 'text',
+                    'value' => set_value('noticia'),
+                    'rows' => '6',
+                    'class' => 'form-control']
+                    ); ?>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="quartel_id" class="col-xs-offset-3 col-xs-2 control-label">Unidade/Estabelecimento/Órgão</label>
             <div class="col-xs-4">
             <?php 
