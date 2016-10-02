@@ -56,15 +56,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="sircape" class="col-xs-offset-3 col-xs-2 control-label">SIRCAPE</label>
-            <div class="col-xs-4">
-            <?php
-                echo form_radio('sircape', 1, $atividade['sircape']).' inserida ';
-                echo form_radio('sircape', 0, !$atividade['sircape']).' por inserir ';
-            ?>
-            </div>
-        </div>
-        <div class="form-group">
             <label for="rel_empenhamento_op" class="col-xs-offset-3 col-xs-2 control-label">Rel. Empenhamento Op.</label>
             <div class="col-xs-4">
             <?php

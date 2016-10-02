@@ -8,18 +8,6 @@ class Medalha_model extends CI_Model
         parent::__construct();
     }
     
-    /*
-    / Tabela medalha
-    / MILITAR_NIM       FK INT(8)
-    / MED_COND_ID       FK INT(11)
-    / PEDIDA            TINYINT
-    / DATA_PEDIDA       DATETIME NULL
-    / RECEBIDA          TINYINT
-    / DATA_RECEBIDA     DATETIME NULL
-    / IMPOSTA           TINYINT
-    / DATA_IMPOSTA      DATETIME NULL
-    */
-    
     //funcao que le a tabela das medalhas e condecorações
     //return de listas de militares, com um join da tabela de medalhas.
     function ler_militar($info)

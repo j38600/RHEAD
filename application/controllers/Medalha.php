@@ -52,7 +52,7 @@ class Medalha extends CI_Controller {
     **/
     public function view($id = '')
     {
-        //$id da escala
+        //$id da medalha
         $info = array();
         $info['id'] = $id;
         $medalha = $this->medalha_model->ler($info);
@@ -180,7 +180,7 @@ class Medalha extends CI_Controller {
     }
     
     /**@
-    Nova medalha ou condecoração
+    Cria entrada na tabela intermédia militars <=> medalhas
     @return void
     **/
     public function atribuir()

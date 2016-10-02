@@ -47,11 +47,6 @@
                     <?php echo form_checkbox('cancelada','').' Cancelada';?>
                   </div>
               </div>
-              <div class="form-group">
-                  <div class="checkbox">
-                      <?php echo form_checkbox('sircape','').' SIRCAPE';?>
-                  </div>
-              </div>
               <button type="submit" class="btn btn-default">Filtrar</button>
             <?php
             echo form_close();
@@ -112,7 +107,6 @@
                 <th>Até</th>
                 <th>Secção BipBip</th>
                 <th>Secção Anuário</th>
-                <th>SIRCAPE</th>
                 <tH></th>
             </tr>
             </thead>
@@ -124,17 +118,16 @@
                         <td><?php echo date('d-m-Y', strtotime($atividade['ate']));?></td>
                         <td><?php echo $atividade['seccao_bipbip'];?></td>
                         <td><?php echo $atividade['seccao_anuario'];?></td>
-                        <td><?php echo ($atividade['sircape']) ? 'Sim' : 'Não';?></td>
                         <td>
                             <div class="btn-group btn-block">
                                 <?php
                                 if ($permissoes['sois'] || $permissoes['secpess']){
                                     echo anchor(
-                                        'atividade/edit/'.$atividade['id'],
-                                        '<span class="glyphicon glyphicon-pencil"></span> Atualizar',
+                                        'atividade/view/'.$atividade['id'],
+                                        '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
                                         array(
                                             'title' => 'Atualizar',
-                                            'class' => 'btn btn-outline btn-warning col-xs-12',
+                                            'class' => 'btn btn-outline btn-success col-xs-12',
                                             'role' => 'button'
                                         )
                                     );
@@ -145,7 +138,6 @@
                     </tr>
                 <?php endforeach;?>
                 <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
