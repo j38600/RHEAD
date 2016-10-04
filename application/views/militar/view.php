@@ -163,7 +163,7 @@
         <?php
         }
         ?>
-        <div class="col-md-5 col-md-offset-1">
+        <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Informações pessoais</h3>
@@ -192,7 +192,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Medalhas e condecorações</h3>
@@ -315,6 +315,30 @@
                             </p>
                         </li>
                     <?php endforeach;?>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Atividades</h3>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading"><?php echo 'Nr. de atividades: '.$nr_atividades;?></h4>
+                            <?php foreach ($atividades as $atividade):?>
+                            <p class="list-group-item-text">
+                                <?php
+                                    echo anchor(
+                                        'atividade/view/'.$atividade['atividade_id'],
+                                        $atividade['descricao']);
+                                    echo ', de '.date('d-m-Y', strtotime($atividade['gdh_inicio']));
+                                    echo ' até '.date('d-m-Y', strtotime($atividade['gdh_fim']));
+                                    echo br();
+                                ?>
+                            <?php endforeach;?>
+                        </p>
+                    </li>
                 </ul>
             </div>
         </div>

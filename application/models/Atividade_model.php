@@ -99,7 +99,28 @@ class Atividade_model extends CI_Model
         return true;
     }
 
-    //funcao que le os quarteis que existem
+    //funcao que le a tabela das atividades
+    //return de listas de militares, com um join da tabela de atividades.
+    function ler_militar($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where('militar_nim', $info['id']);
+        }
+        
+        $this->db->select('militares_atividades.*');
+        //as linhas seguintes alteram os nomes aos campos do posto, companhia, quartel dos militares
+        $this->db->select('atividades.descricao');
+        
+        $this->db->from('militares_atividades');
+        
+        //as linhas seguintes concatenam as medalhas e condecorações aos militares
+        $this->db->join('atividades', 'atividades.id = militares_atividades.atividade_id');
+        //$this->db->order_by('apelido', 'asc');
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
+    
     /*
     //funcao que le a tabela das medalhas e condecorações
     //return de listas de militares, com um join da tabela de militares
@@ -132,40 +153,6 @@ class Atividade_model extends CI_Model
         return ($query->result_array());
     }
     */
-    /*
-    //funcao que le os nims que ja teem uma medalha.
-    //igual a ler_militar, mas sem o join à tabela das medalhas.
-    function ler_nims($info)
-    {
-        if (isset($info['id'])) {
-            $this->db->where_in('med_cond_id', $info['id']);
-        }
-        $this->db->select('militares_med_cond.*');
-        $this->db->from('militares_med_cond');
-        
-        $query = $this->db->get();
-        
-        return ($query->result_array());
-    }
-    */
-    /*
-    //funcao que le a tabela das medalhas e condecoracoes
-    function ler($info)
-    {
-        
-        if (isset($info['id'])) {
-            $this->db->where('id', $info['id']);
-            $this->db->limit(1);
-        }
-        $this->db->select('medalhas_condecoracoes.*, COUNT(militares_med_cond.med_cond_id) as nr_militares');
-        $this->db->from('medalhas_condecoracoes');
-        $this->db->join('militares_med_cond', 'militares_med_cond.med_cond_id = medalhas_condecoracoes.id', 'left');
-        $this->db->group_by('medalhas_condecoracoes.id');
-        
-        $query = $this->db->get();
-        
-        return ($query->result_array());
-    }*/
     
     //funcao para adicionar uma medalha nova nova
     function adicionar($info)
@@ -189,15 +176,6 @@ class Atividade_model extends CI_Model
         $this->db->where('militar_nim', $info['militar_nim']);
         $this->db->where('med_cond_id', $info['med_cond_id']);
         $this->db->update('militares_med_cond', $info);
-        return true;
-    }
-    */
-    /*
-    function atualizar_stock($info)
-    {
-        $this->db->set('stock', $info['stock']);
-        $this->db->where('id', $info['med_cond_id']);
-        $this->db->update('medalhas_condecoracoes');
         return true;
     }
     */

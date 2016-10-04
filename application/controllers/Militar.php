@@ -94,8 +94,11 @@ class Militar extends CI_Controller {
         $info['id'] = $id;
         $militar = $this->militar_model->ler($info);
         $medalhas = $this->medalha_model->ler_militar($info);
+        $atividades = $this->atividade_model->ler_militar($info);
         $info['militar'] = $militar[0];
         $info['medalhas'] = $medalhas;
+        $info['atividades'] = $atividades;
+        $info['nr_atividades'] = count($atividades);
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'militar/view', $info);
     }

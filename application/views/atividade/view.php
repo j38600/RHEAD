@@ -106,6 +106,8 @@
                         <dd><?php echo date('d-m-Y', strtotime($atividade['de']));?></dd>
                         <dt>Até: </dt>
                         <dd><?php echo date('d-m-Y', strtotime($atividade['ate']));?></dd>
+                        <dt>Nr militares: </dt>
+                        <dd><?php echo ($atividade['nr_militares']);?></dd>
                         <dt>Cancelada?</dt>
                         <dd><?php echo ($atividade['cancelada']) ? 'Sim' : 'Não';?></dd>
                         <dt>Cobertura fotográfica?</dt>
