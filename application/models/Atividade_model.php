@@ -14,15 +14,8 @@ class Atividade_model extends CI_Model
     //faz o join com as tabelas anuário e bipbip.
     function ler($info)
     {
-        if (isset($info['cancelada'])) {
-            $this->db->where('cancelada', 1);
-        }else{
-            $this->db->where('cancelada', 0);
-        }
-        if (isset($info['sircape'])) {
-            $this->db->where('sircape', 1);
-        }else{
-            $this->db->where('sircape', 0);
+        if (isset($info['cancelada']) && $info['cancelada']!=2) {
+            $this->db->where('atividades.cancelada', $info['cancelada']);
         }
         if (isset($info['id'])) {
             $this->db->where('atividades.id', $info['id']);
@@ -34,15 +27,36 @@ class Atividade_model extends CI_Model
             $this->db->where_in('anuario_id', $info['anuario_id']);
         }
         
-        $this->db->select('atividades.*');
         $this->db->select('bipbip.seccao AS seccao_bipbip');
         $this->db->select('anuario.seccao AS seccao_anuario');
+        if (isset($info['view'])) {
+            $this->db->select('COUNT(militares_atividades.atividade_id) as nr_militares');
+        }
+        $this->db->select('atividades.*');
         $this->db->from('atividades');
         
         //as linhas seguintes concatenam as tabelas bipbip e anuario com as atividades
+        if (isset($info['view'])) {
+            $this->db->join('militares_atividades', 'militares_atividades.atividade_id = atividades.id', 'left');
+        }
         $this->db->join('bipbip', 'atividades.bipbip_id = bipbip.id');
         $this->db->join('anuario', 'atividades.anuario_id = anuario.id');
         $this->db->order_by('de', 'asc');
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
+    
+    //funcao que le os nims que estavam envolvidos em atividades.
+    //igual a ler_militar, mas sem o join à tabela das atividades.
+    function ler_nims($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('atividade_id', $info['id']);
+        }
+        $this->db->select('militares_atividades.*');
+        $this->db->from('militares_atividades');
+        
         $query = $this->db->get();
         
         return ($query->result_array());
@@ -161,14 +175,13 @@ class Atividade_model extends CI_Model
         return $novo_id;
     }
     
-    /*
-    //funcao para atribuir uma medalha a um militar
-    function atribuir($info)
+    //funcao para associar uma atividade a um militar
+    function associar($info)
     {
-        $this->db->insert('militares_med_cond', $info);
+        $this->db->insert('militares_atividades', $info);
         return true;
     }
-    */
+    
     /*
     //funcao para atualizar as datas de uma medalha a um militar
     function atualizar_militar_med_cond($info)

@@ -201,7 +201,7 @@ class Medalha extends CI_Controller {
         $info['informacao'] = 'nim condecorado: '.$info['militar_nim'].'; medalha: m|'.$info['med_cond_id'];
         $this->registo_model->log_escreve($info);
         
-        redirect('militar/view/'.$info['militar_nim'], 'refresh');
+        redirect('medalha/view/'.$info['med_cond_id'], 'refresh');
     }
 
     /**@

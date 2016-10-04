@@ -1,12 +1,12 @@
 <div class="container-fluid">
     <div class="row">
         <h2>Listagem de atividades previstas / realizadas</h2>
-        <a class="btn btn-primary btn-outline" role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+        <a class="btn btn-primary btn-outline" role="button" data-toggle="collapse" href="#filtros" aria-expanded="false" aria-controls="collapseExample">
           Filtros
         </a>
-        <div class="collapse" id="collapseExample1">
+        <div class="collapse" id="filtros">
           <div class="well">
-              <?php echo form_open('atividade/index', ['class' => 'form-horizontal, form-inline',
+              <?php echo form_open('atividade', ['class' => 'form-horizontal, form-inline',
                                                         'role' => 'form']); ?>
               <div class="form-group">
                 <div class="input-group">
@@ -43,9 +43,11 @@
                 </div>
               </div>
               <div class="form-group">
-                  <div class="checkbox">
-                    <?php echo form_checkbox('cancelada','').' Cancelada';?>
-                  </div>
+                <div class="input-group">
+                    <div class="input-group-addon">Cancelada:</div>
+                <?php 
+                echo form_dropdown('cancelada',$canceladas,'','class="form-control"');?>
+                </div>
               </div>
               <button type="submit" class="btn btn-default">Filtrar</button>
             <?php

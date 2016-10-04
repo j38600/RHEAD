@@ -23,7 +23,7 @@ class Atividade extends CI_Controller {
             $this->user_group['secpess'] = $this->ion_auth->in_group('SecPess');
             $this->user_group['admin'] = $this->ion_auth->is_admin();
         }
-    //$this->output->enable_profiler(TRUE);
+    $this->output->enable_profiler(TRUE);
     }
 
     /**@
@@ -44,6 +44,11 @@ class Atividade extends CI_Controller {
         $anuarios=array();
         $anuarios[0]='Todas';
 
+        $canceladas=array();
+        $canceladas[2]='Todas';
+        $canceladas[1]='Sim';
+        $canceladas[0]='Não';
+
         foreach($bipbip_bd as $bipbip){
             $bipbips[$bipbip['id']] = $bipbip['seccao'];
         }
@@ -55,16 +60,99 @@ class Atividade extends CI_Controller {
         $info = $this->input->post(null, true);
         
         $atividades = $this->atividade_model->ler($info);
-
+        
         $info['atividades'] = $atividades;
         $info['permissoes'] = $this->user_group;
 
         $info['bipbips'] = $bipbips;
         $info['anuarios'] = $anuarios;
+        $info['canceladas'] = $canceladas;
 
         $this->template->load('template', 'atividade/lista', $info);
     }
     
+    /**@
+    Cartão à esquerda com lista de militares envolvidos.
+        Clicando vão para o militar.
+        No fim da lista, pode adicionar um militar.
+            Escolhe de uma dropdown com os nims de todos.
+            É direcionado para o mesmo, podendo pedir, receber ou atribuir a mesma.
+    Cartão à direita com informações da atividade. Aqui podem editá-la.
+    @return void
+    **/
+    public function view($id = '')
+    {
+        //$id da atividade
+        $info = array();
+        $info['id'] = $id;
+        
+        //variavel para ser usada no modelo.
+        $info['view'] = array();
+
+        $atividade = $this->atividade_model->ler($info);
+        $info['atividade'] = $atividade[0];
+        //var_dump($info);
+        //break;
+        //nims dos militares que estiveram envolvidos nesta atividade
+        if ($info['atividade']['nr_militares'] > 0)
+        {
+            $info['nims'] = $this->atividade_model->ler_nims($info);
+            unset($info['id']);
+            $nims = $info['nims'];
+            
+            $cont = 0;
+
+            foreach ($nims as $nim)
+            {
+                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                unset($nims[$cont]);
+                $cont++;
+                
+            }
+            $info['nims'] = $nims;
+            
+            //militares desta medalha
+            $info['militares'] = $this->militar_model->ler($info);
+            unset($info['nims']);
+        }
+        else 
+        {
+            $info['militares'] = array();
+            unset($info['id']);
+        }
+        
+        //saco todos os militares, para poder nomea-los às atividades.
+        $info['todos_militares'] = $this->militar_model->ler($info);
+        
+        $info['permissoes'] = $this->user_group;
+        $this->template->load('template', 'atividade/view', $info);
+    }
+
+    /**@
+    Cria entrada na tabela intermédia militars <=> atividades
+    @return void
+    **/
+    public function associar()
+    {
+        $permissoes = $this->user_group;
+        if (!$permissoes['secpess']) {
+            redirect('atividade', 'refresh');
+        }
+        $info = array();
+        $info = $this->input->post(null, true);
+        
+        $info['id'] = $this->atividade_model->associar($info);
+        
+        //crio os campos que vou usar para fazer o log.
+        //$info['user_nim'] = $this->ion_auth->user()->row()->username;
+        //$info['tipo'] = 'medalhas';
+        //$info['accao'] = 'atribuir';
+        //$info['informacao'] = 'nim condecorado: '.$info['militar_nim'].'; medalha: m|'.$info['med_cond_id'];
+        //$this->registo_model->log_escreve($info);
+        
+        redirect('atividade/view/'.$info['atividade_id'], 'refresh');
+    }
+
     /**@
     Nova atividade
     @return void
@@ -113,7 +201,7 @@ class Atividade extends CI_Controller {
             $info['tipo'] = 'atividades';
             $info['accao'] = 'criar';
             $info['informacao'] = 'descrição: '.$info['descricao'].'; de: '.$info['de'].'; ate: '.$info['ate'].
-                '; Inserido no SIRCAPE: '.$info['sircape'].'; Secção Bipbip: b|'.$info['bipbip_id'].
+                '; Secção Bipbip: b|'.$info['bipbip_id'].
                 '; quartel: q|'.$info['quarteis_id'].'; Secção Anuário: a|'.$info['anuario_id'];
             
             $this->registo_model->log_escreve($info);
@@ -133,7 +221,6 @@ class Atividade extends CI_Controller {
 
     /**@
     Edição de atividades.
-    Quando adicionarem a atividade ao SIRCAPE, podem vir aki atualizar.
     Se mudar o nome, datas dos apoios, podem vir aki.
     Se cancelarem, desaparecem da lista, mas nao da db. 
     @return void
@@ -187,12 +274,12 @@ class Atividade extends CI_Controller {
             $info['tipo'] = 'atividades';
             $info['accao'] = 'atualizar';
             $info['informacao'] = 'descrição: '.$info['descricao'].'; de: '.$info['de'].'; ate: '.$info['ate'].
-                '; Inserido no SIRCAPE: '.$info['sircape'].'; Secção Bipbip: b|'.$info['bipbip_id'].
+                '; Secção Bipbip: b|'.$info['bipbip_id'].
                 '; quartel: q|'.$info['quarteis_id'].'; Secção Anuário: a|'.$info['anuario_id'];
 
             $this->registo_model->log_escreve($info);
 
-            redirect('atividade', 'refresh');
+            redirect('atividade/view/'.$info['id'], 'refresh');
 
         } else {
             $info['permissoes'] = $this->user_group;
