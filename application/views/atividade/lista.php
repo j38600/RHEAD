@@ -128,7 +128,7 @@
                                         'atividade/view/'.$atividade['id'],
                                         '<span class="glyphicon glyphicon-eye-open"></span> Consultar',
                                         array(
-                                            'title' => 'Atualizar',
+                                            'title' => 'Consultar',
                                             'class' => 'btn btn-outline btn-success col-xs-12',
                                             'role' => 'button'
                                         )
@@ -152,7 +152,7 @@
                                     'atividade/nova',
                                     '<span class="glyphicon glyphicon-plus"></span> Nova',
                                     array(
-                                        'title' => 'Novo',
+                                        'title' => 'Nova',
                                         'class' => 'btn-block btn btn-primary btn-outline',
                                         'role' => 'button'
                                     )

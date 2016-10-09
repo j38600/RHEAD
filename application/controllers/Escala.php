@@ -28,17 +28,16 @@ class Escala extends CI_Controller {
 
     /**@
     Listagem de escalas existentes
-    + # de militares por escala
-    <nome da escala | # militares | Consultar escala(view) | Editar (edit)>
+    <nome da escala | Nr militares | Consultar escala(view) | Previsao (previsao)>
     @return void
     **/
     public function index()
     {
+        unset($info);
         $info = array();
+        
         $escalas = $this->escala_model->ler($info);
         
-        var_dump($escalas);
-        //break;
         //$info['nr_militares_escalas'] = 1;
         //$nr_militares_p_escala = $this->escala_model->ler($info);
         
@@ -57,7 +56,6 @@ class Escala extends CI_Controller {
         Podemos obter lista dos próximos 2ou 3 períodos de indisponibilidades
     + botão para ver previsão da escala.
     @return void
-    **/
     public function view($id = '')
     {
         //$id da escala
@@ -94,13 +92,13 @@ class Escala extends CI_Controller {
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'escala/view', $info);
     }
-
+**/
+    
     /**@
     Vista de uma escala. 
     Diversas opções da mesma(semana, fim de semana, 24h ou inicio e fim, etc.)
     + lista dos militares da mesma, com informação de disponibilidade dos mesmos.
     @return void
-    **/
     public function edit($id = '')
     {
         $info = array();
@@ -110,12 +108,12 @@ class Escala extends CI_Controller {
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'emitter/view', $info);
     }
-
+**/
+    
     /**@
     Histórico das escalas!!!
     Por anos, botar estatisticas aki
     @return void
-    **/
     public function history($id = '')
     {
         $info = array();
@@ -125,7 +123,8 @@ class Escala extends CI_Controller {
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'emitter/view', $info);
     }
-
+**/
+    /**
     public function novo()
     {
         $this->form_validation->set_rules('nome_curto', 'Nome Curto', 'trim|max_length[50]|required|xss_clean');
@@ -162,6 +161,7 @@ class Escala extends CI_Controller {
             $this->template->load('template', 'emitter/new', $info);
         }
     }
+    **/
 }
 
 /* End of file escala.php */

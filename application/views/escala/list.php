@@ -29,9 +29,9 @@
                                     );
                                     echo anchor(
                                         'escala/edit/'.$escala['id'],
-                                        '<span class="glyphicon glyphicon-pencil"></span> Atualizar',
+                                        '<span class="glyphicon glyphicon-list-alt"></span> Previsão',
                                         array(
-                                            'title' => 'Atualizar',
+                                            'title' => 'Previsão',
                                             'class' => 'btn btn-outline btn-warning col-xs-6',
                                             'role' => 'button'
                                         )

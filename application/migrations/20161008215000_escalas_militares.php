@@ -39,6 +39,10 @@ class Migration_Escalas_militares extends CI_Migration {
                 'type' => 'TINYINT',
                 'constraint' => 1
             ),
+            'semana' => array(
+                'type' => 'TINYINT',
+                'constraint' => 1
+            ),
             'hora_inicio' => array(
                 'type' => 'DATETIME',
                 'default' => '0000-00-00 00:00:00'
@@ -47,14 +51,12 @@ class Migration_Escalas_militares extends CI_Migration {
                 'type' => 'DATETIME',
                 'default' => '0000-00-00 00:00:00'
             ),
-            //a duração será medida em dias??
-            'duracao' => array(
+            'horas_duracao' => array(
                 'type' => 'INT',
                 'constraint' => 11,
                 'default' => 1
             ),
-            //mais tarde acho que vou ter que descriminar o numero de militares a nomear por classe ou posto.
-            'n_nomeados' => array(
+            'numero_nomeados' => array(
                 'type' => 'INT',
                 'constraint' => 11,
                 'default' => 1
