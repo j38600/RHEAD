@@ -124,44 +124,44 @@ class Escala extends CI_Controller {
         $this->template->load('template', 'emitter/view', $info);
     }
 **/
-    /**
-    public function novo()
+    /**@
+    Nova escala
+    @return void
+    **/
+    public function nova()
     {
-        $this->form_validation->set_rules('nome_curto', 'Nome Curto', 'trim|max_length[50]|required|xss_clean');
-        $this->form_validation->set_rules('descricao', 'Descrição', 'trim|required|xss_clean');
+        //$permissoes = $this->user_group;
+        //if (!$permissoes['secpess']) {
+        //    redirect('medalha', 'refresh');
+        //}
+        $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
+        
+        $info = array();
 
-        //$info['pasta'] = scandir(LOCALIZACAO_TOQUES);
-    
         if ($this->form_validation->run() == true) {
             
-            //guardo o array com o conteudo da pasta, e o indice do ficheiro no array
-            $pasta = $info['pasta'];
-            $ficheiro = $this->input->post('nome_ficheiro');
-
             unset($info);
             $info = array();
             $info = $this->input->post(null, true);
             unset($info['submit']);
-            //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
-            $info['nome_ficheiro'] = $pasta[$ficheiro];
-            $info['ativo'] = true;
-            $info['id'] = $this->clarim_model->adicionar($info);
-            
-            $info['user'] = $this->ion_auth->user()->row()->id;
-            $info['accao'] = 'adicionou o toque '.$info['id'].' - '.$info['nome_curto'];
-            $info['agendamento'] = null;
-            $info['ficheiro'] = $info['id'];
-            $info['feriado'] = null;
-            $info['tipo'] = 2;
-            $this->registo_model->log_escreve($info);
 
-            redirect('clarim', 'refresh');
+            $info['id'] = $this->escala_model->adicionar($info);
+            
+            //crio os campos que vou usar para fazer o log.
+            //$info['user_nim'] = $this->ion_auth->user()->row()->username;
+            //$info['tipo'] = 'medalhas';
+            //$info['accao'] = 'nova';
+            //$info['informacao'] = 'nome: '.$info['nome'].'; descrição: '.$info['descricao'];
+            //$this->registo_model->log_escreve($info);
+            
+            redirect('escala', 'refresh');
 
         } else {
-            $this->template->load('template', 'emitter/new', $info);
+
+            $info['permissoes'] = $this->user_group;
+            $this->template->load('template', 'escala/nova', $info);
         }
     }
-    **/
 }
 
 /* End of file escala.php */

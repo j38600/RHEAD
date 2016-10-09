@@ -180,8 +180,8 @@
                         <dd><?php echo $militar['companhia_nome'];?></dd>
                         <dt>Quartel</dt>
                         <dd><?php echo $militar['quartel_nome'];?></dd>
-                        <dt>Antiguidade</dt>
-                        <dd><?php echo date('d-m-Y', strtotime($militar['antiguidade']));?></dd>
+                        <dt>Data de Promoção</dt>
+                        <dd><?php echo date('d-m-Y', strtotime($militar['data_promocao']));?></dd>
                         <dt>Nota de curso</dt>
                         <dd><?php echo $militar['nota_curso'];?></dd>
                         <dt>Ativo?</dt>

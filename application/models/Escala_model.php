@@ -46,14 +46,12 @@ class Escala_model extends CI_Model
     **/
     
     //funcao para adicionar uma escala nova
-    /**
     function adicionar($info)
     {
         $this->db->insert('escalas', $info);
         $novo_id = $this->db->insert_id();
         return $novo_id;
     }
-    **/
 }
 
 ?>

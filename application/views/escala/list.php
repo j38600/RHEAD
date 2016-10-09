@@ -49,10 +49,10 @@
                             <?php
                             if ($permissoes['admin']){
                                 echo anchor(
-                                    'escala/new',
-                                    '<span class="glyphicon glyphicon-plus"></span> Novo',
+                                    'escala/nova',
+                                    '<span class="glyphicon glyphicon-plus"></span> Nova',
                                     array(
-                                        'title' => 'Novo',
+                                        'title' => 'Nova',
                                         'class' => 'btn btn-outline btn-primary btn-block',
                                         'role' => 'button'
                                     )

@@ -15,7 +15,7 @@
         $this->form_validation->set_rules('nim', 'Número de Indentificação Militar', 'trim|required');
         $this->form_validation->set_rules('nome', 'Nome Completo', 'trim|required');
         $this->form_validation->set_rules('apelido', 'Apelido', 'trim|required');
-        $this->form_validation->set_rules('antiguidade', 'Antiguidade', 'trim|required');
+        $this->form_validation->set_rules('antiguidade', 'Data de Promoção', 'trim|required');
         $this->form_validation->set_rules('nota_curso', 'Nota de Curso', 'trim|required');
                 
         echo form_open('militar/edit/'.$id, ['class' => 'form-horizontal',
@@ -51,12 +51,12 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="antiguidade" class="col-xs-offset-3 col-xs-2 control-label">Data de Promoção</label>
+            <label for="data_promocao" class="col-xs-offset-3 col-xs-2 control-label">Data de Promoção</label>
             <div class="col-xs-4">
-            <?php echo form_input([ 'name' => 'antiguidade',
-                                    'id' => 'antiguidade',
+            <?php echo form_input([ 'name' => 'data_promocao',
+                                    'id' => 'data_promocao',
                                     'type' => 'date',
-                                    'value' => date('Y-m-d',strtotime($militar['antiguidade'])),
+                                    'value' => date('Y-m-d',strtotime($militar['data_promocao'])),
                                     'class' => 'form-control']); ?>
             </div>
         </div>

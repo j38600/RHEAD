@@ -50,12 +50,12 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="antiguidade" class="col-xs-offset-3 col-xs-2 control-label">Data de Promoção</label>
+            <label for="data_promocao" class="col-xs-offset-3 col-xs-2 control-label">Data de Promoção</label>
             <div class="col-xs-4">
-            <?php echo form_input([ 'name' => 'antiguidade',
-                                    'id' => 'antiguidade',
+            <?php echo form_input([ 'name' => 'data_promocao',
+                                    'id' => 'data_promocao',
                                     'type' => 'date',
-                                    'value' => set_value('antiguidade'),
+                                    'value' => set_value('data_promocao'),
                                     'class' => 'form-control']); ?>
             </div>
         </div>
