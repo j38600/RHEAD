@@ -173,6 +173,126 @@ class Escala extends CI_Controller {
             $this->template->load('template', 'escala/nova', $info);
         }
     }
+
+    /**@
+    Controller das dispensas.  
+    Recebe duas variaveis, $action e $id.
+    @return void
+    **/
+    public function dispensa($action = '', $id = '')
+    {
+        //$action -> ação a tomar.
+        //se for list, nao recebe $id.
+        //$id da dispensa
+        switch ($action) {
+            case 'list':
+                unset($info);
+                $info = array();
+                
+                $dispensas = $this->escala_model->ler_dispensa($info);
+                
+                //$info['nr_militares_escalas'] = 1;
+                //$nr_militares_p_escala = $this->escala_model->ler($info);
+                
+                $info['dispensas'] = $dispensas;
+                $info['permissoes'] = $this->user_group;
+                $this->template->load('template', 'escala/dispensa_list', $info);
+
+                break;
+            case 'view':
+                echo($action);
+                break;
+            case 'edit':
+                echo($action);
+                break;
+            case 'nova':
+                echo($action);
+                break;
+            default:
+                redirect('escala/dispensa/list', 'refresh');
+                break;
+        }
+        /**
+        $info = array();
+        
+        $escala = $this->escala_model->ler($info);
+        $info['escala'] = $escala[0];
+        //nims dos militares que estao nesta escala
+        if ($info['escala']['nr_militares'] > 0)
+        {
+            $info['nims'] = $this->escala_model->ler_nims($info);
+            unset($info['id']);
+            $nims = $info['nims'];
+            $cont = 0;
+            foreach ($nims as $nim)
+            {
+                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                unset($nims[$cont]);
+                $cont++;
+                
+            }
+            $info['nims'] = $nims;
+            //militares desta escala
+            $info['militares'] = $this->militar_model->ler($info);
+            unset($info['nims']);
+        }
+        else 
+        {
+            $info['militares'] = array();
+            unset($info['id']);
+        }
+        //saco todos os militares, para poder nomea-los às atividades.
+        $info['todos_militares'] = $this->militar_model->ler($info);
+        
+        $info['permissoes'] = $this->user_group;
+        $this->template->load('template', 'escala/view', $info);
+        **/
+    }
+    
+    /**@
+    Consulta de uma escala. 
+    Diversas opções da mesma(semana, fim de semana, 24h ou inicio e fim, etc.)
+    + lista dos militares.
+    @return void
+    **/
+    public function previsao($id = '')
+    {
+        //$id da escala
+        $info = array();
+        $info['id'] = $id;
+        $escala = $this->escala_model->ler($info);
+        $info['escala'] = $escala[0];
+        //nims dos militares que estao nesta escala
+        if ($info['escala']['nr_militares'] > 0)
+        {
+            $info['nims'] = $this->escala_model->ler_nims($info);
+            unset($info['id']);
+            $nims = $info['nims'];
+            $cont = 0;
+            foreach ($nims as $nim)
+            {
+                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                unset($nims[$cont]);
+                $cont++;
+                
+            }
+            $info['nims'] = $nims;
+            //militares desta escala
+            $info['militares'] = $this->militar_model->ler($info);
+            unset($info['nims']);
+        }
+        else 
+        {
+            $info['militares'] = array();
+            unset($info['id']);
+        }
+        //saco todos os militares, para poder nomea-los às atividades.
+        $info['todos_militares'] = $this->militar_model->ler($info);
+        
+        $info['permissoes'] = $this->user_group;
+        $this->template->load('template', 'escala/view', $info);
+    }
+    
 }
 
 /* End of file escala.php */

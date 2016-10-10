@@ -57,6 +57,28 @@ class Escala_model extends CI_Model
         $this->db->insert('militares_escalas', $info);
         return true;
     }
+
+    //funcao que le a tabela das dispenas
+    function ler_dispensa($info)
+    {
+        
+        if (isset($info['id'])) {
+            $this->db->where('id', $info['id']);
+            $this->db->limit(1);
+        }
+        $this->db->select('indisponibilidades.*');
+        $this->db->select('razoes.razao, razoes.descricao AS descricao_razao');
+        $this->db->select('COUNT(militares_indisponibilidades.indisponibilidade_id) as nr_militares');
+        $this->db->from('indisponibilidades');
+        $this->db->join('militares_indisponibilidades',
+            'militares_indisponibilidades.indisponibilidade_id = indisponibilidades.id', 'left');
+        $this->db->join('razoes', 'indisponibilidades.razao_id = razoes.id');
+        $this->db->group_by('indisponibilidades.id');
+        
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
 }
 
 ?>
