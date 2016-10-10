@@ -58,12 +58,36 @@ class Escala_model extends CI_Model
         return true;
     }
 
+    //funcao para atualizar a informacao da tabela escalas
+    function atualizar($info)
+    {
+        $this->db->where('id', $info['id']);
+        $this->db->update('escalas', $info);
+        
+        return true;
+    }
+
+    //funcao que le a tabela das indisponibilidades
+    function ler_nims_dispensa($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('indisponibilidade_id', $info['id']);
+        }
+        
+        $this->db->select('militares_indisponibilidades.*');
+        $this->db->from('militares_indisponibilidades');
+        
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
+
     //funcao que le a tabela das dispenas
     function ler_dispensa($info)
     {
         
         if (isset($info['id'])) {
-            $this->db->where('id', $info['id']);
+            $this->db->where('indisponibilidades.id', $info['id']);
             $this->db->limit(1);
         }
         $this->db->select('indisponibilidades.*');
@@ -74,6 +98,36 @@ class Escala_model extends CI_Model
             'militares_indisponibilidades.indisponibilidade_id = indisponibilidades.id', 'left');
         $this->db->join('razoes', 'indisponibilidades.razao_id = razoes.id');
         $this->db->group_by('indisponibilidades.id');
+        
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
+
+    //funcao para associar um militar a uma indisponibilidade
+    function associar_dispensa($info)
+    {
+        $this->db->insert('militares_indisponibilidades', $info);
+        return true;
+    }
+
+    //funcao para adicionar uma escala nova
+    function adicionar_dispensa($info)
+    {
+        $this->db->insert('indisponibilidades', $info);
+        $novo_id = $this->db->insert_id();
+        return $novo_id;
+    }
+
+    //funcao que le as razões
+    function ler_razoes($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('id', $info['id']);
+        }
+        
+        $this->db->select('*');
+        $this->db->from('razoes');
         
         $query = $this->db->get();
         
