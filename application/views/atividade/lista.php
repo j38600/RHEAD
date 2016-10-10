@@ -147,6 +147,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td>
                             <?php
                             if ($permissoes['secpess'] || $permissoes['sois']){

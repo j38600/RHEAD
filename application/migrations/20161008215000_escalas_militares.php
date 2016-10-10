@@ -78,7 +78,8 @@ class Migration_Escalas_militares extends CI_Migration {
             ),
             'gdh_ultimo' => array(
                 'type' => 'DATETIME',
-                'default' => '0000-00-00 00:00:00'
+                'default' => NULL,
+                'null' => TRUE
             )
         ));
         $this->dbforge->add_key('militar_nim','escala_id');

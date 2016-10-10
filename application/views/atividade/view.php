@@ -41,7 +41,6 @@
                                             'class' => 'form-control']); ?>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <?php
@@ -79,7 +78,6 @@
                             )
                         );
                     endforeach;
-                    //var_dump($atividade);
                     if ($permissoes['secpess']) {
                         echo anchor(
                             '#caixaNIMs',

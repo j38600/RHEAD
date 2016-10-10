@@ -18,9 +18,9 @@ class Escala_model extends CI_Model
             $this->db->limit(1);
         }
         $this->db->select('escalas.*');
-        $this->db->select('COUNT(militares_escalas.escalas_id) as nr_militares');
+        $this->db->select('COUNT(militares_escalas.escala_id) as nr_militares');
         $this->db->from('escalas');
-        $this->db->join('militares_escalas', 'militares_escalas.escalas_id = escalas.id', 'left');
+        $this->db->join('militares_escalas', 'militares_escalas.escala_id = escalas.id', 'left');
         $this->db->group_by('escalas.id');
         
         $query = $this->db->get();
@@ -29,11 +29,10 @@ class Escala_model extends CI_Model
     }
     
     //funcao que le a tabela das escalas
-    /**
     function ler_nims($info)
     {
         if (isset($info['id'])) {
-            $this->db->where_in('escalas_id', $info['id']);
+            $this->db->where_in('escala_id', $info['id']);
         }
         
         $this->db->select('militares_escalas.*');
@@ -43,7 +42,6 @@ class Escala_model extends CI_Model
         
         return ($query->result_array());
     }
-    **/
     
     //funcao para adicionar uma escala nova
     function adicionar($info)
@@ -51,6 +49,13 @@ class Escala_model extends CI_Model
         $this->db->insert('escalas', $info);
         $novo_id = $this->db->insert_id();
         return $novo_id;
+    }
+
+    //funcao para associar uma atividade a um militar
+    function associar($info)
+    {
+        $this->db->insert('militares_escalas', $info);
+        return true;
     }
 }
 

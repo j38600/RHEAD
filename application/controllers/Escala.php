@@ -50,12 +50,9 @@ class Escala extends CI_Controller {
     /**@
     Consulta de uma escala. 
     Diversas opções da mesma(semana, fim de semana, 24h ou inicio e fim, etc.)
-    + lista dos militares por antiguidades.
-        Clicando podemos ver último serviço, se for trab-estudante, podemos ver período semanal??
-        Podemos colorir, para saber se está disponivel, ou se é trabalhador-estudante.
-        Podemos obter lista dos próximos 2ou 3 períodos de indisponibilidades
-    + botão para ver previsão da escala.
+    + lista dos militares.
     @return void
+    **/
     public function view($id = '')
     {
         //$id da escala
@@ -72,7 +69,7 @@ class Escala extends CI_Controller {
             $cont = 0;
             foreach ($nims as $nim)
             {
-                $nims[$nim['militares_nim']] =+ $nim['militares_nim'];
+                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
                 unset($nims[$cont]);
                 $cont++;
                 
@@ -87,12 +84,12 @@ class Escala extends CI_Controller {
             $info['militares'] = array();
             unset($info['id']);
         }
-        var_dump($info);
-        //break;
+        //saco todos os militares, para poder nomea-los às atividades.
+        $info['todos_militares'] = $this->militar_model->ler($info);
+        
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'escala/view', $info);
     }
-**/
     
     /**@
     Vista de uma escala. 
@@ -111,19 +108,33 @@ class Escala extends CI_Controller {
 **/
     
     /**@
-    Histórico das escalas!!!
-    Por anos, botar estatisticas aki
+    Cria entrada na tabela intermédia militars <=> escalas
     @return void
-    public function history($id = '')
+    **/
+    public function associar()
     {
+        $permissoes = $this->user_group;
+        if (!$permissoes['secpess']) {
+            redirect('atividade', 'refresh');
+        }
         $info = array();
-        $info['id'] = $id;
-        $emissor = $this->emitter_model->ler($info);
-        $info['emissor'] = $emissor[0];
-        $info['permissoes'] = $this->user_group;
-        $this->template->load('template', 'emitter/view', $info);
+        $info = $this->input->post(null, true);
+        
+        if ($info['gdh_ultimo'] == '') {
+            unset($info['gdh_ultimo']);
+        }
+        $info['id'] = $this->escala_model->associar($info);
+        
+        //crio os campos que vou usar para fazer o log.
+        //$info['user_nim'] = $this->ion_auth->user()->row()->username;
+        //$info['tipo'] = 'medalhas';
+        //$info['accao'] = 'atribuir';
+        //$info['informacao'] = 'nim condecorado: '.$info['militar_nim'].'; medalha: m|'.$info['med_cond_id'];
+        //$this->registo_model->log_escreve($info);
+        
+        redirect('escala/view/'.$info['escala_id'], 'refresh');
     }
-**/
+
     /**@
     Nova escala
     @return void
