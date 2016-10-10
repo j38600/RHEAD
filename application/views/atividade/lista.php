@@ -107,6 +107,7 @@
                 <th>Descrição</th>
                 <th>De</th>
                 <th>Até</th>
+                <th>Nr. de Militares</th>
                 <th>Secção BipBip</th>
                 <th>Secção Anuário</th>
                 <tH></th>
@@ -118,6 +119,7 @@
                         <td><?php echo $atividade['descricao'];?></td>
                         <td><?php echo date('d-m-Y', strtotime($atividade['de']));?></td>
                         <td><?php echo date('d-m-Y', strtotime($atividade['ate']));?></td>
+                        <td><?php echo $atividade['nr_militares'];?></td>
                         <td><?php echo $atividade['seccao_bipbip'];?></td>
                         <td><?php echo $atividade['seccao_anuario'];?></td>
                         <td>

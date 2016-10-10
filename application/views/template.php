@@ -37,39 +37,6 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-            <!--
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-briefcase"></span> SOIS
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url()?>sois/activities">Atividades</a></li>
-                        <li><a href="<?php echo base_url()?>sois/credentials">Credenciação</a></li>
-                        <li><a href="<?php echo base_url()?>sois/vehicles">Viaturas</a></li>
-                    </ul>
-                </li>
-            -->
-                <!--<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-globe"></span> Férias
-<span class="glyphicon glyphicon-plane"></span> Férias
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url()?>incident">Listagem</a></li>
-                        <li><a href="<?php echo base_url()?>incident/map">Cenas</a></li>
-                        <li><a href="<?php echo base_url()?>incident">mais cenas</a></li>
-                    </ul>
-                </li>-->
-                <!--<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-education"></span> Trab-Estudantes
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url()?>incident">Listagem</a></li>
-                        <li><a href="<?php echo base_url()?>incident/map">Cenas</a></li>
-                        <li><a href="<?php echo base_url()?>incident">mais cenas</a></li>
-                    </ul>
-                </li>-->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-th-list"></span> Escalas
@@ -77,6 +44,9 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="<?php echo base_url()?>escala">Lista</a></li>
                         <li><a href="<?php echo base_url()?>escala/dispensa/list">Dispensa</a></li>
+                        <!--<li><a href="<?php echo base_url()?>escala/razao/list">Razões p Dispensa</a></li>-->
+                        <!--<li><a href="<?php echo base_url()?>escala/razao/list">Férias</a></li>-->
+                        <!--<li><a href="<?php echo base_url()?>escala/razao/list">T. Estudante</a></li>-->
                         <li class="divider"></li>
                         <li><a href="<?php echo base_url()?>escala">Feriados</a></li>
                     </ul>

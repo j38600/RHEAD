@@ -29,18 +29,17 @@ class Atividade_model extends CI_Model
         
         $this->db->select('bipbip.seccao AS seccao_bipbip');
         $this->db->select('anuario.seccao AS seccao_anuario');
-        if (isset($info['view'])) {
-            $this->db->select('COUNT(militares_atividades.atividade_id) as nr_militares');
-        }
+        $this->db->select('COUNT(militares_atividades.atividade_id) as nr_militares');
         $this->db->select('atividades.*');
+        
         $this->db->from('atividades');
         
         //as linhas seguintes concatenam as tabelas bipbip e anuario com as atividades
-        if (isset($info['view'])) {
-            $this->db->join('militares_atividades', 'militares_atividades.atividade_id = atividades.id', 'left');
-        }
+        $this->db->join('militares_atividades', 'militares_atividades.atividade_id = atividades.id', 'left');
         $this->db->join('bipbip', 'atividades.bipbip_id = bipbip.id');
         $this->db->join('anuario', 'atividades.anuario_id = anuario.id');
+        
+        $this->db->group_by('atividades.id');
         $this->db->order_by('de', 'asc');
         $query = $this->db->get();
         

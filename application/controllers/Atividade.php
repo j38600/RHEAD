@@ -86,9 +86,6 @@ class Atividade extends CI_Controller {
         $info = array();
         $info['id'] = $id;
         
-        //variavel para ser usada no modelo.
-        $info['view'] = array();
-
         $atividade = $this->atividade_model->ler($info);
         $info['atividade'] = $atividade[0];
         //var_dump($info);
