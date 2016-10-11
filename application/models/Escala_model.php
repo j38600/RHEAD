@@ -67,6 +67,15 @@ class Escala_model extends CI_Model
         return true;
     }
 
+    //funcao para atualizar a informacao da tabela escalas
+    function atualizar_dispensa($info)
+    {
+        $this->db->where('id', $info['id']);
+        $this->db->update('indisponibilidades', $info);
+        
+        return true;
+    }
+
     //funcao que le a tabela das indisponibilidades
     function ler_nims_dispensa($info)
     {

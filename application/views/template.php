@@ -48,7 +48,7 @@
                         <!--<li><a href="<?php echo base_url()?>escala/razao/list">Férias</a></li>-->
                         <!--<li><a href="<?php echo base_url()?>escala/razao/list">T. Estudante</a></li>-->
                         <li class="divider"></li>
-                        <li><a href="<?php echo base_url()?>escala">Feriados</a></li>
+                        <li><a href="<?php echo base_url()?>escala/feriado/list">Feriados</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

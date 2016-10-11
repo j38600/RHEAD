@@ -115,7 +115,9 @@ class Escala extends CI_Controller {
             $info = $this->input->post(null, true);
             unset($info['submit']);
             //o valor que vem no post, é o do indice. aqui vou buscar o nome do ficheiro
-
+            $info['hora_inicio'] = date('Y-m-d H:i:s', strtotime($info['hora_inicio']));
+            $info['hora_fim'] = date('Y-m-d H:i:s', strtotime($info['hora_fim']));
+            
             $this->escala_model->atualizar($info);
 
             //crio os campos que vou usar para fazer o log.
@@ -185,6 +187,8 @@ class Escala extends CI_Controller {
             $info = array();
             $info = $this->input->post(null, true);
             unset($info['submit']);
+            $info['hora_inicio'] = date('Y-m-d H:i:s', strtotime($info['hora_inicio']));
+            $info['hora_fim'] = date('Y-m-d H:i:s', strtotime($info['hora_fim']));
 
             $info['id'] = $this->escala_model->adicionar($info);
             
@@ -201,6 +205,29 @@ class Escala extends CI_Controller {
 
             $info['permissoes'] = $this->user_group;
             $this->template->load('template', 'escala/nova', $info);
+        }
+    }
+
+    /**@
+    Controller das dispensas.  
+    Recebe duas variaveis, $action e $id.
+    @return void
+    **/
+    public function feriado($action = '', $id = '')
+    {
+        switch ($action) {
+            case 'list':
+                # code...
+                break;
+            case 'novo':
+                # code...
+                break;
+            case 'edit':
+                # code...
+                break;
+            default:
+                redirect('escala/feriado/list', 'refresh');
+                break;
         }
     }
 
@@ -231,6 +258,9 @@ class Escala extends CI_Controller {
                 $info = array();
                 $info['id'] = $id;
                 $dispensa = $this->escala_model->ler_dispensa($info);
+                if(empty($dispensa)){
+                    redirect('escala/dispensa/list', 'refresh');
+                }
                 
                 $info['dispensa'] = $dispensa[0];
                 //nims dos militares que estao dispensados
@@ -245,7 +275,7 @@ class Escala extends CI_Controller {
                         $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
                         unset($nims[$cont]);
                         $cont++;
-                        
+                    
                     }
                     $info['nims'] = $nims;
                     //militares desta dispensa
@@ -265,7 +295,6 @@ class Escala extends CI_Controller {
 
                 break;
             case 'associar':
-                
                 unset($info);
                 $info = array();
                 $info = $this->input->post(null, true);
@@ -280,9 +309,56 @@ class Escala extends CI_Controller {
                 //$this->registo_model->log_escreve($info);
                 
                 redirect('escala/dispensa/view/'.$info['indisponibilidade_id'], 'refresh');
+                
                 break;
             case 'edit':
-                echo($action);
+                $this->form_validation->set_rules('gdh_inicio', 'GDH Início', 'trim|required');
+                $this->form_validation->set_rules('gdh_fim', 'GDH Fim', 'trim|required');
+                
+                unset($info);
+                $info = array();
+                $info['id'] = $id;
+                $dispensa = $this->escala_model->ler_dispensa($info);
+                if(empty($dispensa)){
+                    redirect('escala/dispensa/list', 'refresh');
+                }
+
+                $info['dispensa'] = $dispensa[0];
+                
+                $razoes_bd = $this->escala_model->ler_razoes($info);
+                $razoes=array();
+                foreach($razoes_bd as $razao){
+                    $razoes[$razao['id']] = $razao['razao'];
+                }
+
+                if ($this->form_validation->run() == true) {
+
+                    unset($info);
+                    $info = array();
+                    $info = $this->input->post(null, true);
+                    unset($info['submit']);
+                    
+                    $this->escala_model->atualizar_dispensa($info);
+
+                    //crio os campos que vou usar para fazer o log.
+                    //$info['user_nim'] = $this->ion_auth->user()->row()->username;
+                    //$info['tipo'] = 'atividades';
+                    //$info['accao'] = 'atualizar';
+                    //$info['informacao'] = 'descrição: '.$info['descricao'].'; de: '.$info['de'].'; ate: '.$info['ate'].
+                    //    '; Secção Bipbip: b|'.$info['bipbip_id'].
+                    //    '; quartel: q|'.$info['quarteis_id'].'; Secção Anuário: a|'.$info['anuario_id'];
+
+                    //$this->registo_model->log_escreve($info);
+
+                    redirect('escala/dispensa/view/'.$info['id'], 'refresh');
+
+                } else {
+                    $info['razoes'] = $razoes;
+                    $info['permissoes'] = $this->user_group;
+
+                    $this->template->load('template', 'escala/dispensa_editar', $info);
+                }
+                
                 break;
             case 'nova':
                 
