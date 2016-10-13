@@ -38,6 +38,10 @@ class Militar_model extends CI_Model
         $this->db->select('postos.abreviatura AS posto_abreviatura, postos.posto AS posto_nome');
         $this->db->select('companhias.abreviatura AS companhia_abreviatura, companhias.companhia AS companhia_nome');
         $this->db->select('quarteis.abreviatura AS quartel_abreviatura, quarteis.quartel AS quartel_nome');
+        if (isset($info['escala_id'])) {
+            $this->db->select('militares_escalas.gdh_ultimo, militares_escalas.nomeado');
+            $this->db->where_in('militares_escalas.escala_id', $info['escala_id']);
+        }
         
         $this->db->from('militares');
         
@@ -45,6 +49,9 @@ class Militar_model extends CI_Model
         $this->db->join('postos', 'postos.id = militares.posto_id');
         $this->db->join('companhias', 'companhias.id = militares.companhia_id');
         $this->db->join('quarteis', 'quarteis.id = militares.quartel_id');
+        if (isset($info['escala_id'])) {
+            $this->db->join('militares_escalas', 'militares_escalas.militar_nim = militares.nim');
+        }
         $this->db->order_by('nim', 'asc');
         $query = $this->db->get();
         

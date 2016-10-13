@@ -509,6 +509,46 @@ class Escala extends CI_Controller {
     **/
     public function previsao($id = '')
     {
+        //$id da escala
+        $info = array();
+        $info['id'] = $id;
+        $escala = $this->escala_model->ler($info);
+        if(empty($escala)){
+            redirect('escala/list', 'refresh');
+        }
+        $info['escala'] = $escala[0];
+        //nims dos militares que estao nesta escala
+        if ($info['escala']['nr_militares'] > 0)
+        {
+            $info['nims'] = $this->escala_model->ler_nims($info);
+            unset($info['id']);
+            $nims = $info['nims'];
+            $cont = 0;
+            foreach ($nims as $nim)
+            {
+                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                unset($nims[$cont]);
+                $cont++;
+                
+            }
+            $info['nims'] = $nims;
+            $info['escala_id'] = $id;
+            //militares desta escala
+            $info['militares'] = $this->militar_model->ler($info);
+            unset($info['nims']);
+        }
+        else 
+        {
+            $info['militares'] = array();
+            unset($info['id']);
+        }
+        var_dump($info);
+        //break;
+        //saco todos os militares, para poder nomea-los às atividades.
+        //$info['todos_militares'] = $this->militar_model->ler($info);
+        
+        //$info['permissoes'] = $this->user_group;
+        //$this->template->load('template', 'escala/view', $info);
     }
     
 }
