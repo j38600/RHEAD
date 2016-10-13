@@ -455,13 +455,47 @@ class Escala extends CI_Controller {
     {
         switch ($action) {
             case 'list':
-                # code...
+                unset($info);
+                $info = array();
+                if($id=='erro'){
+                    $info['erro'] = '';
+                }
+                $razoes = $this->escala_model->ler_razoes($info);
+                
+                $info['razoes'] = $razoes;
+                $info['permissoes'] = $this->user_group;
+                $this->template->load('template', 'escala/razao_list', $info);
+
                 break;
             case 'nova':
-                # code...
+                $this->form_validation->set_rules('razao', 'Razão', 'trim|required');
+                
+                if ($this->form_validation->run() == true) {
+
+                    $info = $this->input->post(null, true);
+                    $info['id'] = $this->escala_model->adicionar_razao($info);
+                    redirect('escala/razao/list', 'refresh');
+                } else {
+                    $info['permissoes'] = $this->user_group;
+                    redirect('escala/razao/list/erro', 'refresh');
+                }
+            
                 break;
-            case 'edit':
-                # code...
+            case 'update':
+                
+                $this->form_validation->set_rules('razao', 'Razão', 'trim|required');
+                
+                if ($this->form_validation->run() == true) {
+
+                    $info = $this->input->post(null, true);
+                    $info['id'] = $this->escala_model->atualizar_razao($info);
+                    
+                    redirect('escala/razao/list', 'refresh');
+                } else {
+                    $info['permissoes'] = $this->user_group;
+                    redirect('escala/razao/list/erro', 'refresh');
+                }
+            
                 break;
             default:
                 redirect('escala/razao/list', 'refresh');
