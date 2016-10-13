@@ -142,6 +142,23 @@ class Escala_model extends CI_Model
         
         return ($query->result_array());
     }
+
+    //funcao que le a tabela das dispenas
+    function ler_feriado($info)
+    {
+        
+        if (isset($info['id'])) {
+            $this->db->where('id', $info['id']);
+            $this->db->limit(1);
+        }
+        $this->db->select('*');
+        $this->db->from('feriados');
+        $this->db->order_by('data', 'asc');
+        
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }
 }
 
 ?>

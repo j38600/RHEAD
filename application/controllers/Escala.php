@@ -35,7 +35,6 @@ class Escala extends CI_Controller {
     {
         unset($info);
         $info = array();
-        
         $escalas = $this->escala_model->ler($info);
         
         //$info['nr_militares_escalas'] = 1;
@@ -205,29 +204,6 @@ class Escala extends CI_Controller {
 
             $info['permissoes'] = $this->user_group;
             $this->template->load('template', 'escala/nova', $info);
-        }
-    }
-
-    /**@
-    Controller das dispensas.  
-    Recebe duas variaveis, $action e $id.
-    @return void
-    **/
-    public function feriado($action = '', $id = '')
-    {
-        switch ($action) {
-            case 'list':
-                # code...
-                break;
-            case 'novo':
-                # code...
-                break;
-            case 'edit':
-                # code...
-                break;
-            default:
-                redirect('escala/feriado/list', 'refresh');
-                break;
         }
     }
 
@@ -406,6 +382,60 @@ class Escala extends CI_Controller {
         }
     }
     
+    /**@
+    Controller dos feriados
+    Recebe duas variaveis, $action e $id.
+    @return void
+    **/
+    public function feriado($action = '', $id = '')
+    {
+        switch ($action) {
+            case 'list':
+                unset($info);
+                $info = array();
+                
+                $feriados = $this->escala_model->ler_feriado($info);
+                
+                $info['feriados'] = $feriados;
+                $info['permissoes'] = $this->user_group;
+                $this->template->load('template', 'escala/feriado_list', $info);
+
+                break;
+            case 'novo':
+                # code...
+                break;
+            case 'edit':
+                # code...
+                break;
+            default:
+                redirect('escala/feriado/list', 'refresh');
+                break;
+        }
+    }
+
+    /**@
+    Controller das razoes
+    Recebe duas variaveis, $action e $id.
+    @return void
+    **/
+    public function razao($action = '', $id = '')
+    {
+        switch ($action) {
+            case 'list':
+                # code...
+                break;
+            case 'nova':
+                # code...
+                break;
+            case 'edit':
+                # code...
+                break;
+            default:
+                redirect('escala/razao/list', 'refresh');
+                break;
+        }
+    }
+
     /**@
     Controller das previsoes.
     @return void

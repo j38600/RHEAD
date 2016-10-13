@@ -20,11 +20,6 @@ class Migration_Alterar_militar extends CI_Migration {
                 'default' => 0,
             )
         ));
-        //adicionar tabela das razoes
-
-        //adicionar tabela das escalas
-
-        //adicionar 
     }
 
     public function down()
