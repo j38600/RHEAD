@@ -393,7 +393,9 @@ class Escala extends CI_Controller {
             case 'list':
                 unset($info);
                 $info = array();
-                
+                if($id=='erro'){
+                    $info['erro'] = '';
+                }
                 $feriados = $this->escala_model->ler_feriado($info);
                 
                 $info['feriados'] = $feriados;
@@ -402,10 +404,41 @@ class Escala extends CI_Controller {
 
                 break;
             case 'novo':
-                # code...
+                $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
+                $this->form_validation->set_rules('data', 'Data', 'trim|required');
+
+                if ($this->form_validation->run() == true) {
+
+                    $info = $this->input->post(null, true);
+                    //Por enquanto, o quartel fica fixo no RTm. De futuro, fazer o seguinte:
+                    //ir buscar o username do Ion Auth, que é o nim, procurar na bd pelo nim,
+                    //Sacar o id do aurtel e passá-lo para a variável.
+                    $info['quartel_id'] = 1;
+                    $info['id'] = $this->escala_model->adicionar_feriado($info);
+                    redirect('escala/feriado/list', 'refresh');
+                } else {
+                    $info['permissoes'] = $this->user_group;
+                    redirect('escala/feriado/list/erro', 'refresh');
+                }
+            
                 break;
-            case 'edit':
-                # code...
+            case 'update':
+                
+                $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
+                $this->form_validation->set_rules('data', 'Data', 'trim|required');
+
+                if ($this->form_validation->run() == true) {
+
+                    $info = $this->input->post(null, true);
+                    $info['id'] = $this->escala_model->atualizar_feriado($info);
+                    $info['data'] = date('Y-m-d H:i:s', strtotime($info['data']));
+
+                    redirect('escala/feriado/list', 'refresh');
+                } else {
+                    $info['permissoes'] = $this->user_group;
+                    redirect('escala/feriado/list/erro', 'refresh');
+                }
+            
                 break;
             default:
                 redirect('escala/feriado/list', 'refresh');

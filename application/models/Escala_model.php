@@ -143,7 +143,7 @@ class Escala_model extends CI_Model
         return ($query->result_array());
     }
 
-    //funcao que le a tabela das dispenas
+    //funcao que le a tabela dos feriados
     function ler_feriado($info)
     {
         
@@ -158,6 +158,23 @@ class Escala_model extends CI_Model
         $query = $this->db->get();
         
         return ($query->result_array());
+    }
+
+    //funcao para atualizar a informacao da tabela feriados
+    function atualizar_feriado($info)
+    {
+        $this->db->where('id', $info['id']);
+        $this->db->update('feriados', $info);
+        
+        return true;
+    }
+
+    //funcao para adicionar uma escala nova
+    function adicionar_feriado($info)
+    {
+        $this->db->insert('feriados', $info);
+        $novo_id = $this->db->insert_id();
+        return $novo_id;
     }
 }
 
