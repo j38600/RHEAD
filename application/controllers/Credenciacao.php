@@ -68,7 +68,7 @@ class Medalha extends CI_Controller {
             //var_dump($nims);
             foreach ($nims as $nim)
             {
-                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                $nims[$nim['militar_nim']] = $nim['militar_nim'];
                 unset($nims[$cont]);
                 $cont++;
                 

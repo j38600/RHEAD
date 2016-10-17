@@ -27,6 +27,69 @@ class Escala extends CI_Controller {
     }
 
     /**@
+    Compara as datas do ultimo serviço feito, para ordenar os militares consoante a folga.
+    @return int
+    **/
+    private function _compara_data($a, $b)
+    {
+        $t1 = strtotime($a['gdh_ultimo']);
+        $t2 = strtotime($b['gdh_ultimo']);
+        return $t1 - $t2;
+    }
+
+    /**@
+    Diz-me se é dia de semana ou fdsemana e/ou feriado
+    @return Bool
+    **/
+    private function _fim_de_semana($data, $feriados)
+    {   
+        $resultado = FALSE;
+        foreach ($feriados as $feriado)
+            {
+                if (date('Y-m-d', strtotime($feriado['data'])) == $data)
+                {
+                    $resultado = TRUE;
+                }
+            }
+        $resultado = (date('N', strtotime($data)) >= 6) || $resultado;
+
+        return($resultado);
+    }
+
+    /**@
+    Recebe uma lista de militares, e separa os que estão dispensados e os que não estão
+    @return array
+    **/
+    private function _separa_dispensados($data, $militares, $dispensas)
+    {   
+        $resultado = FALSE;
+        foreach ($dispensas as $dispensa)
+            {
+                //dispensas para este dia
+                $comeca = (date('Y-m-d', strtotime($dispensa['gdh_inicio'])) <= $data);
+                $acaba = ($data <= date('Y-m-d', strtotime($dispensa['gdh_fim'])));
+                var_dump($data);
+                if ($comeca && $acaba)
+                {
+                    echo ('julio'.$data);
+                }
+                //dentro destas, procurar os nims que aki tenho
+                $resultado = in_array($dispensa['militar_nim'], $militares);
+                //if ($militar['nim'] == $data)
+                //{
+                //    $resultado = TRUE;
+                //}
+            }
+        //echo('dispensados'.$data);
+        //var_dump($militares);
+        //var_dump($resultado);
+        //$resultado[0] = $dispensados;
+        //$resultado[1] = $nomeaveis;
+
+        return($resultado);
+    }
+
+    /**@
     Listagem de escalas existentes
     <nome da escala | Nr militares | Consultar escala(view) | Previsao (previsao)>
     @return void
@@ -68,7 +131,7 @@ class Escala extends CI_Controller {
             $cont = 0;
             foreach ($nims as $nim)
             {
-                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                $nims[$nim['militar_nim']] = $nim['militar_nim'];
                 unset($nims[$cont]);
                 $cont++;
                 
@@ -248,7 +311,7 @@ class Escala extends CI_Controller {
                     $cont = 0;
                     foreach ($nims as $nim)
                     {
-                        $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                        $nims[$nim['militar_nim']] = $nim['militar_nim'];
                         unset($nims[$cont]);
                         $cont++;
                     
@@ -526,7 +589,7 @@ class Escala extends CI_Controller {
             $cont = 0;
             foreach ($nims as $nim)
             {
-                $nims[$nim['militar_nim']] =+ $nim['militar_nim'];
+                $nims[$nim['militar_nim']] = $nim['militar_nim'];
                 unset($nims[$cont]);
                 $cont++;
                 
@@ -535,20 +598,77 @@ class Escala extends CI_Controller {
             $info['escala_id'] = $id;
             //militares desta escala
             $info['militares'] = $this->militar_model->ler($info);
-            unset($info['nims']);
         }
         else 
         {
             $info['militares'] = array();
             unset($info['id']);
         }
-        var_dump($info);
-        //break;
-        //saco todos os militares, para poder nomea-los às atividades.
-        //$info['todos_militares'] = $this->militar_model->ler($info);
+        if ($info['escala']['diario'])
+        {
+            //ordena dos militares por folga. Os que teem gdh_ultimo null, aparecem antes do mais folgado
+            usort($info['militares'], array($this, '_compara_data'));
+            //lista de dispensas dos militares que estao na escala.
+            $dispensas = $this->escala_model->ler_dispensa($info);
+            
+            //vejo o nr de militares a nomear, e mostro o n ultimos.
+            //a partir dai, mostro por folga, até 30 dias para a frente.
+            $nr_a_nomear = $info['escala']['numero_nomeados'];
+            $ultimo_servico = array_slice($info['militares'], -$nr_a_nomear);
+            $data_ultimo_servico = $ultimo_servico[0]['gdh_ultimo'];
+            $data_temp = date('Y-m-d', strtotime($data_ultimo_servico));
+            $data_final_previsao = date('Y-m-d', strtotime('+1 month', strtotime($data_ultimo_servico)));
+            $hoje = date('Y-m-d', strtotime('today'));
+            
+            //lista de feriados
+            $feriados = $this->escala_model->ler_feriado($info);
+            
+            //aqui fora tenho que garantir que a lista de militares está ordenada??
+
+            for($data_final_previsao; $data_temp  < $data_final_previsao;
+                $data_temp = date('Y-m-d', strtotime('+1 day', strtotime($data_temp))))
+            {
+                //echo ($data_temp);
+                //este teste é para ver se é escala A ou B, e se o dia pertence a uma ou outra.
+                if ($info['escala']['semana'] == !$this->_fim_de_semana($data_temp, $feriados)){
+                    
+                    $resultado = $this->_separa_dispensados($data_temp, $nims, $dispensas);
+                    //$dispensados = $resultado[0];
+                    //$nomeaveis = $resultado[1];
+                    $previsao[$data_temp] = '';
+                    $reserva[$data_temp] = '';
+                    $dispensados[$data_temp] = '';
+                }
+            }
+            
+            var_dump($this->_fim_de_semana($data_ultimo_servico, $feriados));
+            
+            var_dump($info);
+            //var_dump($ultimo_servico);
+            var_dump($data_ultimo_servico);
+            var_dump($data_temp);
+            var_dump($data_final_previsao);
+            var_dump($dispensas);
+            echo('previsao');
+            var_dump($previsao);
+            var_dump($reserva);
+
+            
+            //crio um array com os dias, com base na tabela dos feriaados.
+            //e preencho cada dia com o militar nomeavel, array dos militares dispensados+razao, e os reservas.
+            //e envio esta lista para a view.
+
+            //estudar a relacao entre as razoes e as escalas. Que razoes dispensam de que escalas??
+            //graud de precedencia entre escalas!!! Posso impor isso nas nomeações?? Se nomeado, aparece sombreado??
+            
+            //escalas novas, os militares teem que ter todos uma folga igual.
+            //Esta folga é necessária para calcular a partir dela 30 dias.
+            $info['dispensas'] = $dispensas;
+            unset($info['nims']);
+        }
         
-        //$info['permissoes'] = $this->user_group;
-        //$this->template->load('template', 'escala/view', $info);
+        $info['permissoes'] = $this->user_group;
+        $this->template->load('template', 'escala/previsao', $info);
     }
     
 }

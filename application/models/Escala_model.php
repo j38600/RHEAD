@@ -99,6 +99,10 @@ class Escala_model extends CI_Model
             $this->db->where('indisponibilidades.id', $info['id']);
             $this->db->limit(1);
         }
+        if (isset($info['nims'])) {
+            $this->db->where_in('militares_indisponibilidades.militar_nim', $info['nims']);
+            $this->db->select('militares_indisponibilidades.militar_nim');
+        }
         $this->db->select('indisponibilidades.*');
         $this->db->select('razoes.razao, razoes.descricao AS descricao_razao');
         $this->db->select('COUNT(militares_indisponibilidades.indisponibilidade_id) as nr_militares');
