@@ -120,7 +120,7 @@ class Militar extends CI_Controller {
         $this->form_validation->set_rules('nim', 'Número de Indentificação Militar', 'trim|required');
         $this->form_validation->set_rules('nome', 'Nome Completo', 'trim|required');
         $this->form_validation->set_rules('apelido', 'Apelido', 'trim|required');
-        $this->form_validation->set_rules('antiguidade', 'Antiguidade', 'trim|required');
+        $this->form_validation->set_rules('data_promocao', 'Data de Promoção', 'trim|required');
         $this->form_validation->set_rules('nota_curso', 'Nota de Curso', 'trim|required');
         
         $postos_bd = $this->militar_model->ler_postos($info);
