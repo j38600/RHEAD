@@ -633,6 +633,7 @@ class Escala extends CI_Controller {
                 //este teste é para ver se é escala A ou B, e se o dia pertence a uma ou outra.
                 if ($info['escala']['semana'] == !$this->_fim_de_semana($data_temp, $feriados)){
                     
+                    usort($militares, array($this, '_compara_data'));
                     //crio um array com os dias e preencho com a lista de:
                     //militar nomeavel, array dos militares dispensados+razao, e o reserva.
                     
@@ -642,10 +643,21 @@ class Escala extends CI_Controller {
                     
                     //echo('resultado '.$data_temp);
                     
-                    $reserva[$data_temp] = array_slice($nomeaveis, 1, 1);
-                    $previsao[$data_temp] = array_slice($nomeaveis, 0, 1);
+                    $previsao[$data_temp] = array_slice($nomeaveis, 0, $nr_a_nomear);
+                    $reserva[$data_temp] = array_slice($nomeaveis, 1, $nr_a_nomear);
                     $indisponiveis[$data_temp] = $resultado['dispensados'];
-                    //var_dump($previsto);
+                    
+                    for($cont = $nr_a_nomear-1; $cont >= 0; $cont--)
+                    {
+                        $nim = $previsao[$data_temp][$cont]['nim'];
+                        $key = array_search($nim, array_column($militares, 'nim'));
+                        $militares[$key]['gdh_ultimo'] = $data_temp;
+                        //var_dump($nr_a_nomear);
+                        //var_dump($key);
+                    }
+                    echo('previsao');
+                    //var_dump($previsao);
+                    var_dump($militares);
                     //var_dump($reservisto);
                 }
             }
@@ -672,7 +684,10 @@ class Escala extends CI_Controller {
             //Esta folga é necessária para calcular a partir dela 30 dias.
             unset($info['nims']);
         }
-        
+        //var_dump($info['razoes']);
+        //var_dump($info['indisponiveis']);
+        //var_dump($info['previsto']);
+        //var_dump($info['reserva']);
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'escala/previsao', $info);
     }
