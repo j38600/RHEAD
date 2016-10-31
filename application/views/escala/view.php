@@ -53,7 +53,38 @@
 <h2 class="text-center">Escala de <?php echo $escala['nome'];?></h2>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4 col-md-offset-2">
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Trocas e Destrocas</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-right">NIM 1</th>
+                                <th></th>
+                                <th>NIM 2</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($trocas as $troca):?>
+                                    <tr>
+                                        <td class="text-right">
+                                            <?php echo ($troca['gdh_troca']) ? $troca['militar_nim_dois'] : $troca['militar_nim_um'];?>
+                                        </td>
+                                        <td class="text-center"><?php echo ($troca['gdh_troca']) ? 'PD' : 'PT';?></td>
+                                        <td>
+                                            <?php echo ($troca['gdh_troca']) ? $troca['militar_nim_um'] : $troca['militar_nim_dois'];?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach;?>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Militares associados</h3>

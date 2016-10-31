@@ -87,26 +87,26 @@
                     </tr>
                 <?php endforeach;?>
                 <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <?php
-                            if ($permissoes['secpess']){
-                                echo anchor(
-                                    'militar/novo',
-                                    '<span class="glyphicon glyphicon-plus"></span> Novo',
-                                    array(
-                                        'title' => 'Novo',
-                                        'class' => 'btn-block btn btn-primary btn-outline',
-                                        'role' => 'button'
-                                    )
-                                );
-                            }
-                            ?>
-                        </td>
-                    </tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <?php
+                        if ($permissoes['secpess']){
+                            echo anchor(
+                                'militar/novo',
+                                '<span class="glyphicon glyphicon-plus"></span> Novo',
+                                array(
+                                    'title' => 'Novo',
+                                    'class' => 'btn-block btn btn-primary btn-outline',
+                                    'role' => 'button'
+                                )
+                            );
+                        }
+                        ?>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

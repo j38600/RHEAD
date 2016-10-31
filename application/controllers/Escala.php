@@ -149,6 +149,10 @@ class Escala extends CI_Controller {
         //saco todos os militares, para poder nomea-los às atividades.
         $info['todos_militares'] = $this->militar_model->ler($info);
         
+        //vejo se há trocas ou destrocas, para esta escala.
+        $trocas = $this->escala_model->ler_trocas($info);
+        $info['trocas'] = $trocas;
+        
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'escala/view', $info);
     }
@@ -655,9 +659,9 @@ class Escala extends CI_Controller {
                         //var_dump($nr_a_nomear);
                         //var_dump($key);
                     }
-                    echo('previsao');
+                    //echo('previsao');
                     //var_dump($previsao);
-                    var_dump($militares);
+                    //var_dump($militares);
                     //var_dump($reservisto);
                 }
             }

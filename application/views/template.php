@@ -45,7 +45,7 @@
                         <li><a href="<?php echo base_url()?>escala">Lista</a></li>
                         <li><a href="<?php echo base_url()?>escala/dispensa/list">Dispensa</a></li>
                         <li><a href="<?php echo base_url()?>escala/razao/list">Razões p Dispensa</a></li>
-                        <li><a href="<?php echo base_url()?>escala/troca/list">Trocas</a></li>
+                        <!--<li><a href="<?php echo base_url()?>escala/troca/list">Trocas</a></li>-->
                         <!--<li><a href="<?php echo base_url()?>escala/razao/list">Férias</a></li>-->
                         <!--<li><a href="<?php echo base_url()?>escala/razao/list">T. Estudante</a></li>-->
                         <li class="divider"></li>

@@ -32,7 +32,7 @@ class Migration_Trocas extends CI_Migration {
                 'default' => NULL,
                 'null' => TRUE
             ),
-            'gdh_destrocas' => array(
+            'gdh_destroca' => array(
                 'type' => 'DATETIME',
                 'default' => NULL,
                 'null' => TRUE

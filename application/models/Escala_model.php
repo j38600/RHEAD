@@ -196,7 +196,28 @@ class Escala_model extends CI_Model
         $this->db->insert('feriados', $info);
         $novo_id = $this->db->insert_id();
         return $novo_id;
-    }    
+    }
+
+    //funcao que le as trocas
+    function ler_trocas($info)
+    {
+        if (isset($info['id'])) {
+            $this->db->where_in('id', $info['id']);
+        }
+        
+        if (isset($info['escala']['id'])) {
+            $this->db->where_in('escala_id', $info['escala']['id']);
+        }
+        
+        //Independentemente se já foi feita a troca ou não, se a destroca não tiver data, é que ainda está aberta.
+        $this->db->where('gdh_destroca', null);
+        $this->db->select('*');
+        $this->db->from('trocas');
+        
+        $query = $this->db->get();
+        
+        return ($query->result_array());
+    }   
 }
 
 ?>

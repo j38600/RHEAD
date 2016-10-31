@@ -61,25 +61,6 @@
                         </td>
                     </tr>
                 <?php endforeach;?>
-                <tr>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <?php
-                            if ($permissoes['admin']){
-                                echo anchor(
-                                    'escala/nova',
-                                    '<span class="glyphicon glyphicon-plus"></span> Nova',
-                                    array(
-                                        'title' => 'Nova',
-                                        'class' => 'btn btn-outline btn-primary btn-block',
-                                        'role' => 'button'
-                                    )
-                                );
-                            }
-                            ?>
-                        </td>
-                    </tr>
             </tbody>
         </table>
     </div>
