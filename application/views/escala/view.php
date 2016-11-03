@@ -50,6 +50,45 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="caixaTROCAS" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Selecione os militares</h4>
+            </div>
+            <div class="modal-body">
+                <?php   $option_militares = array();
+                    foreach ($todos_militares as $um_militar){
+                        $option_militares[$um_militar['nim']] = $um_militar['nim'].' '.$um_militar['posto_abreviatura'].' '.$um_militar['apelido'];
+                    }
+                    echo form_open('escala/troca/nova', ['class' => 'form-horizontal',
+                                                        'role' => 'form']);
+                    echo form_hidden('escala_id', $escala['id']);
+                ?>
+
+                <div class="form-group">
+                    <label for="de" class="col-xs-offset-1 col-xs-4 control-label">Militar nomeado</label>
+                    <div class="col-xs-6">
+                    <?php echo form_dropdown('militar_nim_um',$option_militares,'','class="form-control"'); ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="de" class="col-xs-offset-1 col-xs-4 control-label">Militar voluntário</label>
+                    <div class="col-xs-6">
+                    <?php echo form_dropdown('militar_nim_dois',$option_militares,'','class="form-control"'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar informação</button>
+                <?php echo form_close(); ?>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <h2 class="text-center">Escala de <?php echo $escala['nome'];?></h2>
 <div class="container-fluid">
     <div class="row">
@@ -81,6 +120,19 @@
                                 <?php endforeach;?>
                             </tbody>
                     </table>
+                    <?php
+                    if ($permissoes['secpess']) {
+                        echo anchor(
+                            '#caixaTROCAS',
+                            'Adicionar uma troca',
+                            array(
+                                'class' => 'list-group-item list-group-item-success',
+                                'role' => 'button',
+                                'data-toggle' => 'modal',
+                            )
+                        );
+                    }
+                    ?>
                 </div>
             </div>
         </div>

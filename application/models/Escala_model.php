@@ -217,7 +217,15 @@ class Escala_model extends CI_Model
         $query = $this->db->get();
         
         return ($query->result_array());
-    }   
+    }
+
+    //funcao para adicionar uma troca nova
+    function adicionar_troca($info)
+    {
+        $this->db->insert('trocas', $info);
+        $novo_id = $this->db->insert_id();
+        return $novo_id;
+    }
 }
 
 ?>
