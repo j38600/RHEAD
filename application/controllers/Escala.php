@@ -69,8 +69,8 @@ class Escala extends CI_Controller {
         foreach ($dispensas as $dispensa)
         {
             //dispensas para este dia inclusive
-            $comeca = (date('Y-m-d', strtotime($dispensa['gdh_inicio'])) <= $data);
-            $acaba = ($data <= date('Y-m-d', strtotime($dispensa['gdh_fim'])));
+            $comeca = (date('Y-m-d H:i', strtotime($dispensa['gdh_inicio'])) <= $data);
+            $acaba = ($data <= date('Y-m-d H:i', strtotime($dispensa['gdh_fim'])));
             //var_dump($data);
 
             if ($comeca && $acaba)
@@ -360,6 +360,10 @@ class Escala extends CI_Controller {
                 
                 unset($info);
                 $info = array();
+                
+                $razoes_bd = $this->escala_model->ler_razoes($info);
+                $razoes=array();
+                
                 $info['id'] = $id;
                 $dispensa = $this->escala_model->ler_dispensa($info);
                 if(empty($dispensa)){
@@ -368,12 +372,9 @@ class Escala extends CI_Controller {
 
                 $info['dispensa'] = $dispensa[0];
                 
-                $razoes_bd = $this->escala_model->ler_razoes($info);
-                $razoes=array();
                 foreach($razoes_bd as $razao){
                     $razoes[$razao['id']] = $razao['razao'];
                 }
-
                 if ($this->form_validation->run() == true) {
 
                     unset($info);
@@ -731,6 +732,28 @@ class Escala extends CI_Controller {
         //var_dump($info['reserva']);
         $info['permissoes'] = $this->user_group;
         $this->template->load('template', 'escala/previsao', $info);
+    }
+
+    /**@
+    Atualizar o estado de nomeado
+    @return void
+    **/
+    public function Nomear()
+    {
+        //$permissoes = $this->user_group;
+        //if (!$permissoes['secpess']) {
+        //    redirect('medalha', 'refresh');
+        //}
+        $info = array();
+        $post = $this->input->post(null, true);
+        
+        $info['militar_nim'] = $post['militar_nim'];
+        $info['escala_id'] = $post['escala_id'];
+        
+        $info['nomeado'] = $post['nomeado'] ? '0' : '1';
+        $info['resultado'] = $this->escala_model->nomear_militar_escala($info);
+        
+        redirect('escala/previsao/'.$info['escala_id'], 'refresh');
     }
     
 }

@@ -226,6 +226,15 @@ class Escala_model extends CI_Model
         $novo_id = $this->db->insert_id();
         return $novo_id;
     }
+
+    //funcao para nomear ou desnomear militar de uma escala
+    function nomear_militar_escala($info)
+    {
+        $this->db->where('militar_nim', $info['militar_nim']);
+        $this->db->where('escala_id', $info['escala_id']);
+        $this->db->update('militares_escalas', $info);
+        return true;
+    }
 }
 
 ?>

@@ -1,3 +1,38 @@
+<div class="modal fade" id="caixaNOMEAR" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirma nomeação para próximo serviço?</h4>
+            </div>
+            <div class="modal-body">
+                <?php
+                    echo form_open('escala/nomear/', ['class' => 'form-horizontal',
+                                                      'role' => 'form']);
+                    echo form_hidden('escala_id', $escala['id']);
+                    echo form_input(
+                        ['name'  => 'nomeado',
+                        'type'  => 'hidden',
+                        'value' => set_value('nomeado'),
+                        'class' => 'nomeado']
+                        );
+                    echo form_input(
+                        ['name'  => 'militar_nim',
+                        'type'  => 'hidden',
+                        'value' => set_value('militar_nim'),
+                        'class' => 'militar_nim']
+                        );
+                ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar informação</button>
+                <?php echo form_close();?>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="container-fluid">
     <div class="row">
         <h2>Previsao da escala de <?php echo $escala['nome'];?></h2>
@@ -22,14 +57,30 @@
                         <td><?php
                             foreach ($militares as $militar)
                             {
-                                echo $militar['nim'];
+                                echo anchor(
+                                    '#caixaNOMEAR',
+                                    $militar['posto_abreviatura'].' '.$militar['nim'].' '.$militar['apelido'],
+                                    array(
+                                        'class' => ($militar['nomeado'] ? 'bg-primary' : 'bg-info'),
+                                        'data-toggle' => 'modal',
+                                        'data-militar-nim'=>$militar['nim'],
+                                        'data-nomeado'=>$militar['nomeado']
+                                    )
+                                );
+                                //echo $militar['nim'];
                                 echo br();
                             }
                         ?></td>
                         <td><?php
                             foreach ($reserva[$dia] as $militar)
                             {
-                                echo $militar['nim'];
+                                echo anchor(
+                                    'militar/view/'.$militar['nim'],
+                                    $militar['posto_abreviatura'].' '.$militar['nim'].' '.$militar['apelido'],
+                                    array(
+                                        'class' => 'bg-danger'
+                                    )
+                                );
                                 echo br();
                             }
                         ?></td>
@@ -65,3 +116,16 @@
         </table>
     </div>
 </div>
+
+<script>//pega no id da escala, no nim do militar e altero o estado do campo nomeado.
+    $('#caixaNOMEAR').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var nomeado = button.data('nomeado') // Extract info from data-* attributes
+      var militar_nim = button.data('militar-nim') // Extract info from data-* attributes
+      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      var modal = $(this)
+      modal.find('.militar_nim').val(militar_nim) //no DOM com class medalha dou o valor da variavel medalha_id
+      modal.find('.nomeado').val(nomeado) //no DOM com proximacerimonia dou o valor da variavel proxima_cerimonia
+    })
+</script>
